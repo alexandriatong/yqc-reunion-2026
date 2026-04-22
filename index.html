@@ -609,6 +609,95 @@
     font-size: 1.05rem;
     padding: 8px 6px !important;
   }
+  /* ===================== MOBILE BREAKPOINTS ===================== */
+
+  /* Small phones (up to 380px) — very tight screens */
+  @media (max-width: 380px) {
+    html { font-size: 15px; }
+    .header { padding: 28px 16px 24px; }
+    .header-photo-wrap { width: 110px; height: 110px; margin-bottom: 14px; }
+    .header h1 { font-size: 1.4rem; }
+    .header p { font-size: 0.88rem; }
+    .header-dates { font-size: 0.78rem; padding: 5px 14px; }
+    .main { padding: 20px 12px 48px; }
+    .event-header { padding: 12px 14px; gap: 10px; }
+    .event-day-badge { min-width: 58px; padding: 6px 10px; }
+    .event-day-badge .date { font-size: 0.95rem; }
+    .event-title { font-size: 1.05rem; }
+    .event-meta { font-size: 0.8rem; }
+    .event-price-tag { font-size: 0.75rem; padding: 3px 8px; }
+    .event-body { padding: 0 14px 16px; }
+    .event-desc { padding: 12px 14px; font-size: 0.92rem; }
+    .radio-option label { padding: 10px 12px; font-size: 0.9rem; }
+    .banquet-subcard { padding: 12px 12px; }
+    .btn { padding: 12px 18px; font-size: 0.95rem; }
+    .btn-row { gap: 8px; }
+    .field-group label { font-size: 0.82rem; }
+    .field-group input, .field-group select, .field-group textarea { font-size: 0.95rem; padding: 10px 12px; }
+    .stepper button { width: 38px; height: 38px; font-size: 1.2rem; }
+    .qty-input { width: 52px !important; }
+    .bento-item-label { font-size: 0.85rem; }
+    .cost-summary-header { font-size: 0.9rem; padding: 12px 14px; }
+    .cost-line { font-size: 0.8rem; }
+    .review-label { min-width: 100px; font-size: 0.75rem; }
+    .review-total-box .amount { font-size: 2.2rem; }
+  }
+
+  /* Standard phones (381px–600px) */
+  @media (min-width: 381px) and (max-width: 600px) {
+    html { font-size: 16px; }
+    .header { padding: 32px 20px 28px; }
+    .header-photo-wrap { width: 140px; height: 140px; }
+    .header h1 { font-size: 1.65rem; }
+    .main { padding: 24px 14px 52px; }
+    .event-header { padding: 14px 18px; gap: 12px; }
+    .event-title { font-size: 1.1rem; }
+    .event-body { padding: 0 18px 18px; }
+    .radio-option label { padding: 10px 14px; }
+    .btn { padding: 13px 22px; }
+    .stepper button { width: 36px; height: 36px; }
+    .qty-input { width: 56px !important; }
+  }
+
+  /* Large phones / small tablets (601px–767px) */
+  @media (min-width: 601px) and (max-width: 767px) {
+    .header-photo-wrap { width: 160px; height: 160px; }
+    .main { padding: 28px 20px 56px; }
+    .event-header { gap: 14px; }
+  }
+
+  /* Tablets portrait (768px–899px) */
+  @media (min-width: 768px) and (max-width: 899px) {
+    .main { padding: 32px 28px 60px; }
+    .header { padding: 44px 32px 36px; }
+  }
+
+  /* All mobile: layout adjustments for screens under 520px */
+  @media (max-width: 520px) {
+    .event-header { flex-wrap: wrap; }
+    .event-price-tag { order: 3; margin-top: 4px; }
+    .event-title-block { order: 2; }
+    .event-day-badge { order: 1; }
+    .radio-group { flex-direction: column; gap: 8px; }
+    .radio-option label { width: 100%; }
+    .field-row { grid-template-columns: 1fr !important; }
+    .btn-row { flex-direction: column; }
+    .btn-row .btn { width: 100%; text-align: center; }
+    .bento-item-row { flex-wrap: wrap; gap: 8px; }
+    .review-row { flex-direction: column; gap: 4px; }
+    .review-value { text-align: left !important; }
+    .review-label { min-width: unset; }
+    .payment-method { gap: 8px; }
+    .payment-method-info .method-detail { font-size: 0.8rem; }
+    .cost-summary-box { position: static; }
+  }
+
+  /* Touch devices: remove sticky hover states */
+  @media (hover: none) {
+    .event-card:hover { box-shadow: var(--shadow); }
+    .btn-primary:hover, .btn-gold:hover { transform: none; }
+    .stepper button:hover { border-color: var(--border); background: white; }
+  }
 </style>
 </head>
 <body>
@@ -646,7 +735,7 @@
   <!-- PAGE 1: YOUR INFO -->
   <div class="form-page active" id="page-1">
     <div class="info-note" style="font-size:1rem;line-height:1.75;margin-bottom:24px;padding:18px 20px;border-radius:12px;">
-      🌺 <strong>Aloha family</strong> — we can't wait to see you in a few months! Please complete each step of this form to register for the reunion. If you have any questions, please reach out to <strong>Tyler Ching</strong> (<a href="mailto:tyler.ching@gmail.com" style="color:var(--teal-dark)">tyler.ching@gmail.com</a>) or <strong>Kaly Tong</strong> (<a href="mailto:kalytong33@gmail.com" style="color:var(--teal-dark)">kalytong33@gmail.com</a>).
+      🌺 <strong>Aloha family</strong> — we can't wait to see you in a few months! Please complete each step of this form to register for the reunion. If you have any questions, please reach out to <strong>Tyler Ching</strong> (<a href="mailto:tyler.ching@gmail.com" style="color:var(--teal-dark)">tyler.ching@gmail.com</a>) or <strong>Alexandria Tong</strong> (<a href="mailto:alexandriatong@gmail.com" style="color:var(--teal-dark)">alexandriatong@gmail.com</a>).
     </div>
     <div class="page-heading">
       <div class="eyebrow">Step 1 of 3</div>
@@ -867,7 +956,7 @@
             <div class="event-price-tag">Free + optional bento</div>
           </div>
           <div class="event-body">
-            <div class="event-desc">Held in the month of April annually, Chung Mung is our opportunity to honor and pay respects to Kung Kung and Popo and other family members who have passed. Since many of us have never experienced this event and its culture, we will be recreating Chung Mung for those who wish to enjoy this meaningful tradition.</div>
+            <div class="event-desc">Held in the month of April annually, Chung Mung is our opportunity to honor and pay respects to Kung Kung and Popo and other family members who have passed. Since many of us have never experienced this event and its culture, we will be re-creating Chung Mung for those who wish to enjoy this meaningful tradition.</div>
             <div class="event-inputs">
               <div class="attending-toggle">
                 <div class="radio-group">
@@ -888,6 +977,10 @@
                   <h4>🍱 Optional Bento — $10 per bento</h4>
                   <div class="field-group" style="margin-bottom:12px">
                     <label>Would you like to order bentos?</label>
+                    <div class="info-note" style="margin-top:8px;margin-bottom:0">
+                      📋 <strong>View the full bento menu with photos before selecting:</strong><br>
+                      <a href="https://docs.google.com/document/d/11y1SZ44yhebyxu3CZCf6E4Ry-fjlOdLSi6uIXcd0ltc/edit?tab=t.0" target="_blank" rel="noopener" style="color:var(--teal-dark);font-weight:700;word-break:break-word;">Open Bento Menu →</a>
+                    </div>
                     <div class="radio-group" style="margin-top:6px">
                       <div class="radio-option"><input type="radio" name="cm_bento_order" id="cm_bento_no" value="no" checked onchange="toggleCMBento()"><label for="cm_bento_no"><span class="check-circle"></span> No thanks</label></div>
                       <div class="radio-option"><input type="radio" name="cm_bento_order" id="cm_bento_yes" value="yes" onchange="toggleCMBento()"><label for="cm_bento_yes"><span class="check-circle"></span> Yes, order bentos</label></div>
