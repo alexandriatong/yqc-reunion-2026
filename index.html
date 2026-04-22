@@ -205,6 +205,7 @@
     gap: 14px;
     cursor: pointer;
     user-select: none;
+    flex-wrap: wrap;
   }
   .event-day-badge {
     background: var(--teal);
@@ -217,9 +218,17 @@
   }
   .event-day-badge .day { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 1px; opacity: 0.85; font-weight: 700; }
   .event-day-badge .date { font-size: 1.1rem; font-weight: 900; font-family: 'Playfair Display', serif; }
-  .event-title-block { flex: 1; }
+  .event-title-block { flex: 1; min-width: 0; }
   .event-title { font-family: 'Playfair Display', serif; font-size: 1.25rem; font-weight: 700; color: var(--teal-dark); }
-  .event-meta { font-size: 0.92rem; color: var(--muted); margin-top: 3px; font-weight: 600; }
+  .event-meta { font-size: 0.92rem; color: var(--muted); margin-top: 3px; font-weight: 600; line-height: 1.5; }
+  .event-meta .meta-sep { margin: 0 4px; opacity: 0.5; }
+  @media (max-width: 600px) {
+    .event-title { font-size: 1.1rem; }
+    .event-meta { font-size: 0.82rem; }
+    .event-meta .meta-sep { display: block; height: 0; overflow: hidden; margin: 2px 0; }
+    .event-meta .meta-time,
+    .event-meta .meta-loc { display: block; }
+  }
   .event-price-tag {
     background: var(--gold-light);
     color: var(--teal-dark);
@@ -229,6 +238,7 @@
     border-radius: 20px;
     flex-shrink: 0;
     align-self: flex-start;
+    white-space: nowrap;
   }
   .event-body {
     padding: 0 22px 20px;
@@ -623,8 +633,6 @@
     .event-header { padding: 12px 14px; gap: 10px; }
     .event-day-badge { min-width: 58px; padding: 6px 10px; }
     .event-day-badge .date { font-size: 0.95rem; }
-    .event-title { font-size: 1.05rem; }
-    .event-meta { font-size: 0.8rem; }
     .event-price-tag { font-size: 0.75rem; padding: 3px 8px; }
     .event-body { padding: 0 14px 16px; }
     .event-desc { padding: 12px 14px; font-size: 0.92rem; }
@@ -651,7 +659,6 @@
     .header h1 { font-size: 1.65rem; }
     .main { padding: 24px 14px 52px; }
     .event-header { padding: 14px 18px; gap: 12px; }
-    .event-title { font-size: 1.1rem; }
     .event-body { padding: 0 18px 18px; }
     .radio-option label { padding: 10px 14px; }
     .btn { padding: 13px 22px; }
@@ -674,10 +681,19 @@
 
   /* All mobile: layout adjustments for screens under 520px */
   @media (max-width: 520px) {
-    .event-header { flex-wrap: wrap; }
-    .event-price-tag { order: 3; margin-top: 4px; }
-    .event-title-block { order: 2; }
-    .event-day-badge { order: 1; }
+    /* Event header: day badge + title on row 1, price tag full-width on row 2 */
+    .event-header { flex-wrap: wrap; row-gap: 10px; }
+    .event-day-badge { order: 1; flex-shrink: 0; }
+    .event-title-block { order: 2; flex: 1; min-width: 0; }
+    .event-price-tag {
+      order: 3;
+      width: 100%;
+      text-align: center;
+      white-space: normal;
+      border-radius: 8px;
+      padding: 6px 12px;
+      font-size: 0.85rem;
+    }
     .radio-group { flex-direction: column; gap: 8px; }
     .radio-option label { width: 100%; }
     .field-row { grid-template-columns: 1fr !important; }
@@ -793,7 +809,7 @@
             <div class="event-day-badge"><div class="day">Tuesday</div><div class="date">Jul 21</div></div>
             <div class="event-title-block">
               <div class="event-title">Beef Stew with Rice & the Joy of Family</div>
-              <div class="event-meta">🕒 3pm – 9pm &nbsp;|&nbsp; 📍 801 South St Rec Center</div>
+              <div class="event-meta"><span class="meta-time">🕒 3pm – 9pm</span><span class="meta-sep"> | </span><span class="meta-loc">📍 801 South St Rec Center</span></div>
             </div>
             <div class="event-price-tag">$22 adult / $10 child (4-10)</div>
           </div>
@@ -874,7 +890,7 @@
             <div class="event-day-badge"><div class="day">Wednesday</div><div class="date">Jul 22</div></div>
             <div class="event-title-block">
               <div class="event-title">18 Holes of Fore, Family & Fun</div>
-              <div class="event-meta">🕘 9am &nbsp;|&nbsp; 📍 Hawaii Prince Golf Course</div>
+              <div class="event-meta"><span class="meta-time">🕘 9am</span><span class="meta-sep"> | </span><span class="meta-loc">📍 Hawaii Prince Golf Course</span></div>
             </div>
             <div class="event-price-tag">$85/person</div>
           </div>
@@ -908,7 +924,7 @@
             <div class="event-day-badge"><div class="day">Wednesday</div><div class="date">Jul 22</div></div>
             <div class="event-title-block">
               <div class="event-title">18 Littler Holes – Mini Golf!</div>
-              <div class="event-meta">🕘 9am &nbsp;|&nbsp; 📍 Bayview Miniature Golf</div>
+              <div class="event-meta"><span class="meta-time">🕘 9am</span><span class="meta-sep"> | </span><span class="meta-loc">📍 Bayview Miniature Golf</span></div>
             </div>
             <div class="event-price-tag">$13 adult / $10 child (4-10)</div>
           </div>
@@ -951,12 +967,12 @@
             <div class="event-day-badge"><div class="day">Wednesday</div><div class="date">Jul 22</div></div>
             <div class="event-title-block">
               <div class="event-title">Traditional Chung Mung Experience</div>
-              <div class="event-meta">🕛 12pm &nbsp;|&nbsp; 📍 Hawaiian Memorial Park Cemetery</div>
+              <div class="event-meta"><span class="meta-time">🕛 12pm</span><span class="meta-sep"> | </span><span class="meta-loc">📍 Hawaiian Memorial Park Cemetery</span></div>
             </div>
             <div class="event-price-tag">Free + optional bento</div>
           </div>
           <div class="event-body">
-            <div class="event-desc">Held in the month of April annually, Chung Mung is our opportunity to honor and pay respects to Kung Kung and Popo and other family members who have passed. Since many of us have never experienced this event and its culture, we will be re-creating Chung Mung for those who wish to enjoy this meaningful tradition.</div>
+            <div class="event-desc">Held in the month of April annually, Chung Mung is our opportunity to honor and pay respects to Kung Kung and Popo and other family members who have passed. Since many of us have never experienced this event and its culture, we will be recreating Chung Mung for those who wish to enjoy this meaningful tradition.</div>
             <div class="event-inputs">
               <div class="attending-toggle">
                 <div class="radio-group">
@@ -1103,7 +1119,7 @@
             <div class="event-day-badge"><div class="day">Thursday</div><div class="date">Jul 23</div></div>
             <div class="event-title-block">
               <div class="event-title">Step by Step – The Hike</div>
-              <div class="event-meta">🕘 9am &nbsp;|&nbsp; 📍 Makapuu Point Lighthouse Trail</div>
+              <div class="event-meta"><span class="meta-time">🕘 9am</span><span class="meta-sep"> | </span><span class="meta-loc">📍 Makapuu Point Lighthouse Trail</span></div>
             </div>
             <div class="event-price-tag">$5/person</div>
           </div>
@@ -1136,7 +1152,7 @@
             <div class="event-day-badge" style="background:var(--teal-dark)"><div class="day">Thursday</div><div class="date">Jul 23</div></div>
             <div class="event-title-block">
               <div class="event-title">Our Biennial Dinner Banquet ⭐</div>
-              <div class="event-meta">🕔 5pm &nbsp;|&nbsp; 📍 Jade Dynasty Restaurant, Ala Moana Center</div>
+              <div class="event-meta"><span class="meta-time">🕔 5pm</span><span class="meta-sep"> | </span><span class="meta-loc">📍 Jade Dynasty Restaurant, Ala Moana Center</span></div>
             </div>
             <div class="event-price-tag" style="background:var(--teal);color:white">See options</div>
           </div>
@@ -1217,7 +1233,7 @@
             <div class="event-day-badge"><div class="day">Friday</div><div class="date">Jul 24</div></div>
             <div class="event-title-block">
               <div class="event-title">Sun, Sand & Smiles</div>
-              <div class="event-meta">🕙 10am till your heart's desire &nbsp;|&nbsp; 📍 Ala Moana Beach Park</div>
+              <div class="event-meta"><span class="meta-time">🕙 10am till your heart's desire</span><span class="meta-sep"> | </span><span class="meta-loc">📍 Ala Moana Beach Park</span></div>
             </div>
             <div class="event-price-tag">Free + optional bento</div>
           </div>
@@ -1270,7 +1286,7 @@
             <div class="event-day-badge" style="background:var(--gold)"><div class="day">Friday</div><div class="date">Jul 24</div></div>
             <div class="event-title-block">
               <div class="event-title">✨ Young at Heart Night (Part 1)</div>
-              <div class="event-meta">📍 Location & details to be announced &nbsp;|&nbsp; Gen 5 & 6 (Gen 4 welcome till 10pm!)</div>
+              <div class="event-meta"><span class="meta-loc">📍 Location & details TBA</span><span class="meta-sep"> | </span><span class="meta-time">Gen 5 & 6 (Gen 4 welcome till 10pm!)</span></div>
             </div>
             <div class="event-price-tag" style="background:var(--gold);color:white">Interest Only</div>
           </div>
@@ -1323,7 +1339,7 @@
             <div class="event-day-badge"><div class="day">Saturday</div><div class="date">Jul 25</div></div>
             <div class="event-title-block">
               <div class="event-title">Magic, It Must Be Magic</div>
-              <div class="event-meta">🕦 11:30am &nbsp;|&nbsp; 📍 Hilton Waikiki Beach Resort &nbsp;|&nbsp; ⚠️ 75 max</div>
+              <div class="event-meta"><span class="meta-time">🕦 11:30am</span><span class="meta-sep"> | </span><span class="meta-loc">📍 Hilton Waikiki Beach Resort</span><span class="meta-sep"> | </span><span class="meta-time">⚠️ 75 max</span></div>
             </div>
             <div class="event-price-tag">$35/person</div>
           </div>
@@ -1357,7 +1373,7 @@
             <div class="event-day-badge" style="background:var(--coral)"><div class="day">Sunday</div><div class="date">Jul 26</div></div>
             <div class="event-title-block">
               <div class="event-title">Ono Food, Much Aloha… Our Luau 🌅</div>
-              <div class="event-meta">🕙 10am until the sun says "Aloha Po" &nbsp;|&nbsp; 📍 Kokololio/Kakela Beach Park, Hauula</div>
+              <div class="event-meta"><span class="meta-time">🕙 10am until the sun says "Aloha Po"</span><span class="meta-sep"> | </span><span class="meta-loc">📍 Kokololio/Kakela Beach Park, Hauula</span></div>
             </div>
             <div class="event-price-tag">$33 adult / $15 child (4-10)</div>
           </div>
