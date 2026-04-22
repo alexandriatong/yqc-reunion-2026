@@ -573,6 +573,23 @@
   .hidden { display: none !important; }
   .attending-toggle { margin-bottom: 10px; }
 
+  /* Bento menu */
+  .bento-menu { display: flex; flex-direction: column; gap: 8px; margin-bottom: 12px; }
+  .bento-item-row {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 12px; padding: 8px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .bento-item-row:last-child { border-bottom: none; }
+  .bento-item-label { font-size: 0.95rem; color: var(--text); line-height: 1.4; flex: 1; }
+  .bento-code { font-weight: 700; color: var(--teal-dark); margin-right: 4px; }
+  .bento-total-row {
+    display: flex; justify-content: space-between; align-items: center;
+    font-weight: 700; font-size: 1rem; color: var(--teal-dark);
+    padding: 10px 0 2px; border-top: 2px solid var(--teal);
+    margin-top: 4px;
+  }
+
   /* Number input stepper */
   .stepper { display: flex; align-items: center; gap: 10px; }
   .stepper button {
@@ -660,24 +677,6 @@
           <span class="error-msg" id="err-email">Please enter a valid email address.</span>
         </div>
       </div>
-      <div style="height:14px"></div>
-      <div class="field-group">
-        <label>Your Branch / Family Unit</label>
-        <input type="text" id="familyUnit">
-      </div>
-      <div style="height:14px"></div>
-      <div class="field-group">
-        <label>Generation</label>
-        <select id="generation">
-          <option value="">-- Select --</option>
-          <option>Gen 3</option>
-          <option>Gen 4</option>
-          <option>Gen 5</option>
-          <option>Gen 6</option>
-          <option>Married In</option>
-          <option>Other / Not Sure</option>
-        </select>
-      </div>
     </div>
 
     <div class="btn-row">
@@ -704,7 +703,7 @@
               <div class="event-title">Beef Stew with Rice & the Joy of Family</div>
               <div class="event-meta">🕒 3pm – 9pm &nbsp;|&nbsp; 📍 801 South St Rec Center</div>
             </div>
-            <div class="event-price-tag">$22 adult / $10 child</div>
+            <div class="event-price-tag">$22 adult / $10 child (4-10)</div>
           </div>
           <div class="event-body">
             <div class="event-desc">Come and enjoy ono, homemade Beef Stew mixed with lots of hugs, laughter and plenty of catching up! Our first event never fails to get the family juices flowing! And yes, there will be the high stakes poker tourney and the clanking of mahjong tiles!</div>
@@ -718,7 +717,15 @@
               <div class="hidden" id="ev1_details">
                 <div class="field-row">
                   <div class="field-group">
-                    <label>Adults ($22 each) <span class="req">*</span></label>
+                    <label>3rd Gen. Uncle/Aunty or Spouse (Free)</label>
+                    <div class="stepper">
+                      <button onclick="changeQty('ev1_3rdgen',-1)">−</button>
+                      <input type="number" id="ev1_3rdgen" class="qty-input" value="0" min="0" max="50" oninput="updateCosts()">
+                      <button onclick="changeQty('ev1_3rdgen',1)">+</button>
+                    </div>
+                  </div>
+                  <div class="field-group">
+                    <label>Adults ($22 each)</label>
                     <div class="stepper">
                       <button onclick="changeQty('ev1_adults',-1)">−</button>
                       <input type="number" id="ev1_adults" class="qty-input" value="1" min="0" max="50" oninput="updateCosts()">
@@ -726,11 +733,38 @@
                     </div>
                   </div>
                   <div class="field-group">
-                    <label>Children ($10 each)</label>
+                    <label>Children age 4-10 ($10 each)</label>
                     <div class="stepper">
                       <button onclick="changeQty('ev1_children',-1)">−</button>
                       <input type="number" id="ev1_children" class="qty-input" value="0" min="0" max="50" oninput="updateCosts()">
                       <button onclick="changeQty('ev1_children',1)">+</button>
+                    </div>
+                  </div>
+                </div>
+                <div class="banquet-subcard" style="margin-top:12px">
+                  <h4>🀄 Mahjong Night Interest</h4>
+                  <div class="field-group" style="margin-bottom:10px">
+                    <label>Interested in joining Mahjong Night?</label>
+                    <div class="radio-group" style="margin-top:6px">
+                      <div class="radio-option"><input type="radio" name="mahjong_interest" id="mahjong_no" value="no" checked onchange="toggleMahjong()"><label for="mahjong_no"><span class="check-circle"></span> Not Interested</label></div>
+                      <div class="radio-option"><input type="radio" name="mahjong_interest" id="mahjong_yes" value="yes" onchange="toggleMahjong()"><label for="mahjong_yes"><span class="check-circle"></span> Yes, count me in!</label></div>
+                    </div>
+                  </div>
+                  <div class="hidden" id="mahjong_contact">
+                    <div class="field-row">
+                      <div class="field-group">
+                        <label>Contact Name <span class="req">*</span></label>
+                        <input type="text" id="mahjong_name">
+                      </div>
+                      <div class="field-group">
+                        <label>Phone / Text</label>
+                        <input type="tel" id="mahjong_phone" placeholder="(808) 555-0100">
+                      </div>
+                    </div>
+                    <div style="height:10px"></div>
+                    <div class="field-group">
+                      <label>Email Address</label>
+                      <input type="email" id="mahjong_email" placeholder="you@example.com">
                     </div>
                   </div>
                 </div>
@@ -762,11 +796,12 @@
                 <div class="field-group">
                   <label>Number of Golfers <span class="req">*</span></label>
                   <div class="stepper">
-                    <button onclick="changeQty('ev2_count',-1)">−</button>
-                    <input type="number" id="ev2_count" class="qty-input" value="1" min="1" max="50" oninput="updateCosts()">
-                    <button onclick="changeQty('ev2_count',1)">+</button>
+                    <button onclick="changeQty('ev2_count',-1, updateGolfNames)">−</button>
+                    <input type="number" id="ev2_count" class="qty-input" value="1" min="1" max="50" oninput="updateCosts(); updateGolfNames();">
+                    <button onclick="changeQty('ev2_count',1, updateGolfNames)">+</button>
                   </div>
                 </div>
+                <div id="golf_names" style="margin-top:14px;display:flex;flex-direction:column;gap:10px;"></div>
               </div>
             </div>
           </div>
@@ -780,7 +815,7 @@
               <div class="event-title">18 Littler Holes – Mini Golf!</div>
               <div class="event-meta">🕘 9am &nbsp;|&nbsp; 📍 Bayview Miniature Golf</div>
             </div>
-            <div class="event-price-tag">$13 adult / $10 child</div>
+            <div class="event-price-tag">$13 adult / $10 child (4-10)</div>
           </div>
           <div class="event-body">
             <div class="event-desc">Come one, come all! Keiki from 3 to 93! You'll just need one club but you'll have plenty of family fun and excitement!</div>
@@ -802,7 +837,7 @@
                     </div>
                   </div>
                   <div class="field-group">
-                    <label>Children ($10 each)</label>
+                    <label>Children age 4-10 ($10 each)</label>
                     <div class="stepper">
                       <button onclick="changeQty('ev3_children',-1)">−</button>
                       <input type="number" id="ev3_children" class="qty-input" value="0" min="0" max="50" oninput="updateCosts()">
@@ -845,8 +880,7 @@
                 </div>
                 <div class="banquet-subcard" style="margin-top:4px">
                   <h4>🍱 Optional Bento — $10 per bento</h4>
-                  <div class="info-note" style="margin-bottom:10px">A full bento menu with descriptions and photos is coming soon — we'll share a link when available!</div>
-                  <div class="field-group" style="margin-bottom:10px">
+                  <div class="field-group" style="margin-bottom:12px">
                     <label>Would you like to order bentos?</label>
                     <div class="radio-group" style="margin-top:6px">
                       <div class="radio-option"><input type="radio" name="cm_bento_order" id="cm_bento_no" value="no" checked onchange="toggleCMBento()"><label for="cm_bento_no"><span class="check-circle"></span> No thanks</label></div>
@@ -854,13 +888,108 @@
                     </div>
                   </div>
                   <div class="hidden" id="cm_bento_details">
-                    <div class="field-group">
-                      <label>Number of Bentos <span class="req">*</span></label>
-                      <div class="stepper">
-                        <button onclick="changeQty('cm_bento_count',-1)">−</button>
-                        <input type="number" id="cm_bento_count" class="qty-input" value="1" min="1" max="50" oninput="updateCosts()">
-                        <button onclick="changeQty('cm_bento_count',1)">+</button>
+                    <p style="font-size:0.9rem;color:var(--muted);margin-bottom:12px">Select quantities for each bento option. Each bento is $10.</p>
+                    <div class="bento-menu">
+                      <div class="bento-item-row">
+                        <span class="bento-item-label"><span class="bento-code">(A)</span> 7-Pack</span>
+                        <div class="stepper" style="flex-shrink:0">
+                          <button onclick="changeQty('cm_bento_a',-1); updateCosts();">−</button>
+                          <input type="number" id="cm_bento_a" class="qty-input" value="0" min="0" max="50" oninput="updateCosts()">
+                          <button onclick="changeQty('cm_bento_a',1); updateCosts();">+</button>
+                        </div>
                       </div>
+                      <div class="bento-item-row">
+                        <span class="bento-item-label"><span class="bento-code">(B)</span> Deluxe Breakfast</span>
+                        <div class="stepper" style="flex-shrink:0">
+                          <button onclick="changeQty('cm_bento_b',-1); updateCosts();">−</button>
+                          <input type="number" id="cm_bento_b" class="qty-input" value="0" min="0" max="50" oninput="updateCosts()">
+                          <button onclick="changeQty('cm_bento_b',1); updateCosts();">+</button>
+                        </div>
+                      </div>
+                      <div class="bento-item-row">
+                        <span class="bento-item-label"><span class="bento-code">(C)</span> Chicken Katsu Curry</span>
+                        <div class="stepper" style="flex-shrink:0">
+                          <button onclick="changeQty('cm_bento_c',-1); updateCosts();">−</button>
+                          <input type="number" id="cm_bento_c" class="qty-input" value="0" min="0" max="50" oninput="updateCosts()">
+                          <button onclick="changeQty('cm_bento_c',1); updateCosts();">+</button>
+                        </div>
+                      </div>
+                      <div class="bento-item-row">
+                        <span class="bento-item-label"><span class="bento-code">(D)</span> Fried Chicken</span>
+                        <div class="stepper" style="flex-shrink:0">
+                          <button onclick="changeQty('cm_bento_d',-1); updateCosts();">−</button>
+                          <input type="number" id="cm_bento_d" class="qty-input" value="0" min="0" max="50" oninput="updateCosts()">
+                          <button onclick="changeQty('cm_bento_d',1); updateCosts();">+</button>
+                        </div>
+                      </div>
+                      <div class="bento-item-row">
+                        <span class="bento-item-label"><span class="bento-code">(E)</span> Teriyaki Chicken</span>
+                        <div class="stepper" style="flex-shrink:0">
+                          <button onclick="changeQty('cm_bento_e',-1); updateCosts();">−</button>
+                          <input type="number" id="cm_bento_e" class="qty-input" value="0" min="0" max="50" oninput="updateCosts()">
+                          <button onclick="changeQty('cm_bento_e',1); updateCosts();">+</button>
+                        </div>
+                      </div>
+                      <div class="bento-item-row">
+                        <span class="bento-item-label"><span class="bento-code">(F)</span> Creamy Sesame Chicken Salad</span>
+                        <div class="stepper" style="flex-shrink:0">
+                          <button onclick="changeQty('cm_bento_f',-1); updateCosts();">−</button>
+                          <input type="number" id="cm_bento_f" class="qty-input" value="0" min="0" max="50" oninput="updateCosts()">
+                          <button onclick="changeQty('cm_bento_f',1); updateCosts();">+</button>
+                        </div>
+                      </div>
+                      <div class="bento-item-row">
+                        <span class="bento-item-label"><span class="bento-code">(G)</span> Deluxe Somen Salad</span>
+                        <div class="stepper" style="flex-shrink:0">
+                          <button onclick="changeQty('cm_bento_g',-1); updateCosts();">−</button>
+                          <input type="number" id="cm_bento_g" class="qty-input" value="0" min="0" max="50" oninput="updateCosts()">
+                          <button onclick="changeQty('cm_bento_g',1); updateCosts();">+</button>
+                        </div>
+                      </div>
+                      <div class="bento-item-row">
+                        <span class="bento-item-label"><span class="bento-code">(H)</span> Large Fried Saimin</span>
+                        <div class="stepper" style="flex-shrink:0">
+                          <button onclick="changeQty('cm_bento_h',-1); updateCosts();">−</button>
+                          <input type="number" id="cm_bento_h" class="qty-input" value="0" min="0" max="50" oninput="updateCosts()">
+                          <button onclick="changeQty('cm_bento_h',1); updateCosts();">+</button>
+                        </div>
+                      </div>
+                      <div class="bento-item-row">
+                        <span class="bento-item-label"><span class="bento-code">(I)</span> Spaghetti with Meat Sauce</span>
+                        <div class="stepper" style="flex-shrink:0">
+                          <button onclick="changeQty('cm_bento_i',-1); updateCosts();">−</button>
+                          <input type="number" id="cm_bento_i" class="qty-input" value="0" min="0" max="50" oninput="updateCosts()">
+                          <button onclick="changeQty('cm_bento_i',1); updateCosts();">+</button>
+                        </div>
+                      </div>
+                      <div class="bento-item-row">
+                        <span class="bento-item-label"><span class="bento-code">(J)</span> Salisbury Steak with Mushroom Gravy</span>
+                        <div class="stepper" style="flex-shrink:0">
+                          <button onclick="changeQty('cm_bento_j',-1); updateCosts();">−</button>
+                          <input type="number" id="cm_bento_j" class="qty-input" value="0" min="0" max="50" oninput="updateCosts()">
+                          <button onclick="changeQty('cm_bento_j',1); updateCosts();">+</button>
+                        </div>
+                      </div>
+                      <div class="bento-item-row">
+                        <span class="bento-item-label"><span class="bento-code">(K)</span> Seafood Inari Sushi Bomb</span>
+                        <div class="stepper" style="flex-shrink:0">
+                          <button onclick="changeQty('cm_bento_k',-1); updateCosts();">−</button>
+                          <input type="number" id="cm_bento_k" class="qty-input" value="0" min="0" max="50" oninput="updateCosts()">
+                          <button onclick="changeQty('cm_bento_k',1); updateCosts();">+</button>
+                        </div>
+                      </div>
+                      <div class="bento-item-row">
+                        <span class="bento-item-label"><span class="bento-code">(L)</span> Spicy Ahi Inari Pack</span>
+                        <div class="stepper" style="flex-shrink:0">
+                          <button onclick="changeQty('cm_bento_l',-1); updateCosts();">−</button>
+                          <input type="number" id="cm_bento_l" class="qty-input" value="0" min="0" max="50" oninput="updateCosts()">
+                          <button onclick="changeQty('cm_bento_l',1); updateCosts();">+</button>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="bento-total-row">
+                      <span>Bento Total:</span>
+                      <span id="cm_bento_total_display">$0</span>
                     </div>
                   </div>
                 </div>
@@ -926,17 +1055,25 @@
                   <div class="field-group">
                     <label>How would you like to register?</label>
                     <div class="radio-group" style="margin-top:6px">
-                      <div class="radio-option"><input type="radio" name="banquet_type" id="banquet_individual" value="individual" checked onchange="toggleBanquetType()"><label for="banquet_individual"><span class="check-circle"></span> Individual Tickets ($38.88 adult / $25 child)</label></div>
+                      <div class="radio-option"><input type="radio" name="banquet_type" id="banquet_individual" value="individual" checked onchange="toggleBanquetType()"><label for="banquet_individual"><span class="check-circle"></span> Individual Tickets ($38.88 adult / $25 child age 4-10)</label></div>
                       <div class="radio-option"><input type="radio" name="banquet_type" id="banquet_table" value="table" onchange="toggleBanquetType()"><label for="banquet_table"><span class="check-circle"></span> Reserve a Table ($388/table, up to 10)</label></div>
                     </div>
                   </div>
 
                   <!-- Individual -->
                   <div class="banquet-subcard" id="banquet_individual_section">
-                    <h4>🪑 Individual Tickets — $38.88 adult / $25 child</h4>
+                    <h4>🪑 Individual Tickets — $38.88 adult / $25 child age 4-10 / Free for 3rd Gen. Uncle/Aunty or Spouse</h4>
                     <div class="field-row">
                       <div class="field-group">
-                        <label>Adults ($38.88 each) <span class="req">*</span></label>
+                        <label>3rd Gen. Uncle/Aunty or Spouse (Free)</label>
+                        <div class="stepper">
+                          <button onclick="changeQty('banquet_ind_3rdgen',-1, updateBanquetNames)">−</button>
+                          <input type="number" id="banquet_ind_3rdgen" class="qty-input" value="0" min="0" max="50" oninput="updateCosts(); updateBanquetNames();">
+                          <button onclick="changeQty('banquet_ind_3rdgen',1, updateBanquetNames)">+</button>
+                        </div>
+                      </div>
+                      <div class="field-group">
+                        <label>Adults ($38.88 each)</label>
                         <div class="stepper">
                           <button onclick="changeQty('banquet_ind_adults',-1, updateBanquetNames)">−</button>
                           <input type="number" id="banquet_ind_adults" class="qty-input" value="1" min="0" max="50" oninput="updateCosts(); updateBanquetNames();">
@@ -944,7 +1081,7 @@
                         </div>
                       </div>
                       <div class="field-group">
-                        <label>Children ($25 each)</label>
+                        <label>Children age 4-10 ($25 each)</label>
                         <div class="stepper">
                           <button onclick="changeQty('banquet_ind_children',-1, updateBanquetNames)">−</button>
                           <input type="number" id="banquet_ind_children" class="qty-input" value="0" min="0" max="50" oninput="updateCosts(); updateBanquetNames();">
@@ -1120,7 +1257,7 @@
               <div class="event-title">Ono Food, Much Aloha… Our Luau 🌅</div>
               <div class="event-meta">🕙 10am until the sun says "Aloha Po" &nbsp;|&nbsp; 📍 Kokololio/Kakela Beach Park, Hauula</div>
             </div>
-            <div class="event-price-tag">$33 adult / $15 child</div>
+            <div class="event-price-tag">$33 adult / $15 child (4-10)</div>
           </div>
           <div class="event-body">
             <div class="event-desc">Bittersweet. But mostly sweet. The culmination of family planning, family execution, family love and Aloha all roll to this day, where we again, head to the country to breathe "our" air. The food is fabulous, but the breezes, the skies, the ocean and all of us together will truly make for a Grand Finale!</div>
@@ -1134,7 +1271,15 @@
               <div class="hidden" id="ev9_details">
                 <div class="field-row">
                   <div class="field-group">
-                    <label>Adults ($33 each) <span class="req">*</span></label>
+                    <label>3rd Gen. Uncle/Aunty or Spouse (Free)</label>
+                    <div class="stepper">
+                      <button onclick="changeQty('ev9_3rdgen',-1)">−</button>
+                      <input type="number" id="ev9_3rdgen" class="qty-input" value="0" min="0" max="50" oninput="updateCosts()">
+                      <button onclick="changeQty('ev9_3rdgen',1)">+</button>
+                    </div>
+                  </div>
+                  <div class="field-group">
+                    <label>Adults ($33 each)</label>
                     <div class="stepper">
                       <button onclick="changeQty('ev9_adults',-1)">−</button>
                       <input type="number" id="ev9_adults" class="qty-input" value="1" min="0" max="50" oninput="updateCosts()">
@@ -1142,7 +1287,7 @@
                     </div>
                   </div>
                   <div class="field-group">
-                    <label>Children ($15 each)</label>
+                    <label>Children age 4-10 ($15 each)</label>
                     <div class="stepper">
                       <button onclick="changeQty('ev9_children',-1)">−</button>
                       <input type="number" id="ev9_children" class="qty-input" value="0" min="0" max="50" oninput="updateCosts()">
@@ -1287,15 +1432,15 @@
 <script>
 // ===================== DATA =====================
 const EVENTS = [
-  { id:'ev1', name:'Beef Stew with Rice & Joy of Family', day:'Tuesday, Jul 21', type:'adult_child', adultPrice:22, childPrice:10, adultId:'ev1_adults', childId:'ev1_children' },
+  { id:'ev1', name:'Beef Stew with Rice & Joy of Family', day:'Tuesday, Jul 21', type:'adult_child', adultPrice:22, childPrice:10, thirdGenId:'ev1_3rdgen', adultId:'ev1_adults', childId:'ev1_children' },
   { id:'ev2', name:'18 Holes of Golf', day:'Wednesday, Jul 22', price:85, priceLabel:'$85/person', countId:'ev2_count', type:'per_person' },
-  { id:'ev3', name:'Mini Golf', day:'Wednesday, Jul 22', type:'adult_child', adultPrice:13, childPrice:10, adultId:'ev3_adults', childId:'ev3_children' },
+  { id:'ev3', name:'Mini Golf', day:'Wednesday, Jul 22', type:'adult_child', adultPrice:13, childPrice:10, thirdGenId:null, adultId:'ev3_adults', childId:'ev3_children' },
   { id:'ev4', name:'Traditional Chung Mung', day:'Wednesday, Jul 22', price:0, priceLabel:'Free', countId:'ev4_count', type:'free' },
   { id:'ev5', name:'The Hike – Makapuu', day:'Thursday, Jul 23', price:5, priceLabel:'$5/person', countId:'ev5_count', type:'per_person' },
   { id:'ev6', name:'Biennial Dinner Banquet', day:'Thursday, Jul 23', price:null, priceLabel:'See options', countId:null, type:'banquet' },
   { id:'ev7', name:'Sun, Sand & Smiles (Beach Day)', day:'Friday, Jul 24', price:0, priceLabel:'Free', countId:'ev7_count', type:'free' },
   { id:'ev8', name:'Magic Show – Magical Mystery Show', day:'Saturday, Jul 25', price:35, priceLabel:'$35/person', countId:'ev8_count', type:'per_person' },
-  { id:'ev9', name:'Ono Food & Luau', day:'Sunday, Jul 26', type:'adult_child', adultPrice:33, childPrice:15, adultId:'ev9_adults', childId:'ev9_children' },
+  { id:'ev9', name:'Ono Food & Luau', day:'Sunday, Jul 26', type:'adult_child', adultPrice:33, childPrice:15, thirdGenId:'ev9_3rdgen', adultId:'ev9_adults', childId:'ev9_children' },
 ];
 
 // Persistent submissions store
@@ -1379,12 +1524,33 @@ function toggleCMBento() {
   updateCosts();
 }
 
+function toggleMahjong() {
+  const interested = document.querySelector('input[name="mahjong_interest"]:checked')?.value === 'yes';
+  document.getElementById('mahjong_contact').classList.toggle('hidden', !interested);
+}
+
+function updateGolfNames() {
+  const count = parseInt(document.getElementById('ev2_count')?.value) || 1;
+  const container = document.getElementById('golf_names');
+  if (!container) return;
+  const existingVals = {};
+  container.querySelectorAll('input').forEach((inp, i) => { existingVals[i + 1] = inp.value; });
+  container.innerHTML = '';
+  for (let i = 1; i <= count; i++) {
+    const div = document.createElement('div');
+    div.className = 'field-group';
+    div.innerHTML = `<label>Golfer ${i} Full Name <span class="req">*</span></label><input type="text" id="golf_name_${i}" value="${existingVals[i] || ''}">`;
+    container.appendChild(div);
+  }
+}
+
 function updateBanquetNames() {
   const type = document.querySelector('input[name="banquet_type"]:checked')?.value || 'individual';
   if (type === 'individual') {
+    const thirdGen = parseInt(document.getElementById('banquet_ind_3rdgen')?.value) || 0;
     const adults = parseInt(document.getElementById('banquet_ind_adults').value) || 0;
     const children = parseInt(document.getElementById('banquet_ind_children').value) || 0;
-    const total = adults + children;
+    const total = thirdGen + adults + children;
     const container = document.getElementById('banquet_ind_names');
     // Preserve existing values before rebuilding
     const existingVals = {};
@@ -1445,21 +1611,31 @@ function getEventCost(ev) {
   if (!attending) return { cost: 0, label: '', attending: false };
 
   if (ev.type === 'adult_child') {
+    const thirdGen = parseInt(document.getElementById(ev.thirdGenId)?.value)||0;
     const adults = parseInt(document.getElementById(ev.adultId)?.value)||0;
     const children = parseInt(document.getElementById(ev.childId)?.value)||0;
     const cost = (adults * ev.adultPrice) + (children * ev.childPrice);
-    const label = `${adults} adult(s) × $${ev.adultPrice} + ${children} child(ren) × $${ev.childPrice}`;
-    return { cost, label, attending: true, count: adults + children, adults, children };
+    const parts = [];
+    if (thirdGen > 0) parts.push(`${thirdGen} 3rd Gen. × $0`);
+    if (adults > 0) parts.push(`${adults} adult(s) × $${ev.adultPrice}`);
+    if (children > 0) parts.push(`${children} child(ren) × $${ev.childPrice}`);
+    const label = parts.join(' + ') || 'Free';
+    return { cost, label, attending: true, count: thirdGen + adults + children, thirdGen, adults, children };
   }
 
   if (ev.type === 'free') {
     const count = parseInt(document.getElementById(ev.countId)?.value)||1;
     if (ev.id === 'ev4') {
-      // Chung Mung bento
+      // Chung Mung bento - individual items
+      const bentoIds = ['cm_bento_a','cm_bento_b','cm_bento_c','cm_bento_d','cm_bento_e','cm_bento_f','cm_bento_g','cm_bento_h','cm_bento_i','cm_bento_j','cm_bento_k','cm_bento_l'];
       const wantsBento = document.querySelector('input[name="cm_bento_order"]:checked')?.value === 'yes';
-      const bentoCount = wantsBento ? (parseInt(document.getElementById('cm_bento_count')?.value)||1) : 0;
-      const bentoCost = bentoCount * 10;
-      return { cost: bentoCost, label: bentoCost > 0 ? `${bentoCount} bento(s) × $10` : 'Free', attending: true, count };
+      let bentoTotal = 0, bentoCount = 0;
+      if (wantsBento) {
+        bentoIds.forEach(id => { const q = parseInt(document.getElementById(id)?.value)||0; bentoCount += q; bentoTotal += q * 10; });
+      }
+      const display = document.getElementById('cm_bento_total_display');
+      if (display) display.textContent = '$' + bentoTotal;
+      return { cost: bentoTotal, label: bentoTotal > 0 ? `${bentoCount} bento(s) × $10` : 'Free', attending: true, count };
     }
     if (ev.id === 'ev7') {
       // Beach day bento
@@ -1477,7 +1653,7 @@ function getEventCost(ev) {
       const adults = parseInt(document.getElementById('banquet_ind_adults').value)||0;
       const children = parseInt(document.getElementById('banquet_ind_children').value)||0;
       const cost = (adults * 38.88) + (children * 25);
-      return { cost: Math.round(cost * 100) / 100, label: `${adults} adult(s) × $38.88 + ${children} child(ren) × $25`, attending: true, count: adults + children };
+      return { cost: Math.round(cost * 100) / 100, label: `${adults} adult(s) × $38.88 + ${children} child(ren) age 4-10 × $25`, attending: true, count: adults + children };
     } else {
       const tbls = parseInt(document.getElementById('banquet_tbl_count').value)||1;
       return { cost: tbls * 388, label: `${tbls} table(s) × $388`, attending: true, count: tbls };
@@ -1519,10 +1695,8 @@ function buildReview() {
   const ln = document.getElementById('lastName').value.trim();
   const email = document.getElementById('email').value.trim();
   const phone = document.getElementById('phone').value.trim();
-  const family = document.getElementById('familyUnit').value.trim();
-  const gen = document.getElementById('generation').value;
   let contactHTML = '';
-  const rows = [['Name', `${fn} ${ln}`], ['Email', email], ['Phone', phone||'—'], ['Family Branch', family||'—'], ['Generation', gen||'—']];
+  const rows = [['Name', `${fn} ${ln}`], ['Email', email], ['Phone', phone||'—']];
   rows.forEach(([l,v]) => { contactHTML += `<div class="review-row"><span class="review-label">${l}</span><span class="review-value">${v}</span></div>`; });
   document.getElementById('review-contact').innerHTML = contactHTML;
 
@@ -1629,27 +1803,46 @@ async function submitForm() {
 
   const wantsBento = document.querySelector('input[name="bento_order"]:checked')?.value === 'yes';
   const bentoCount = wantsBento ? (parseInt(document.getElementById('bento_count')?.value)||0) : 0;
-  const wantsCMBento = document.querySelector('input[name="cm_bento_order"]:checked')?.value === 'yes';
-  const cmBentoCount = wantsCMBento ? (parseInt(document.getElementById('cm_bento_count')?.value)||0) : 0;
+  // CM bento counts now captured per-item in submission object above
 
   const submission = {
     submittedAt: new Date().toISOString(),
-    firstName: fn, lastName: ln, email, phone, familyUnit: family, generation: gen,
+    firstName: fn, lastName: ln, email, phone,
     ev1_BeefStew_attending: eventsData.ev1.attending,
+    ev1_3rdgen: document.getElementById('ev1_3rdgen')?.value||0,
     ev1_adults: document.getElementById('ev1_adults')?.value||0,
     ev1_children: document.getElementById('ev1_children')?.value||0,
+    ev1_mahjong_interested: document.querySelector('input[name="mahjong_interest"]:checked')?.value === 'yes',
+    ev1_mahjong_name: document.getElementById('mahjong_name')?.value.trim()||'',
+    ev1_mahjong_phone: document.getElementById('mahjong_phone')?.value.trim()||'',
+    ev1_mahjong_email: document.getElementById('mahjong_email')?.value.trim()||'',
     ev1_cost: eventsData.ev1.cost,
     ev2_Golf_attending: eventsData.ev2.attending, ev2_count: eventsData.ev2.count, ev2_cost: eventsData.ev2.cost,
+    ev2_golf_names: (() => { const names = []; const c = parseInt(document.getElementById('ev2_count')?.value)||1; for(let i=1;i<=c;i++){const v=document.getElementById(`golf_name_${i}`)?.value.trim(); if(v) names.push(v);} return names.join(', '); })(),
     ev3_MiniGolf_attending: eventsData.ev3.attending,
     ev3_adults: document.getElementById('ev3_adults')?.value||0,
     ev3_children: document.getElementById('ev3_children')?.value||0,
     ev3_cost: eventsData.ev3.cost,
     ev4_ChungMung_attending: eventsData.ev4.attending, ev4_count: eventsData.ev4.count,
-    ev4_bento_ordered: wantsCMBento, ev4_bento_count: cmBentoCount, ev4_cost: eventsData.ev4.cost,
+    ev4_bento_ordered: document.querySelector('input[name="cm_bento_order"]:checked')?.value === 'yes',
+    ev4_bento_A_7_Pack: parseInt(document.getElementById('cm_bento_a')?.value)||0,
+    ev4_bento_B_Deluxe_Breakfast: parseInt(document.getElementById('cm_bento_b')?.value)||0,
+    ev4_bento_C_Chicken_Katsu_Curry: parseInt(document.getElementById('cm_bento_c')?.value)||0,
+    ev4_bento_D_Fried_Chicken: parseInt(document.getElementById('cm_bento_d')?.value)||0,
+    ev4_bento_E_Teriyaki_Chicken: parseInt(document.getElementById('cm_bento_e')?.value)||0,
+    ev4_bento_F_Creamy_Sesame_Chicken_Salad: parseInt(document.getElementById('cm_bento_f')?.value)||0,
+    ev4_bento_G_Deluxe_Somen_Salad: parseInt(document.getElementById('cm_bento_g')?.value)||0,
+    ev4_bento_H_Large_Fried_Saimin: parseInt(document.getElementById('cm_bento_h')?.value)||0,
+    ev4_bento_I_Spaghetti_with_Meat_Sauce: parseInt(document.getElementById('cm_bento_i')?.value)||0,
+    ev4_bento_J_Salisbury_Steak_with_Mushroom_Gravy: parseInt(document.getElementById('cm_bento_j')?.value)||0,
+    ev4_bento_K_Seafood_Inari_Sushi_Bomb: parseInt(document.getElementById('cm_bento_k')?.value)||0,
+    ev4_bento_L_Spicy_Ahi_Inari_Pack: parseInt(document.getElementById('cm_bento_l')?.value)||0,
+    ev4_cost: eventsData.ev4.cost,
     ev5_Hike_attending: eventsData.ev5.attending, ev5_count: eventsData.ev5.count, ev5_cost: eventsData.ev5.cost,
     ev6_Banquet_attending: eventsData.ev6.attending, ev6_banquet_type: banquetType,
+    ev6_banquet_ind_3rdgen: document.getElementById('banquet_ind_3rdgen')?.value||0,
     ev6_banquet_ind_adults: document.getElementById('banquet_ind_adults')?.value||0,
-    ev6_banquet_ind_children: document.getElementById('banquet_ind_children')?.value||0,
+    ev6_banquet_ind_children_4_10: document.getElementById('banquet_ind_children')?.value||0,
     ev6_banquet_ind_names: banquetIndNames,
     ev6_banquet_tables: document.getElementById('banquet_tbl_count')?.value||0,
     ev6_banquet_table_data: banquetTableData, ev6_cost: eventsData.ev6.cost,
@@ -1662,6 +1855,7 @@ async function submitForm() {
     yah_count: document.getElementById('yah_count').value,
     ev8_MagicShow_attending: eventsData.ev8.attending, ev8_count: eventsData.ev8.count, ev8_cost: eventsData.ev8.cost,
     ev9_Luau_attending: eventsData.ev9.attending,
+    ev9_3rdgen: document.getElementById('ev9_3rdgen')?.value||0,
     ev9_adults: document.getElementById('ev9_adults')?.value||0,
     ev9_children: document.getElementById('ev9_children')?.value||0,
     ev9_cost: eventsData.ev9.cost,
@@ -1701,7 +1895,7 @@ function printRegistration() {
     { label: 'Mini Golf (Wed Jul 22)', attending: s.ev3_MiniGolf_attending, count: `${s.ev3_adults} adult(s), ${s.ev3_children} child(ren)`, cost: s.ev3_cost },
     { label: `Chung Mung (Wed Jul 22)${s.ev4_bento_ordered ? ` + ${s.ev4_bento_count} bento(s)` : ''}`, attending: s.ev4_ChungMung_attending, count: s.ev4_count, cost: s.ev4_cost },
     { label: 'The Hike (Thu Jul 23)', attending: s.ev5_Hike_attending, count: s.ev5_count, cost: s.ev5_cost },
-    { label: 'Dinner Banquet (Thu Jul 23)', attending: s.ev6_Banquet_attending, count: s.ev6_banquet_type === 'table' ? `${s.ev6_banquet_tables} table(s)` : `${s.ev6_banquet_ind_adults} adult(s), ${s.ev6_banquet_ind_children} child(ren)`, cost: s.ev6_cost },
+    { label: 'Dinner Banquet (Thu Jul 23)', attending: s.ev6_Banquet_attending, count: s.ev6_banquet_type === 'table' ? `${s.ev6_banquet_tables} table(s)` : `${s.ev6_banquet_ind_adults} adult(s), ${s.ev6_banquet_ind_children_4_10} child(ren)`, cost: s.ev6_cost },
     { label: `Beach Day (Fri Jul 24)${s.ev7_bento_ordered ? ` + ${s.ev7_bento_count} bento(s)` : ''}`, attending: s.ev7_BeachDay_attending, count: s.ev7_count, cost: s.ev7_cost },
     { label: 'Magic Show (Sat Jul 25)', attending: s.ev8_MagicShow_attending, count: s.ev8_count, cost: s.ev8_cost },
     { label: 'Luau (Sun Jul 26)', attending: s.ev9_Luau_attending, count: `${s.ev9_adults} adult(s), ${s.ev9_children} child(ren)`, cost: s.ev9_cost },
@@ -1783,8 +1977,7 @@ function resetForm() {
   document.getElementById('lastName').value='';
   document.getElementById('email').value='';
   document.getElementById('phone').value='';
-  document.getElementById('familyUnit').value='';
-  document.getElementById('generation').value='';
+
   document.getElementById('notes').value='';
   // Reset YAH
   const yahNo = document.getElementById('yah_no');
@@ -1799,6 +1992,20 @@ function resetForm() {
   if (cmBentoNo) cmBentoNo.checked = true;
   const cmBentoDetails = document.getElementById('cm_bento_details');
   if (cmBentoDetails) cmBentoDetails.classList.add('hidden');
+  const el_a = document.getElementById('cm_bento_a'); if(el_a) el_a.value=0;
+  const el_b = document.getElementById('cm_bento_b'); if(el_b) el_b.value=0;
+  const el_c = document.getElementById('cm_bento_c'); if(el_c) el_c.value=0;
+  const el_d = document.getElementById('cm_bento_d'); if(el_d) el_d.value=0;
+  const el_e = document.getElementById('cm_bento_e'); if(el_e) el_e.value=0;
+  const el_f = document.getElementById('cm_bento_f'); if(el_f) el_f.value=0;
+  const el_g = document.getElementById('cm_bento_g'); if(el_g) el_g.value=0;
+  const el_h = document.getElementById('cm_bento_h'); if(el_h) el_h.value=0;
+  const el_i = document.getElementById('cm_bento_i'); if(el_i) el_i.value=0;
+  const el_j = document.getElementById('cm_bento_j'); if(el_j) el_j.value=0;
+  const el_k = document.getElementById('cm_bento_k'); if(el_k) el_k.value=0;
+  const el_l = document.getElementById('cm_bento_l'); if(el_l) el_l.value=0;
+  const cmBentoDisplay = document.getElementById('cm_bento_total_display');
+  if (cmBentoDisplay) cmBentoDisplay.textContent = '$0';
   // Reset events
   ['ev1','ev2','ev3','ev4','ev5','ev6','ev7','ev8','ev9'].forEach(id => {
     const noRadio = document.getElementById(id+'_no');
@@ -1811,6 +2018,18 @@ function resetForm() {
   document.getElementById('banquet_tbl_names').innerHTML = '';
   toggleBanquetType();
   // Reset adult/child counters
+  // Reset 3rd gen counters
+  ['ev1_3rdgen','ev9_3rdgen','banquet_ind_3rdgen'].forEach(id => {
+    const el = document.getElementById(id); if(el) el.value=0;
+  });
+  // Reset mahjong
+  const mahjongNo = document.getElementById('mahjong_no');
+  if (mahjongNo) mahjongNo.checked = true;
+  const mahjongContact = document.getElementById('mahjong_contact');
+  if (mahjongContact) mahjongContact.classList.add('hidden');
+  // Reset golf names
+  const golfNames = document.getElementById('golf_names');
+  if (golfNames) golfNames.innerHTML = '';
   ['ev1_adults','ev3_adults','ev9_adults','banquet_ind_adults'].forEach(id => {
     const el = document.getElementById(id); if(el) el.value=1;
   });
