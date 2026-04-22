@@ -938,7 +938,7 @@
                       <div class="field-group">
                         <label>Adults ($38.88 each) <span class="req">*</span></label>
                         <div class="stepper">
-                          <button onclick="changeQty('banquet_ind_adults',-1)">−</button>
+                          <button onclick="changeQty('banquet_ind_adults',-1, updateBanquetNames)">−</button>
                           <input type="number" id="banquet_ind_adults" class="qty-input" value="1" min="0" max="50" oninput="updateCosts(); updateBanquetNames();">
                           <button onclick="changeQty('banquet_ind_adults',1, updateBanquetNames)">+</button>
                         </div>
@@ -946,7 +946,7 @@
                       <div class="field-group">
                         <label>Children ($25 each)</label>
                         <div class="stepper">
-                          <button onclick="changeQty('banquet_ind_children',-1)">−</button>
+                          <button onclick="changeQty('banquet_ind_children',-1, updateBanquetNames)">−</button>
                           <input type="number" id="banquet_ind_children" class="qty-input" value="0" min="0" max="50" oninput="updateCosts(); updateBanquetNames();">
                           <button onclick="changeQty('banquet_ind_children',1, updateBanquetNames)">+</button>
                         </div>
@@ -1430,7 +1430,10 @@ function updateBanquetNames() {
 // ===================== STEPPER =====================
 function changeQty(id, delta, callback) {
   const input = document.getElementById(id);
-  const newVal = Math.max(parseInt(input.min)||1, Math.min(parseInt(input.max)||99, (parseInt(input.value)||1) + delta));
+  const current = input.value === '' ? parseInt(input.min) || 0 : parseInt(input.value);
+  const min = input.min !== '' ? parseInt(input.min) : 0;
+  const max = input.max !== '' ? parseInt(input.max) : 99;
+  const newVal = Math.max(min, Math.min(max, current + delta));
   input.value = newVal;
   updateCosts();
   if (callback) callback();
