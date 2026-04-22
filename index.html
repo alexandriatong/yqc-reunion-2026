@@ -605,6 +605,8 @@
     width: 64px !important;
     text-align: center;
     font-weight: 700;
+    font-family: 'Lato', sans-serif;
+    font-size: 1.05rem;
     padding: 8px 6px !important;
   }
 </style>
@@ -1390,7 +1392,7 @@
     <!-- PAYMENT INFO -->
     <div class="payment-box">
       <h3>💳 How to Pay</h3>
-      <p style="font-size:0.88rem;color:var(--muted);margin-bottom:14px">All payments are handled by <strong>Tiffany Davis</strong>. Please send payment after submitting this form.</p>
+      <p style="font-size:0.88rem;color:var(--muted);margin-bottom:14px">All payments are handled by <strong>Tiffany Davis</strong>. Please send payment after submitting this form.<br><br><strong><em>Your registration is not complete until full payment has been received.</em></strong></p>
       <div class="payment-method">
         <div class="payment-icon venmo">💙</div>
         <div class="payment-method-info">
@@ -1781,7 +1783,7 @@ function updateCosts() {
       total += r.cost;
       const line = document.createElement('div');
       line.className = 'cost-line';
-      line.innerHTML = `<span class="cost-event-name">${ev.name}</span><span class="cost-amount">${r.cost === 0 ? 'Free' : '$' + r.cost.toLocaleString()}</span>`;
+      line.innerHTML = `<span class="cost-event-name">${ev.name}</span><span class="cost-amount">${r.cost === 0 ? '$0' : '$' + r.cost.toLocaleString()}</span>`;
       linesEl.appendChild(line);
     }
   });
@@ -1811,7 +1813,7 @@ function buildReview() {
     if (r.attending) {
       hasAny = true;
       total += r.cost;
-      const costStr = r.cost === 0 ? 'Free' : `$${r.cost.toLocaleString()} (${r.label})`;
+      const costStr = r.cost === 0 ? '$0' : `$${r.cost.toLocaleString()} (${r.label})`;
       evHTML += `<div class="review-row"><span class="review-label">${ev.day}</span><span class="review-value"><strong>${ev.name}</strong><br><span style="color:var(--teal-dark)">${costStr}</span></span></div>`;
     }
   });
