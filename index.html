@@ -424,7 +424,7 @@
 
   /* LAYOUT WITH STICKY SIDEBAR */
   .page-2-layout { display: grid; grid-template-columns: 1fr; gap: 24px; }
-  @media(min-width: 900px) { .page-2-layout { grid-template-columns: 1fr 240px; } }
+  @media(min-width: 900px) { .page-2-layout { grid-template-columns: 1fr 300px; } }
   .events-col { min-width: 0; }
   .sidebar-col {}
 
@@ -644,7 +644,7 @@
   <!-- PAGE 1: YOUR INFO -->
   <div class="form-page active" id="page-1">
     <div class="info-note" style="font-size:1rem;line-height:1.75;margin-bottom:24px;padding:18px 20px;border-radius:12px;">
-      🌺 <strong>Aloha family</strong> — we can't wait to see you in a few months! Please complete each step of this form to register for the reunion. If you have any questions, please reach out to <strong>Tyler Ching</strong> or <strong>Kaly Tong</strong>.
+      🌺 <strong>Aloha family</strong> — we can't wait to see you in a few months! Please complete each step of this form to register for the reunion. If you have any questions, please reach out to <strong>Tyler Ching</strong> (<a href="mailto:tyler.ching@gmail.com" style="color:var(--teal-dark)">tyler.ching@gmail.com</a>) or <strong>Kaly Tong</strong> (<a href="mailto:kalytong33@gmail.com" style="color:var(--teal-dark)">kalytong33@gmail.com</a>).
     </div>
     <div class="page-heading">
       <div class="eyebrow">Step 1 of 3</div>
@@ -668,8 +668,9 @@
       <div style="height:14px"></div>
       <div class="field-row">
         <div class="field-group">
-          <label>Phone Number</label>
+          <label>Phone Number <span class="req">*</span></label>
           <input type="tel" id="phone" placeholder="(808) 555-0100" autocomplete="tel">
+          <span class="error-msg" id="err-phone">Please enter your phone number.</span>
         </div>
         <div class="field-group">
           <label>Email Address <span class="req">*</span></label>
@@ -717,11 +718,11 @@
               <div class="hidden" id="ev1_details">
                 <div class="field-row">
                   <div class="field-group">
-                    <label>3rd Gen. Uncle/Aunty or Spouse (Free)</label>
+                    <label>3rd Gen. Uncle/Aunty or Spouse ($0)</label>
                     <div class="stepper">
-                      <button onclick="changeQty('ev1_3rdgen',-1)">−</button>
-                      <input type="number" id="ev1_3rdgen" class="qty-input" value="0" min="0" max="50" oninput="updateCosts()">
-                      <button onclick="changeQty('ev1_3rdgen',1)">+</button>
+                      <button onclick="changeQty('ev1_3rdgen',-1, function(){ update3rdGenNames('ev1_3rdgen','ev1_3rdgen_names'); })">−</button>
+                      <input type="number" id="ev1_3rdgen" class="qty-input" value="0" min="0" max="50" oninput="updateCosts(); update3rdGenNames('ev1_3rdgen','ev1_3rdgen_names');">
+                      <button onclick="changeQty('ev1_3rdgen',1, function(){ update3rdGenNames('ev1_3rdgen','ev1_3rdgen_names'); })">+</button>
                     </div>
                   </div>
                   <div class="field-group">
@@ -741,6 +742,7 @@
                     </div>
                   </div>
                 </div>
+                <div id="ev1_3rdgen_names" style="margin-top:14px;display:flex;flex-direction:column;gap:10px;"></div>
                 <div class="banquet-subcard" style="margin-top:12px">
                   <h4>🀄 Mahjong Night Interest</h4>
                   <div class="field-group" style="margin-bottom:10px">
@@ -757,14 +759,16 @@
                         <input type="text" id="mahjong_name">
                       </div>
                       <div class="field-group">
-                        <label>Phone / Text</label>
+                        <label>Phone / Text <span class="req">*</span></label>
                         <input type="tel" id="mahjong_phone" placeholder="(808) 555-0100">
+                        <span class="error-msg" id="err-mahjong-phone">Please enter a phone number.</span>
                       </div>
                     </div>
                     <div style="height:10px"></div>
                     <div class="field-group">
-                      <label>Email Address</label>
+                      <label>Email Address <span class="req">*</span></label>
                       <input type="email" id="mahjong_email" placeholder="you@example.com">
+                      <span class="error-msg" id="err-mahjong-email">Please enter an email address.</span>
                     </div>
                   </div>
                 </div>
@@ -1062,10 +1066,10 @@
 
                   <!-- Individual -->
                   <div class="banquet-subcard" id="banquet_individual_section">
-                    <h4>🪑 Individual Tickets — $38.88 adult / $25 child age 4-10 / Free for 3rd Gen. Uncle/Aunty or Spouse</h4>
+                    <h4>🪑 Individual Tickets — $38.88 adult / $25 child age 4-10 / $0 for 3rd Gen. Uncle/Aunty or Spouse</h4>
                     <div class="field-row">
                       <div class="field-group">
-                        <label>3rd Gen. Uncle/Aunty or Spouse (Free)</label>
+                        <label>3rd Gen. Uncle/Aunty or Spouse ($0)</label>
                         <div class="stepper">
                           <button onclick="changeQty('banquet_ind_3rdgen',-1, updateBanquetNames)">−</button>
                           <input type="number" id="banquet_ind_3rdgen" class="qty-input" value="0" min="0" max="50" oninput="updateCosts(); updateBanquetNames();">
@@ -1176,7 +1180,7 @@
             <div class="event-price-tag" style="background:var(--gold);color:white">Interest Only</div>
           </div>
           <div class="event-body">
-            <div class="event-desc">"One of the best results of our Reunions has been the bonding of Gen 5 and 6 at the Young at Heart night(s) and this makes all of the reunion efforts worthwhile. Of course, the occasional Gen 4 member jumps in (leaves by 10pm) but this, too, makes it special."</div>
+            <div class="event-desc">One of the best results of our Reunions has been the bonding of Gen 5 and 6 at the Young at Heart night(s) and this makes all of the reunion efforts worthwhile. Of course, the occasional Gen 4 member jumps in (leaves by 10pm) but this, too, makes it special.</div>
             <div class="event-inputs">
               <div class="attending-toggle">
                 <div class="radio-group">
@@ -1190,10 +1194,12 @@
                   <div class="field-group">
                     <label>Contact Name <span class="req">*</span></label>
                     <input type="text" id="yah_name" placeholder="Your name">
+                    <span class="error-msg" id="err-yah-name">Please enter your name.</span>
                   </div>
                   <div class="field-group">
-                    <label>Phone / Text</label>
+                    <label>Phone / Text <span class="req">*</span></label>
                     <input type="tel" id="yah_phone" placeholder="(808) 555-0100">
+                    <span class="error-msg" id="err-yah-phone">Please enter a phone number.</span>
                   </div>
                 </div>
                 <div style="height:12px"></div>
@@ -1271,11 +1277,11 @@
               <div class="hidden" id="ev9_details">
                 <div class="field-row">
                   <div class="field-group">
-                    <label>3rd Gen. Uncle/Aunty or Spouse (Free)</label>
+                    <label>3rd Gen. Uncle/Aunty or Spouse ($0)</label>
                     <div class="stepper">
-                      <button onclick="changeQty('ev9_3rdgen',-1)">−</button>
-                      <input type="number" id="ev9_3rdgen" class="qty-input" value="0" min="0" max="50" oninput="updateCosts()">
-                      <button onclick="changeQty('ev9_3rdgen',1)">+</button>
+                      <button onclick="changeQty('ev9_3rdgen',-1, function(){ update3rdGenNames('ev9_3rdgen','ev9_3rdgen_names'); })">−</button>
+                      <input type="number" id="ev9_3rdgen" class="qty-input" value="0" min="0" max="50" oninput="updateCosts(); update3rdGenNames('ev9_3rdgen','ev9_3rdgen_names');">
+                      <button onclick="changeQty('ev9_3rdgen',1, function(){ update3rdGenNames('ev9_3rdgen','ev9_3rdgen_names'); })">+</button>
                     </div>
                   </div>
                   <div class="field-group">
@@ -1295,6 +1301,7 @@
                     </div>
                   </div>
                 </div>
+                <div id="ev9_3rdgen_names" style="margin-top:14px;display:flex;flex-direction:column;gap:10px;"></div>
               </div>
             </div>
           </div>
@@ -1452,6 +1459,7 @@ function goToPage(n) {
     if (!validatePage1()) return;
   }
   if (n === 3) {
+    if (!validatePage2()) return;
     buildReview();
   }
   document.querySelectorAll('.form-page').forEach(p => p.classList.remove('active'));
@@ -1476,18 +1484,105 @@ function validatePage1() {
   let ok = true;
   const fn = document.getElementById('firstName').value.trim();
   const ln = document.getElementById('lastName').value.trim();
+  const ph = document.getElementById('phone').value.trim();
   const em = document.getElementById('email').value.trim();
   setError('firstName', !fn, 'err-firstName');
   setError('lastName', !ln, 'err-lastName');
+  setError('phone', !ph, 'err-phone');
   setError('email', !em || !em.includes('@'), 'err-email');
-  if (!fn || !ln || !em || !em.includes('@')) ok = false;
+  if (!fn || !ln || !ph || !em || !em.includes('@')) ok = false;
   return ok;
 }
 function setError(fieldId, hasError, errId) {
   const input = document.getElementById(fieldId);
   const errEl = document.getElementById(errId);
+  if (!input || !errEl) return;
   if (hasError) { input.classList.add('has-error'); errEl.classList.add('show'); }
   else { input.classList.remove('has-error'); errEl.classList.remove('show'); }
+}
+
+function validatePage2() {
+  let ok = true;
+  let firstError = null;
+
+  // Helper: validate a visible text/email/tel field
+  function req(id, errId, msg) {
+    const el = document.getElementById(id);
+    const errEl = document.getElementById(errId);
+    if (!el || !errEl) return;
+    // Only validate if the field is visible (not inside a hidden ancestor)
+    const visible = el.offsetParent !== null;
+    if (!visible) { errEl.classList.remove('show'); el.classList.remove('has-error'); return; }
+    const val = el.value.trim();
+    if (!val) {
+      el.classList.add('has-error'); errEl.classList.add('show');
+      if (!firstError) firstError = el;
+      ok = false;
+    } else {
+      el.classList.remove('has-error'); errEl.classList.remove('show');
+    }
+  }
+
+  // YAH contact fields (only if interested)
+  const yahInterested = document.querySelector('input[name="yah_attend"]:checked')?.value === 'yes';
+  if (yahInterested) {
+    req('yah_name', 'err-yah-name', 'Please enter your name.');
+    req('yah_phone', 'err-yah-phone', 'Please enter a phone number.');
+  }
+
+  // Mahjong contact fields (only if interested)
+  const mahjongInterested = document.querySelector('input[name="mahjong_interest"]:checked')?.value === 'yes';
+  if (mahjongInterested) {
+    req('mahjong_phone', 'err-mahjong-phone', 'Please enter a phone number.');
+    req('mahjong_email', 'err-mahjong-email', 'Please enter an email address.');
+  }
+
+  // Golf name fields
+  const golfAttending = document.querySelector('input[name="ev2_attend"]:checked')?.value === 'yes';
+  if (golfAttending) {
+    const count = parseInt(document.getElementById('ev2_count')?.value)||1;
+    for (let i = 1; i <= count; i++) {
+      const id = `golf_name_${i}`;
+      const el = document.getElementById(id);
+      if (el && !el.value.trim()) {
+        el.classList.add('has-error');
+        if (!firstError) firstError = el;
+        ok = false;
+      } else if (el) { el.classList.remove('has-error'); }
+    }
+  }
+
+  if (!ok && firstError) {
+    firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    if (!document.getElementById('page2-error-banner')) {
+      const banner = document.createElement('div');
+      banner.id = 'page2-error-banner';
+      banner.style.cssText = 'background:#b03020;color:white;padding:12px 20px;border-radius:10px;margin-bottom:16px;font-weight:700;font-size:0.95rem;';
+      banner.textContent = '⚠️ Please fill in all required fields before continuing.';
+      const btnRow = document.querySelector('#page-2 .btn-row');
+      if (btnRow) btnRow.parentNode.insertBefore(banner, btnRow);
+    }
+  } else {
+    const banner = document.getElementById('page2-error-banner');
+    if (banner) banner.remove();
+  }
+  return ok;
+}
+
+// ── 3rd Gen name fields ───────────────────────────────────────────────────────
+function update3rdGenNames(countId, containerId) {
+  const count = parseInt(document.getElementById(countId)?.value) || 0;
+  const container = document.getElementById(containerId);
+  if (!container) return;
+  const existingVals = {};
+  container.querySelectorAll('input').forEach((inp, i) => { existingVals[i + 1] = inp.value; });
+  container.innerHTML = '';
+  for (let i = 1; i <= count; i++) {
+    const div = document.createElement('div');
+    div.className = 'field-group';
+    div.innerHTML = `<label>3rd Gen. Guest ${i} Full Name <span class="req">*</span></label><input type="text" id="${containerId}_name_${i}" value="${existingVals[i] || ''}">`;
+    container.appendChild(div);
+  }
 }
 
 // ===================== EVENT TOGGLES =====================
@@ -1747,7 +1842,7 @@ function buildReview() {
 const GOOGLE_SHEET_URL = 'https://script.google.com/macros/s/AKfycbzNSLKzTrjhINH6ISwlQM_6ykv2NG0MXfqYYlpXDCGoK2_2c7ELR1R1G5fUchaQYr0MKQ/exec';
 
 // ===================== SUBMIT =====================
-async function submitForm() {
+function submitForm() {
   const submitBtn = document.querySelector('#page-3 .btn-gold');
   submitBtn.disabled = true;
   submitBtn.textContent = 'Submitting… 🌺';
@@ -1756,8 +1851,6 @@ async function submitForm() {
   const ln = document.getElementById('lastName').value.trim();
   const email = document.getElementById('email').value.trim();
   const phone = document.getElementById('phone').value.trim();
-  const family = document.getElementById('familyUnit').value.trim();
-  const gen = document.getElementById('generation').value;
   const notes = document.getElementById('notes').value.trim();
   const yahInterested = document.querySelector('input[name="yah_attend"]:checked')?.value === 'yes';
 
@@ -1776,11 +1869,12 @@ async function submitForm() {
   let banquetTableData = '';
   if (eventsData.ev6.attending) {
     if (banquetType === 'individual') {
+      const thirdGen = parseInt(document.getElementById('banquet_ind_3rdgen')?.value)||0;
       const adults = parseInt(document.getElementById('banquet_ind_adults').value)||0;
       const children = parseInt(document.getElementById('banquet_ind_children').value)||0;
-      const total = adults + children;
+      const nameTotal = thirdGen + adults + children;
       const names = [];
-      for (let i = 1; i <= total; i++) {
+      for (let i = 1; i <= nameTotal; i++) {
         const v = document.getElementById(`banquet_ind_name_${i}`)?.value.trim();
         if (v) names.push(v);
       }
@@ -1803,7 +1897,6 @@ async function submitForm() {
 
   const wantsBento = document.querySelector('input[name="bento_order"]:checked')?.value === 'yes';
   const bentoCount = wantsBento ? (parseInt(document.getElementById('bento_count')?.value)||0) : 0;
-  // CM bento counts now captured per-item in submission object above
 
   const submission = {
     submittedAt: new Date().toISOString(),
@@ -1863,21 +1956,17 @@ async function submitForm() {
   };
   currentSubmission = submission;
 
-  // Send to Google Sheets
-  try {
-    await fetch(GOOGLE_SHEET_URL, {
-      method: 'POST',
-      mode: 'no-cors',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(submission)
-    });
-  } catch(e) {
-    console.warn('Could not reach Google Sheets:', e);
-  }
+  // Fire-and-forget — don't await, show success immediately
+  fetch(GOOGLE_SHEET_URL, {
+    method: 'POST',
+    mode: 'no-cors',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(submission)
+  }).catch(e => console.warn('Sheet sync failed:', e));
 
+  // Show success immediately
   submitBtn.disabled = false;
   submitBtn.textContent = 'Submit Registration 🌺';
-
   document.querySelectorAll('.form-page').forEach(p => p.classList.remove('active'));
   document.getElementById('success-page').classList.add('active');
   document.getElementById('success-name').textContent = fn;
