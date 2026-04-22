@@ -7,21 +7,21 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --teal: #1a7a6e;
-    --teal-light: #25a192;
-    --teal-dark: #0f5a50;
-    --gold: #c9922a;
-    --gold-light: #f0b84a;
-    --sand: #fdf6ec;
-    --coral: #d45f3c;
+    --teal: #4a6fa5;
+    --teal-light: #6b8fc9;
+    --teal-dark: #2c4a7c;
+    --gold: #b07d2e;
+    --gold-light: #d4a843;
+    --sand: #f5f4f2;
+    --coral: #c0392b;
     --white: #ffffff;
     --text: #2a2a2a;
     --muted: #6b7280;
-    --border: #d4c9b8;
-    --input-bg: #fdfaf6;
-    --section-bg: #f7f2ea;
+    --border: #d1ccc4;
+    --input-bg: #fafaf9;
+    --section-bg: #f0eeeb;
     --error: #c0392b;
-    --shadow: 0 4px 24px rgba(26,122,110,0.10);
+    --shadow: 0 4px 24px rgba(44,74,124,0.09);
   }
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   body {
@@ -665,10 +665,10 @@
               <div class="event-title">Beef Stew with Rice & the Joy of Family</div>
               <div class="event-meta">🕒 3pm – 9pm &nbsp;|&nbsp; 📍 801 South St Rec Center</div>
             </div>
-            <div class="event-price-tag">$25/person</div>
+            <div class="event-price-tag">$22 adult / $10 child</div>
           </div>
           <div class="event-body">
-            <div class="event-desc">"Come and enjoy ono, homemade Beef Stew mixed with lots of hugs, laughter and plenty of catching up! Our first event never fails to get the family juices flowing! And yes, there will be the high stakes poker tourney and the clanking of mahjong tiles!"</div>
+            <div class="event-desc">Come and enjoy ono, homemade Beef Stew mixed with lots of hugs, laughter and plenty of catching up! Our first event never fails to get the family juices flowing! And yes, there will be the high stakes poker tourney and the clanking of mahjong tiles!</div>
             <div class="event-inputs">
               <div class="attending-toggle">
                 <div class="radio-group">
@@ -677,12 +677,22 @@
                 </div>
               </div>
               <div class="hidden" id="ev1_details">
-                <div class="field-group">
-                  <label>Number of People <span class="req">*</span></label>
-                  <div class="stepper">
-                    <button onclick="changeQty('ev1_count',-1)">−</button>
-                    <input type="number" id="ev1_count" class="qty-input" value="1" min="1" max="50" oninput="updateCosts()">
-                    <button onclick="changeQty('ev1_count',1)">+</button>
+                <div class="field-row">
+                  <div class="field-group">
+                    <label>Adults ($22 each) <span class="req">*</span></label>
+                    <div class="stepper">
+                      <button onclick="changeQty('ev1_adults',-1)">−</button>
+                      <input type="number" id="ev1_adults" class="qty-input" value="1" min="0" max="50" oninput="updateCosts()">
+                      <button onclick="changeQty('ev1_adults',1)">+</button>
+                    </div>
+                  </div>
+                  <div class="field-group">
+                    <label>Children ($10 each)</label>
+                    <div class="stepper">
+                      <button onclick="changeQty('ev1_children',-1)">−</button>
+                      <input type="number" id="ev1_children" class="qty-input" value="0" min="0" max="50" oninput="updateCosts()">
+                      <button onclick="changeQty('ev1_children',1)">+</button>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -698,10 +708,10 @@
               <div class="event-title">18 Holes of Fore, Family & Fun</div>
               <div class="event-meta">🕘 9am &nbsp;|&nbsp; 📍 Hawaii Prince Golf Course</div>
             </div>
-            <div class="event-price-tag">$120/person</div>
+            <div class="event-price-tag">$85/person</div>
           </div>
           <div class="event-body">
-            <div class="event-desc">"Bring your clubs, your skills (or not) and your readiness to have a blast with ohana on the course!"</div>
+            <div class="event-desc">Bring your clubs, your skills (or not) and your readiness to have a blast with ohana on the course!</div>
             <div class="event-inputs">
               <div class="attending-toggle">
                 <div class="radio-group">
@@ -731,10 +741,10 @@
               <div class="event-title">18 Littler Holes – Mini Golf!</div>
               <div class="event-meta">🕘 9am &nbsp;|&nbsp; 📍 Bayview Miniature Golf</div>
             </div>
-            <div class="event-price-tag">$15/person</div>
+            <div class="event-price-tag">$13 adult / $10 child</div>
           </div>
           <div class="event-body">
-            <div class="event-desc">"Come one, come all! Keiki from 3 to 93! You'll just need one club but you'll have plenty of family fun and excitement!"</div>
+            <div class="event-desc">Come one, come all! Keiki from 3 to 93! You'll just need one club but you'll have plenty of family fun and excitement!</div>
             <div class="event-inputs">
               <div class="attending-toggle">
                 <div class="radio-group">
@@ -743,12 +753,22 @@
                 </div>
               </div>
               <div class="hidden" id="ev3_details">
-                <div class="field-group">
-                  <label>Number of People <span class="req">*</span></label>
-                  <div class="stepper">
-                    <button onclick="changeQty('ev3_count',-1)">−</button>
-                    <input type="number" id="ev3_count" class="qty-input" value="1" min="1" max="50" oninput="updateCosts()">
-                    <button onclick="changeQty('ev3_count',1)">+</button>
+                <div class="field-row">
+                  <div class="field-group">
+                    <label>Adults ($13 each) <span class="req">*</span></label>
+                    <div class="stepper">
+                      <button onclick="changeQty('ev3_adults',-1)">−</button>
+                      <input type="number" id="ev3_adults" class="qty-input" value="1" min="0" max="50" oninput="updateCosts()">
+                      <button onclick="changeQty('ev3_adults',1)">+</button>
+                    </div>
+                  </div>
+                  <div class="field-group">
+                    <label>Children ($10 each)</label>
+                    <div class="stepper">
+                      <button onclick="changeQty('ev3_children',-1)">−</button>
+                      <input type="number" id="ev3_children" class="qty-input" value="0" min="0" max="50" oninput="updateCosts()">
+                      <button onclick="changeQty('ev3_children',1)">+</button>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -764,10 +784,10 @@
               <div class="event-title">Traditional Chung Mung Experience</div>
               <div class="event-meta">🕛 12pm &nbsp;|&nbsp; 📍 Hawaiian Memorial Park Cemetery</div>
             </div>
-            <div class="event-price-tag">Free</div>
+            <div class="event-price-tag">Free + optional bento</div>
           </div>
           <div class="event-body">
-            <div class="event-desc">"Held in the month of April annually, Chung Mung is our opportunity to honor and pay respects to Kung Kung and Popo and other family members who have passed. We will be recreating Chung Mung for those who wish to enjoy this meaningful tradition."</div>
+            <div class="event-desc">Held in the month of April annually, Chung Mung is our opportunity to honor and pay respects to Kung Kung and Popo and other family members who have passed. Since many of us have never experienced this event and its culture, we will be recreating Chung Mung for those who wish to enjoy this meaningful tradition.</div>
             <div class="event-inputs">
               <div class="attending-toggle">
                 <div class="radio-group">
@@ -784,6 +804,27 @@
                     <button onclick="changeQty('ev4_count',1)">+</button>
                   </div>
                 </div>
+                <div class="banquet-subcard" style="margin-top:4px">
+                  <h4>🍱 Optional Bento — $10 per bento</h4>
+                  <div class="info-note" style="margin-bottom:10px">A full bento menu with descriptions and photos is coming soon — we'll share a link when available!</div>
+                  <div class="field-group" style="margin-bottom:10px">
+                    <label>Would you like to order bentos?</label>
+                    <div class="radio-group" style="margin-top:6px">
+                      <div class="radio-option"><input type="radio" name="cm_bento_order" id="cm_bento_no" value="no" checked onchange="toggleCMBento()"><label for="cm_bento_no"><span class="check-circle"></span> No thanks</label></div>
+                      <div class="radio-option"><input type="radio" name="cm_bento_order" id="cm_bento_yes" value="yes" onchange="toggleCMBento()"><label for="cm_bento_yes"><span class="check-circle"></span> Yes, order bentos</label></div>
+                    </div>
+                  </div>
+                  <div class="hidden" id="cm_bento_details">
+                    <div class="field-group">
+                      <label>Number of Bentos <span class="req">*</span></label>
+                      <div class="stepper">
+                        <button onclick="changeQty('cm_bento_count',-1)">−</button>
+                        <input type="number" id="cm_bento_count" class="qty-input" value="1" min="1" max="50" oninput="updateCosts()">
+                        <button onclick="changeQty('cm_bento_count',1)">+</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -797,10 +838,10 @@
               <div class="event-title">Step by Step – The Hike</div>
               <div class="event-meta">🕘 9am &nbsp;|&nbsp; 📍 Makapuu Point Lighthouse Trail</div>
             </div>
-            <div class="event-price-tag">Free</div>
+            <div class="event-price-tag">$5/person</div>
           </div>
           <div class="event-body">
-            <div class="event-desc">"Get those shoes out! No, not your dancing shoes…yet! Your walkers, runners, hikers, those shoes! Join the Ching hiking party. You know you're going to be eating and eating this week so…"</div>
+            <div class="event-desc">Get those shoes out! No, not your dancing shoes…yet! Your walkers, runners, hikers, those shoes! Join the Ching hiking party. You know you're going to be eating and eating this week so… MAKAPUU POINT LIGHTHOUSE TRAIL, 9am</div>
             <div class="event-inputs">
               <div class="attending-toggle">
                 <div class="radio-group">
@@ -810,7 +851,7 @@
               </div>
               <div class="hidden" id="ev5_details">
                 <div class="field-group">
-                  <label>Number of Hikers</label>
+                  <label>Number of Hikers <span class="req">*</span></label>
                   <div class="stepper">
                     <button onclick="changeQty('ev5_count',-1)">−</button>
                     <input type="number" id="ev5_count" class="qty-input" value="1" min="1" max="50" oninput="updateCosts()">
@@ -833,7 +874,7 @@
             <div class="event-price-tag" style="background:var(--teal);color:white">See options</div>
           </div>
           <div class="event-body">
-            <div class="event-desc">"This is our night to indulge in delicious Chinese food, try to talk over the happy Ching family chatter, and learn about additions to and accomplishments of our awesome family!"</div>
+            <div class="event-desc">This is our night to indulge in delicious Chinese food, try to talk over the happy Ching family chatter, and learn about additions to and accomplishments of our awesome family!</div>
             <div class="event-inputs">
               <div class="attending-toggle">
                 <div class="radio-group">
@@ -846,22 +887,33 @@
                   <div class="field-group">
                     <label>How would you like to register?</label>
                     <div class="radio-group" style="margin-top:6px">
-                      <div class="radio-option"><input type="radio" name="banquet_type" id="banquet_individual" value="individual" checked onchange="toggleBanquetType()"><label for="banquet_individual"><span class="check-circle"></span> Individual Tickets ($55/person)</label></div>
+                      <div class="radio-option"><input type="radio" name="banquet_type" id="banquet_individual" value="individual" checked onchange="toggleBanquetType()"><label for="banquet_individual"><span class="check-circle"></span> Individual Tickets ($38.88 adult / $25 child)</label></div>
                       <div class="radio-option"><input type="radio" name="banquet_type" id="banquet_table" value="table" onchange="toggleBanquetType()"><label for="banquet_table"><span class="check-circle"></span> Reserve a Table ($388/table, up to 10)</label></div>
                     </div>
                   </div>
 
                   <!-- Individual -->
                   <div class="banquet-subcard" id="banquet_individual_section">
-                    <h4>🪑 Individual Tickets — $55 per person</h4>
-                    <div class="field-group">
-                      <label>Number of Tickets <span class="req">*</span></label>
-                      <div class="stepper">
-                        <button onclick="changeQty('banquet_ind_count',-1)">−</button>
-                        <input type="number" id="banquet_ind_count" class="qty-input" value="1" min="1" max="50" oninput="updateCosts()">
-                        <button onclick="changeQty('banquet_ind_count',1)">+</button>
+                    <h4>🪑 Individual Tickets — $38.88 adult / $25 child</h4>
+                    <div class="field-row">
+                      <div class="field-group">
+                        <label>Adults ($38.88 each) <span class="req">*</span></label>
+                        <div class="stepper">
+                          <button onclick="changeQty('banquet_ind_adults',-1)">−</button>
+                          <input type="number" id="banquet_ind_adults" class="qty-input" value="1" min="0" max="50" oninput="updateCosts(); updateBanquetNames();">
+                          <button onclick="changeQty('banquet_ind_adults',1, updateBanquetNames)">+</button>
+                        </div>
+                      </div>
+                      <div class="field-group">
+                        <label>Children ($25 each)</label>
+                        <div class="stepper">
+                          <button onclick="changeQty('banquet_ind_children',-1)">−</button>
+                          <input type="number" id="banquet_ind_children" class="qty-input" value="0" min="0" max="50" oninput="updateCosts(); updateBanquetNames();">
+                          <button onclick="changeQty('banquet_ind_children',1, updateBanquetNames)">+</button>
+                        </div>
                       </div>
                     </div>
+                    <div id="banquet_ind_names" style="margin-top:14px;display:flex;flex-direction:column;gap:10px;"></div>
                   </div>
 
                   <!-- Table -->
@@ -872,15 +924,11 @@
                       <label>Number of Tables <span class="req">*</span></label>
                       <div class="stepper">
                         <button onclick="changeQty('banquet_tbl_count',-1)">−</button>
-                        <input type="number" id="banquet_tbl_count" class="qty-input" value="1" min="1" max="20" oninput="updateCosts()">
-                        <button onclick="changeQty('banquet_tbl_count',1)">+</button>
+                        <input type="number" id="banquet_tbl_count" class="qty-input" value="1" min="1" max="20" oninput="updateCosts(); updateBanquetNames();">
+                        <button onclick="changeQty('banquet_tbl_count',1, updateBanquetNames)">+</button>
                       </div>
                     </div>
-                    <div style="height:10px"></div>
-                    <div class="field-group">
-                      <label>Family/Group Name for Table</label>
-                      <input type="text" id="banquet_table_name" placeholder="e.g. Uncle Roy's Table">
-                    </div>
+                    <div id="banquet_tbl_names" style="margin-top:14px;display:flex;flex-direction:column;gap:18px;"></div>
                   </div>
                 </div>
               </div>
@@ -896,10 +944,10 @@
               <div class="event-title">Sun, Sand & Smiles</div>
               <div class="event-meta">🕙 10am till your heart's desire &nbsp;|&nbsp; 📍 Ala Moana Beach Park</div>
             </div>
-            <div class="event-price-tag">$10/person</div>
+            <div class="event-price-tag">Free + optional bento</div>
           </div>
           <div class="event-body">
-            <div class="event-desc">"Towels, check. Sunscreen, check. Hydration, check. Pupus, check. Pack all of these and hele on down to Magic Island for a relaxing, family filled day at the beach. Get ready to eat, laugh, nap, swim, nap!"</div>
+            <div class="event-desc">Towels, check. Sunscreen, check. Hydration, check. Pupus, check. Pack all of these and hele on down to Magic Island for a relaxing, family filled day at the beach. Get ready to eat, laugh, nap, swim, nap! One of our most enjoyed events!</div>
             <div class="event-inputs">
               <div class="attending-toggle">
                 <div class="radio-group">
@@ -916,49 +964,75 @@
                     <button onclick="changeQty('ev7_count',1)">+</button>
                   </div>
                 </div>
+                <div class="banquet-subcard" style="margin-top:4px">
+                  <h4>🍱 Optional Bento Lunch — $15 per bento (includes water)</h4>
+                  <div class="field-group" style="margin-bottom:10px">
+                    <label>Would you like to order bentos?</label>
+                    <div class="radio-group" style="margin-top:6px">
+                      <div class="radio-option"><input type="radio" name="bento_order" id="bento_no" value="no" checked onchange="toggleBento()"><label for="bento_no"><span class="check-circle"></span> No thanks</label></div>
+                      <div class="radio-option"><input type="radio" name="bento_order" id="bento_yes" value="yes" onchange="toggleBento()"><label for="bento_yes"><span class="check-circle"></span> Yes, order bentos</label></div>
+                    </div>
+                  </div>
+                  <div class="hidden" id="bento_details">
+                    <div class="field-group">
+                      <label>Number of Bentos <span class="req">*</span></label>
+                      <div class="stepper">
+                        <button onclick="changeQty('bento_count',-1)">−</button>
+                        <input type="number" id="bento_count" class="qty-input" value="1" min="1" max="50" oninput="updateCosts()">
+                        <button onclick="changeQty('bento_count',1)">+</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
 
-        <!-- FRIDAY YOUNG AT HEART ⭐ SPECIAL -->
-        <div class="yah-card">
-          <div class="yah-header">
-            <h3>✨ Young at Heart Night (Part 1) — Friday, Jul 24</h3>
-            <p>📍 Location & details to be announced &nbsp;|&nbsp; Gen 5 & 6 (Gen 4 welcome till 10pm!)</p>
-          </div>
-          <div class="yah-body">
-            <p style="font-size:0.9rem;color:var(--muted);line-height:1.65;margin-bottom:16px;font-style:italic">"One of the best results of our Reunions has been the bonding of Gen 5 and 6 at the Young at Heart night(s) and this makes all of the reunion efforts worthwhile."</p>
-            <div class="field-group" style="margin-bottom:14px">
-              <label>Are you interested in attending?</label>
-              <div class="yah-interest-row">
-                <div class="checkbox-option"><input type="checkbox" id="yah_yes" onchange="toggleYAH()"><label for="yah_yes">✅ Yes, I'm interested!</label></div>
-              </div>
+        <!-- FRIDAY YOUNG AT HEART -->
+        <div class="event-card" style="border: 2px solid var(--gold);">
+          <div class="event-header">
+            <div class="event-day-badge" style="background:var(--gold)"><div class="day">Friday</div><div class="date">Jul 24</div></div>
+            <div class="event-title-block">
+              <div class="event-title">✨ Young at Heart Night (Part 1)</div>
+              <div class="event-meta">📍 Location & details to be announced &nbsp;|&nbsp; Gen 5 & 6 (Gen 4 welcome till 10pm!)</div>
             </div>
-            <div class="hidden" id="yah_contact_section">
-              <div class="info-note">Please leave your contact info so we can send you details when they're confirmed.</div>
-              <div class="field-row">
-                <div class="field-group">
-                  <label>Contact Name <span class="req">*</span></label>
-                  <input type="text" id="yah_name" placeholder="Your name">
-                </div>
-                <div class="field-group">
-                  <label>Phone / Text</label>
-                  <input type="tel" id="yah_phone" placeholder="(808) 555-0100">
+            <div class="event-price-tag" style="background:var(--gold);color:white">Interest Only</div>
+          </div>
+          <div class="event-body">
+            <div class="event-desc">"One of the best results of our Reunions has been the bonding of Gen 5 and 6 at the Young at Heart night(s) and this makes all of the reunion efforts worthwhile. Of course, the occasional Gen 4 member jumps in (leaves by 10pm) but this, too, makes it special."</div>
+            <div class="event-inputs">
+              <div class="attending-toggle">
+                <div class="radio-group">
+                  <div class="radio-option"><input type="radio" name="yah_attend" id="yah_no" value="no" checked onchange="toggleYAH()"><label for="yah_no"><span class="check-circle"></span> Not Interested</label></div>
+                  <div class="radio-option"><input type="radio" name="yah_attend" id="yah_attend_yes" value="yes" onchange="toggleYAH()"><label for="yah_attend_yes"><span class="check-circle"></span> Yes, I'm Interested!</label></div>
                 </div>
               </div>
-              <div style="height:12px"></div>
-              <div class="field-group">
-                <label>Email Address</label>
-                <input type="email" id="yah_email" placeholder="you@example.com">
-              </div>
-              <div style="height:12px"></div>
-              <div class="field-group">
-                <label>Estimated # Attending</label>
-                <div class="stepper">
-                  <button onclick="changeQty('yah_count',-1)">−</button>
-                  <input type="number" id="yah_count" class="qty-input" value="1" min="1" max="50">
-                  <button onclick="changeQty('yah_count',1)">+</button>
+              <div class="hidden" id="yah_contact_section">
+                <div class="info-note">Please leave your contact info so we can send you details when they're confirmed.</div>
+                <div class="field-row">
+                  <div class="field-group">
+                    <label>Contact Name <span class="req">*</span></label>
+                    <input type="text" id="yah_name" placeholder="Your name">
+                  </div>
+                  <div class="field-group">
+                    <label>Phone / Text</label>
+                    <input type="tel" id="yah_phone" placeholder="(808) 555-0100">
+                  </div>
+                </div>
+                <div style="height:12px"></div>
+                <div class="field-group">
+                  <label>Email Address</label>
+                  <input type="email" id="yah_email" placeholder="you@example.com">
+                </div>
+                <div style="height:12px"></div>
+                <div class="field-group">
+                  <label>Estimated # Attending</label>
+                  <div class="stepper">
+                    <button onclick="changeQty('yah_count',-1)">−</button>
+                    <input type="number" id="yah_count" class="qty-input" value="1" min="1" max="50">
+                    <button onclick="changeQty('yah_count',1)">+</button>
+                  </div>
                 </div>
               </div>
             </div>
@@ -973,10 +1047,10 @@
               <div class="event-title">Magic, It Must Be Magic</div>
               <div class="event-meta">🕦 11:30am &nbsp;|&nbsp; 📍 Hilton Waikiki Beach Resort &nbsp;|&nbsp; ⚠️ 75 max</div>
             </div>
-            <div class="event-price-tag">$65/person</div>
+            <div class="event-price-tag">$35/person</div>
           </div>
           <div class="event-body">
-            <div class="event-desc">"We'll be going to Waikiki to enjoy a highly acclaimed magic show, the Magical Mystery Show. Amazement, more laughter and more family. Make sure you appear…or disappear."</div>
+            <div class="event-desc">Magic. Sure applies to our YQC Family in so many ways! But on this day, we'll be going to Waikiki to enjoy a highly acclaimed magic show, the Magical Mystery Show. Amazement, more laughter and more family. Make sure you appear…or disappear.</div>
             <div class="info-note" style="margin:0 0 12px">Limited to 75 attendees total. Register early to secure your spot!</div>
             <div class="event-inputs">
               <div class="attending-toggle">
@@ -1007,10 +1081,10 @@
               <div class="event-title">Ono Food, Much Aloha… Our Luau 🌅</div>
               <div class="event-meta">🕙 10am until the sun says "Aloha Po" &nbsp;|&nbsp; 📍 Kokololio/Kakela Beach Park, Hauula</div>
             </div>
-            <div class="event-price-tag">$45/person</div>
+            <div class="event-price-tag">$33 adult / $15 child</div>
           </div>
           <div class="event-body">
-            <div class="event-desc">"Bittersweet. But mostly sweet. The culmination of family planning, family execution, family love and Aloha all roll to this day, where we again, head to the country to breathe 'our' air. The food is fabulous, but the breezes, the skies, the ocean and all of us together will truly make for a Grand Finale!"</div>
+            <div class="event-desc">Bittersweet. But mostly sweet. The culmination of family planning, family execution, family love and Aloha all roll to this day, where we again, head to the country to breathe "our" air. The food is fabulous, but the breezes, the skies, the ocean and all of us together will truly make for a Grand Finale!</div>
             <div class="event-inputs">
               <div class="attending-toggle">
                 <div class="radio-group">
@@ -1019,12 +1093,22 @@
                 </div>
               </div>
               <div class="hidden" id="ev9_details">
-                <div class="field-group">
-                  <label>Number of People <span class="req">*</span></label>
-                  <div class="stepper">
-                    <button onclick="changeQty('ev9_count',-1)">−</button>
-                    <input type="number" id="ev9_count" class="qty-input" value="1" min="1" max="50" oninput="updateCosts()">
-                    <button onclick="changeQty('ev9_count',1)">+</button>
+                <div class="field-row">
+                  <div class="field-group">
+                    <label>Adults ($33 each) <span class="req">*</span></label>
+                    <div class="stepper">
+                      <button onclick="changeQty('ev9_adults',-1)">−</button>
+                      <input type="number" id="ev9_adults" class="qty-input" value="1" min="0" max="50" oninput="updateCosts()">
+                      <button onclick="changeQty('ev9_adults',1)">+</button>
+                    </div>
+                  </div>
+                  <div class="field-group">
+                    <label>Children ($15 each)</label>
+                    <div class="stepper">
+                      <button onclick="changeQty('ev9_children',-1)">−</button>
+                      <input type="number" id="ev9_children" class="qty-input" value="0" min="0" max="50" oninput="updateCosts()">
+                      <button onclick="changeQty('ev9_children',1)">+</button>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -1035,8 +1119,8 @@
         <!-- ADDITIONAL NOTES -->
         <div class="event-card" style="padding:22px">
           <div class="field-group">
-            <label>Additional Notes or Questions</label>
-            <textarea id="notes" placeholder="Dietary restrictions, accessibility needs, questions for the organizers…" rows="3"></textarea>
+            <label>Additional Notes or Questions for the Organizers</label>
+            <textarea id="notes" rows="3"></textarea>
           </div>
         </div>
 
@@ -1164,15 +1248,15 @@
 <script>
 // ===================== DATA =====================
 const EVENTS = [
-  { id:'ev1', name:'Beef Stew with Rice & Joy of Family', day:'Tuesday, Jul 21', price:25, priceLabel:'$25/person', countId:'ev1_count', type:'per_person' },
-  { id:'ev2', name:'18 Holes of Golf', day:'Wednesday, Jul 22', price:120, priceLabel:'$120/person', countId:'ev2_count', type:'per_person' },
-  { id:'ev3', name:'Mini Golf', day:'Wednesday, Jul 22', price:15, priceLabel:'$15/person', countId:'ev3_count', type:'per_person' },
+  { id:'ev1', name:'Beef Stew with Rice & Joy of Family', day:'Tuesday, Jul 21', type:'adult_child', adultPrice:22, childPrice:10, adultId:'ev1_adults', childId:'ev1_children' },
+  { id:'ev2', name:'18 Holes of Golf', day:'Wednesday, Jul 22', price:85, priceLabel:'$85/person', countId:'ev2_count', type:'per_person' },
+  { id:'ev3', name:'Mini Golf', day:'Wednesday, Jul 22', type:'adult_child', adultPrice:13, childPrice:10, adultId:'ev3_adults', childId:'ev3_children' },
   { id:'ev4', name:'Traditional Chung Mung', day:'Wednesday, Jul 22', price:0, priceLabel:'Free', countId:'ev4_count', type:'free' },
-  { id:'ev5', name:'The Hike – Makapuu', day:'Thursday, Jul 23', price:0, priceLabel:'Free', countId:'ev5_count', type:'free' },
+  { id:'ev5', name:'The Hike – Makapuu', day:'Thursday, Jul 23', price:5, priceLabel:'$5/person', countId:'ev5_count', type:'per_person' },
   { id:'ev6', name:'Biennial Dinner Banquet', day:'Thursday, Jul 23', price:null, priceLabel:'See options', countId:null, type:'banquet' },
-  { id:'ev7', name:'Sun, Sand & Smiles (Beach Day)', day:'Friday, Jul 24', price:10, priceLabel:'$10/person', countId:'ev7_count', type:'per_person' },
-  { id:'ev8', name:'Magic Show – Magical Mystery Show', day:'Saturday, Jul 25', price:65, priceLabel:'$65/person', countId:'ev8_count', type:'per_person' },
-  { id:'ev9', name:'Ono Food & Luau', day:'Sunday, Jul 26', price:45, priceLabel:'$45/person', countId:'ev9_count', type:'per_person' },
+  { id:'ev7', name:'Sun, Sand & Smiles (Beach Day)', day:'Friday, Jul 24', price:0, priceLabel:'Free', countId:'ev7_count', type:'free' },
+  { id:'ev8', name:'Magic Show – Magical Mystery Show', day:'Saturday, Jul 25', price:35, priceLabel:'$35/person', countId:'ev8_count', type:'per_person' },
+  { id:'ev9', name:'Ono Food & Luau', day:'Sunday, Jul 26', type:'adult_child', adultPrice:33, childPrice:15, adultId:'ev9_adults', childId:'ev9_children' },
 ];
 
 // Persistent submissions store
@@ -1236,36 +1320,115 @@ function toggleBanquetType() {
   document.getElementById('banquet_individual_section').classList.toggle('hidden', type !== 'individual');
   document.getElementById('banquet_table_section').classList.toggle('hidden', type !== 'table');
   updateCosts();
+  updateBanquetNames();
 }
 
 function toggleYAH() {
-  const checked = document.getElementById('yah_yes').checked;
-  document.getElementById('yah_contact_section').classList.toggle('hidden', !checked);
+  const interested = document.querySelector('input[name="yah_attend"]:checked')?.value === 'yes';
+  document.getElementById('yah_contact_section').classList.toggle('hidden', !interested);
+}
+
+function toggleBento() {
+  const wants = document.querySelector('input[name="bento_order"]:checked')?.value === 'yes';
+  document.getElementById('bento_details').classList.toggle('hidden', !wants);
+  updateCosts();
+}
+
+function toggleCMBento() {
+  const wants = document.querySelector('input[name="cm_bento_order"]:checked')?.value === 'yes';
+  document.getElementById('cm_bento_details').classList.toggle('hidden', !wants);
+  updateCosts();
+}
+
+function updateBanquetNames() {
+  const type = document.querySelector('input[name="banquet_type"]:checked')?.value || 'individual';
+  if (type === 'individual') {
+    const adults = parseInt(document.getElementById('banquet_ind_adults').value) || 0;
+    const children = parseInt(document.getElementById('banquet_ind_children').value) || 0;
+    const total = adults + children;
+    const container = document.getElementById('banquet_ind_names');
+    if (total <= 1) { container.innerHTML = ''; return; }
+    const existing = container.querySelectorAll('input').length;
+    if (existing === total) return;
+    container.innerHTML = '';
+    for (let i = 1; i <= total; i++) {
+      const div = document.createElement('div');
+      div.className = 'field-group';
+      div.innerHTML = `<label>Guest ${i} Full Name <span class="req">*</span></label><input type="text" id="banquet_ind_name_${i}" placeholder="e.g. Lei Ching">`;
+      container.appendChild(div);
+    }
+  } else {
+    const tables = parseInt(document.getElementById('banquet_tbl_count').value) || 1;
+    const container = document.getElementById('banquet_tbl_names');
+    container.innerHTML = '';
+    for (let t = 1; t <= tables; t++) {
+      const section = document.createElement('div');
+      section.style.cssText = 'border-top:1px dashed var(--border);padding-top:14px;';
+      let html = `<div style="font-family:'Playfair Display',serif;font-size:0.95rem;color:var(--teal-dark);margin-bottom:10px;font-weight:700">Table ${t}</div>`;
+      html += `<div class="field-group" style="margin-bottom:10px"><label>Table Name / Family Group <span class="req">*</span></label><input type="text" id="banquet_tbl_label_${t}" placeholder="e.g. Uncle Roy's Table"></div>`;
+      for (let g = 1; g <= 10; g++) {
+        html += `<div class="field-group" style="margin-bottom:8px"><label>Seat ${g} — Full Name</label><input type="text" id="banquet_tbl_${t}_name_${g}" placeholder="Full name (or leave blank if empty seat)"></div>`;
+      }
+      section.innerHTML = html;
+      container.appendChild(section);
+    }
+  }
 }
 
 // ===================== STEPPER =====================
-function changeQty(id, delta) {
+function changeQty(id, delta, callback) {
   const input = document.getElementById(id);
   const newVal = Math.max(parseInt(input.min)||1, Math.min(parseInt(input.max)||99, (parseInt(input.value)||1) + delta));
   input.value = newVal;
   updateCosts();
+  if (callback) callback();
 }
 
 // ===================== COST CALCULATION =====================
 function getEventCost(ev) {
   const attending = document.querySelector(`input[name="${ev.id}_attend"]:checked`)?.value === 'yes';
   if (!attending) return { cost: 0, label: '', attending: false };
-  if (ev.type === 'free') return { cost: 0, label: 'Free', attending: true, count: parseInt(document.getElementById(ev.countId)?.value)||1 };
+
+  if (ev.type === 'adult_child') {
+    const adults = parseInt(document.getElementById(ev.adultId)?.value)||0;
+    const children = parseInt(document.getElementById(ev.childId)?.value)||0;
+    const cost = (adults * ev.adultPrice) + (children * ev.childPrice);
+    const label = `${adults} adult(s) × $${ev.adultPrice} + ${children} child(ren) × $${ev.childPrice}`;
+    return { cost, label, attending: true, count: adults + children, adults, children };
+  }
+
+  if (ev.type === 'free') {
+    const count = parseInt(document.getElementById(ev.countId)?.value)||1;
+    if (ev.id === 'ev4') {
+      // Chung Mung bento
+      const wantsBento = document.querySelector('input[name="cm_bento_order"]:checked')?.value === 'yes';
+      const bentoCount = wantsBento ? (parseInt(document.getElementById('cm_bento_count')?.value)||1) : 0;
+      const bentoCost = bentoCount * 10;
+      return { cost: bentoCost, label: bentoCost > 0 ? `${bentoCount} bento(s) × $10` : 'Free', attending: true, count };
+    }
+    if (ev.id === 'ev7') {
+      // Beach day bento
+      const wantsBento = document.querySelector('input[name="bento_order"]:checked')?.value === 'yes';
+      const bentoCount = wantsBento ? (parseInt(document.getElementById('bento_count')?.value)||1) : 0;
+      const bentoCost = bentoCount * 15;
+      return { cost: bentoCost, label: bentoCost > 0 ? `${bentoCount} bento(s) × $15` : 'Free', attending: true, count };
+    }
+    return { cost: 0, label: 'Free', attending: true, count };
+  }
+
   if (ev.type === 'banquet') {
     const bType = document.querySelector('input[name="banquet_type"]:checked')?.value || 'individual';
     if (bType === 'individual') {
-      const cnt = parseInt(document.getElementById('banquet_ind_count').value)||1;
-      return { cost: cnt * 55, label: `${cnt} ticket(s) × $55`, attending: true, count: cnt };
+      const adults = parseInt(document.getElementById('banquet_ind_adults').value)||0;
+      const children = parseInt(document.getElementById('banquet_ind_children').value)||0;
+      const cost = (adults * 38.88) + (children * 25);
+      return { cost: Math.round(cost * 100) / 100, label: `${adults} adult(s) × $38.88 + ${children} child(ren) × $25`, attending: true, count: adults + children };
     } else {
       const tbls = parseInt(document.getElementById('banquet_tbl_count').value)||1;
       return { cost: tbls * 388, label: `${tbls} table(s) × $388`, attending: true, count: tbls };
     }
   }
+
   const cnt = parseInt(document.getElementById(ev.countId).value)||1;
   return { cost: cnt * ev.price, label: `${cnt} × ${ev.priceLabel}`, attending: true, count: cnt };
 }
@@ -1326,7 +1489,7 @@ function buildReview() {
   document.getElementById('review-total-display').textContent = '$' + total.toLocaleString();
 
   // YAH
-  const yahInterested = document.getElementById('yah_yes').checked;
+  const yahInterested = document.querySelector('input[name="yah_attend"]:checked')?.value === 'yes';
   const yahSection = document.getElementById('review-yah-section');
   if (yahInterested) {
     yahSection.style.display = '';
@@ -1367,7 +1530,7 @@ async function submitForm() {
   const family = document.getElementById('familyUnit').value.trim();
   const gen = document.getElementById('generation').value;
   const notes = document.getElementById('notes').value.trim();
-  const yahInterested = document.getElementById('yah_yes').checked;
+  const yahInterested = document.querySelector('input[name="yah_attend"]:checked')?.value === 'yes';
 
   const eventsData = {};
   let total = 0;
@@ -1378,29 +1541,76 @@ async function submitForm() {
   });
 
   const banquetType = document.querySelector('input[name="banquet_type"]:checked')?.value || '';
-  const banquetTableName = document.getElementById('banquet_table_name').value.trim();
+
+  // Collect banquet names
+  let banquetIndNames = '';
+  let banquetTableData = '';
+  if (eventsData.ev6.attending) {
+    if (banquetType === 'individual') {
+      const adults = parseInt(document.getElementById('banquet_ind_adults').value)||0;
+      const children = parseInt(document.getElementById('banquet_ind_children').value)||0;
+      const total = adults + children;
+      const names = [];
+      for (let i = 1; i <= total; i++) {
+        const v = document.getElementById(`banquet_ind_name_${i}`)?.value.trim();
+        if (v) names.push(v);
+      }
+      banquetIndNames = names.join(', ');
+    } else {
+      const tbls = parseInt(document.getElementById('banquet_tbl_count').value)||1;
+      const tableArr = [];
+      for (let t = 1; t <= tbls; t++) {
+        const label = document.getElementById(`banquet_tbl_label_${t}`)?.value.trim() || `Table ${t}`;
+        const seats = [];
+        for (let g = 1; g <= 10; g++) {
+          const v = document.getElementById(`banquet_tbl_${t}_name_${g}`)?.value.trim();
+          if (v) seats.push(v);
+        }
+        tableArr.push(`${label}: ${seats.join(', ')}`);
+      }
+      banquetTableData = tableArr.join(' | ');
+    }
+  }
+
+  const wantsBento = document.querySelector('input[name="bento_order"]:checked')?.value === 'yes';
+  const bentoCount = wantsBento ? (parseInt(document.getElementById('bento_count')?.value)||0) : 0;
+  const wantsCMBento = document.querySelector('input[name="cm_bento_order"]:checked')?.value === 'yes';
+  const cmBentoCount = wantsCMBento ? (parseInt(document.getElementById('cm_bento_count')?.value)||0) : 0;
 
   const submission = {
     submittedAt: new Date().toISOString(),
     firstName: fn, lastName: ln, email, phone, familyUnit: family, generation: gen,
-    ev1_BeefStew_attending: eventsData.ev1.attending, ev1_count: eventsData.ev1.count, ev1_cost: eventsData.ev1.cost,
+    ev1_BeefStew_attending: eventsData.ev1.attending,
+    ev1_adults: document.getElementById('ev1_adults')?.value||0,
+    ev1_children: document.getElementById('ev1_children')?.value||0,
+    ev1_cost: eventsData.ev1.cost,
     ev2_Golf_attending: eventsData.ev2.attending, ev2_count: eventsData.ev2.count, ev2_cost: eventsData.ev2.cost,
-    ev3_MiniGolf_attending: eventsData.ev3.attending, ev3_count: eventsData.ev3.count, ev3_cost: eventsData.ev3.cost,
+    ev3_MiniGolf_attending: eventsData.ev3.attending,
+    ev3_adults: document.getElementById('ev3_adults')?.value||0,
+    ev3_children: document.getElementById('ev3_children')?.value||0,
+    ev3_cost: eventsData.ev3.cost,
     ev4_ChungMung_attending: eventsData.ev4.attending, ev4_count: eventsData.ev4.count,
-    ev5_Hike_attending: eventsData.ev5.attending, ev5_count: eventsData.ev5.count,
+    ev4_bento_ordered: wantsCMBento, ev4_bento_count: cmBentoCount, ev4_cost: eventsData.ev4.cost,
+    ev5_Hike_attending: eventsData.ev5.attending, ev5_count: eventsData.ev5.count, ev5_cost: eventsData.ev5.cost,
     ev6_Banquet_attending: eventsData.ev6.attending, ev6_banquet_type: banquetType,
-    ev6_banquet_ind_count: document.getElementById('banquet_ind_count').value,
-    ev6_banquet_tables: document.getElementById('banquet_tbl_count').value,
-    ev6_banquet_table_name: banquetTableName, ev6_cost: eventsData.ev6.cost,
-    ev7_BeachDay_attending: eventsData.ev7.attending, ev7_count: eventsData.ev7.count, ev7_cost: eventsData.ev7.cost,
+    ev6_banquet_ind_adults: document.getElementById('banquet_ind_adults')?.value||0,
+    ev6_banquet_ind_children: document.getElementById('banquet_ind_children')?.value||0,
+    ev6_banquet_ind_names: banquetIndNames,
+    ev6_banquet_tables: document.getElementById('banquet_tbl_count')?.value||0,
+    ev6_banquet_table_data: banquetTableData, ev6_cost: eventsData.ev6.cost,
+    ev7_BeachDay_attending: eventsData.ev7.attending, ev7_count: eventsData.ev7.count,
+    ev7_bento_ordered: wantsBento, ev7_bento_count: bentoCount, ev7_cost: eventsData.ev7.cost,
     yah_interested: yahInterested,
     yah_contact_name: document.getElementById('yah_name').value.trim(),
     yah_phone: document.getElementById('yah_phone').value.trim(),
     yah_email: document.getElementById('yah_email').value.trim(),
     yah_count: document.getElementById('yah_count').value,
     ev8_MagicShow_attending: eventsData.ev8.attending, ev8_count: eventsData.ev8.count, ev8_cost: eventsData.ev8.cost,
-    ev9_Luau_attending: eventsData.ev9.attending, ev9_count: eventsData.ev9.count, ev9_cost: eventsData.ev9.cost,
-    total_estimated: total, notes
+    ev9_Luau_attending: eventsData.ev9.attending,
+    ev9_adults: document.getElementById('ev9_adults')?.value||0,
+    ev9_children: document.getElementById('ev9_children')?.value||0,
+    ev9_cost: eventsData.ev9.cost,
+    total_estimated: Math.round(total * 100) / 100, notes
   };
   currentSubmission = submission;
 
@@ -1431,46 +1641,46 @@ function printRegistration() {
   const s = currentSubmission;
 
   const evLines = [
-    { label: 'Beef Stew Night (Tue Jul 21)', attending: s.ev1_BeefStew_attending, count: s.ev1_count, cost: s.ev1_cost },
+    { label: 'Beef Stew Night (Tue Jul 21)', attending: s.ev1_BeefStew_attending, count: `${s.ev1_adults} adult(s), ${s.ev1_children} child(ren)`, cost: s.ev1_cost },
     { label: '18-Hole Golf (Wed Jul 22)', attending: s.ev2_Golf_attending, count: s.ev2_count, cost: s.ev2_cost },
-    { label: 'Mini Golf (Wed Jul 22)', attending: s.ev3_MiniGolf_attending, count: s.ev3_count, cost: s.ev3_cost },
-    { label: 'Chung Mung (Wed Jul 22)', attending: s.ev4_ChungMung_attending, count: s.ev4_count, cost: 0 },
-    { label: 'The Hike (Thu Jul 23)', attending: s.ev5_Hike_attending, count: s.ev5_count, cost: 0 },
-    { label: 'Dinner Banquet (Thu Jul 23)', attending: s.ev6_Banquet_attending, count: s.ev6_banquet_type === 'table' ? `${s.ev6_banquet_tables} table(s)` : `${s.ev6_banquet_ind_count} ticket(s)`, cost: s.ev6_cost },
-    { label: 'Beach Day (Fri Jul 24)', attending: s.ev7_BeachDay_attending, count: s.ev7_count, cost: s.ev7_cost },
+    { label: 'Mini Golf (Wed Jul 22)', attending: s.ev3_MiniGolf_attending, count: `${s.ev3_adults} adult(s), ${s.ev3_children} child(ren)`, cost: s.ev3_cost },
+    { label: `Chung Mung (Wed Jul 22)${s.ev4_bento_ordered ? ` + ${s.ev4_bento_count} bento(s)` : ''}`, attending: s.ev4_ChungMung_attending, count: s.ev4_count, cost: s.ev4_cost },
+    { label: 'The Hike (Thu Jul 23)', attending: s.ev5_Hike_attending, count: s.ev5_count, cost: s.ev5_cost },
+    { label: 'Dinner Banquet (Thu Jul 23)', attending: s.ev6_Banquet_attending, count: s.ev6_banquet_type === 'table' ? `${s.ev6_banquet_tables} table(s)` : `${s.ev6_banquet_ind_adults} adult(s), ${s.ev6_banquet_ind_children} child(ren)`, cost: s.ev6_cost },
+    { label: `Beach Day (Fri Jul 24)${s.ev7_bento_ordered ? ` + ${s.ev7_bento_count} bento(s)` : ''}`, attending: s.ev7_BeachDay_attending, count: s.ev7_count, cost: s.ev7_cost },
     { label: 'Magic Show (Sat Jul 25)', attending: s.ev8_MagicShow_attending, count: s.ev8_count, cost: s.ev8_cost },
-    { label: 'Luau (Sun Jul 26)', attending: s.ev9_Luau_attending, count: s.ev9_count, cost: s.ev9_cost },
+    { label: 'Luau (Sun Jul 26)', attending: s.ev9_Luau_attending, count: `${s.ev9_adults} adult(s), ${s.ev9_children} child(ren)`, cost: s.ev9_cost },
   ].filter(e => e.attending);
 
   const evRows = evLines.map(e =>
-    `<tr><td>${e.label}</td><td style="text-align:center">${e.count}</td><td style="text-align:right">${e.cost > 0 ? '$' + e.cost.toLocaleString() : 'Free'}</td></tr>`
+    `<tr><td>${e.label}</td><td style="text-align:center">${e.count}</td><td style="text-align:right">${e.cost > 0 ? '$' + Number(e.cost).toLocaleString('en-US', {minimumFractionDigits:2,maximumFractionDigits:2}) : 'Free'}</td></tr>`
   ).join('') || '<tr><td colspan="3" style="color:#888;font-style:italic">No events selected.</td></tr>';
 
   const yahBlock = s.yah_interested ? `
-    <h3 style="color:#0f5a50;margin:20px 0 8px">✨ Young at Heart Night Interest</h3>
+    <h3 style="color:#2c4a7c;margin:20px 0 8px">✨ Young at Heart Night Interest</h3>
     <table><tr><td>Contact Name</td><td>${s.yah_contact_name||'—'}</td></tr>
     <tr><td>Phone</td><td>${s.yah_phone||'—'}</td></tr>
     <tr><td>Email</td><td>${s.yah_email||'—'}</td></tr>
     <tr><td>Est. Attendees</td><td>${s.yah_count}</td></tr></table>` : '';
 
-  const notesBlock = s.notes ? `<h3 style="color:#0f5a50;margin:20px 0 8px">📝 Notes</h3><p style="color:#555">${s.notes}</p>` : '';
+  const notesBlock = s.notes ? `<h3 style="color:#2c4a7c;margin:20px 0 8px">📝 Notes</h3><p style="color:#555">${s.notes}</p>` : '';
 
   const html = `<!DOCTYPE html><html><head><meta charset="UTF-8">
   <title>YQC 2026 Registration – ${s.firstName} ${s.lastName}</title>
   <style>
     body { font-family: Georgia, serif; max-width: 680px; margin: 40px auto; color: #2a2a2a; font-size: 14px; }
-    h1 { color: #0f5a50; font-size: 22px; margin-bottom: 2px; }
+    h1 { color: #2c4a7c; font-size: 22px; margin-bottom: 2px; }
     .subtitle { color: #888; font-size: 13px; margin-bottom: 24px; }
-    h3 { color: #0f5a50; margin: 20px 0 8px; font-size: 15px; }
+    h3 { color: #2c4a7c; margin: 20px 0 8px; font-size: 15px; }
     table { width: 100%; border-collapse: collapse; margin-bottom: 8px; }
     td { padding: 7px 10px; border-bottom: 1px solid #eee; font-size: 13px; }
     td:first-child { color: #555; width: 55%; }
-    .events-table th { background: #0f5a50; color: white; padding: 8px 10px; text-align: left; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; }
+    .events-table th { background: #2c4a7c; color: white; padding: 8px 10px; text-align: left; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; }
     .events-table td { vertical-align: middle; }
-    .total-row { background: #f7f2ea; font-weight: bold; font-size: 15px; }
-    .total-row td { border-top: 2px solid #0f5a50; padding: 10px; }
-    .payment-box { background: #f7f2ea; border-left: 4px solid #c9922a; padding: 14px 16px; margin-top: 24px; border-radius: 4px; font-size: 13px; line-height: 1.7; }
-    .deadline { background: #d45f3c; color: white; padding: 10px 14px; border-radius: 4px; margin-top: 14px; font-weight: bold; text-align: center; font-size: 13px; }
+    .total-row { background: #f0eeeb; font-weight: bold; font-size: 15px; }
+    .total-row td { border-top: 2px solid #2c4a7c; padding: 10px; }
+    .payment-box { background: #f0eeeb; border-left: 4px solid #b07d2e; padding: 14px 16px; margin-top: 24px; border-radius: 4px; font-size: 13px; line-height: 1.7; }
+    .deadline { background: #c0392b; color: white; padding: 10px 14px; border-radius: 4px; margin-top: 14px; font-weight: bold; text-align: center; font-size: 13px; }
     .footer { color: #aaa; font-size: 11px; text-align: center; margin-top: 32px; border-top: 1px solid #eee; padding-top: 12px; }
     @media print { body { margin: 20px; } }
   </style></head><body>
@@ -1488,9 +1698,9 @@ function printRegistration() {
 
   <h3>🌺 Events Selected</h3>
   <table class="events-table">
-    <thead><tr><th>Event</th><th style="text-align:center">People / Units</th><th style="text-align:right">Cost</th></tr></thead>
+    <thead><tr><th>Event</th><th style="text-align:center">Attendees</th><th style="text-align:right">Cost</th></tr></thead>
     <tbody>${evRows}</tbody>
-    <tfoot><tr class="total-row"><td colspan="2">Estimated Total Due</td><td style="text-align:right">$${s.total_estimated.toLocaleString()}</td></tr></tfoot>
+    <tfoot><tr class="total-row"><td colspan="2">Estimated Total Due</td><td style="text-align:right">$${Number(s.total_estimated).toLocaleString('en-US', {minimumFractionDigits:2,maximumFractionDigits:2})}</td></tr></tfoot>
   </table>
 
   ${yahBlock}
@@ -1521,8 +1731,20 @@ function resetForm() {
   document.getElementById('familyUnit').value='';
   document.getElementById('generation').value='';
   document.getElementById('notes').value='';
-  document.getElementById('yah_yes').checked=false;
+  // Reset YAH
+  const yahNo = document.getElementById('yah_no');
+  if (yahNo) yahNo.checked = true;
   document.getElementById('yah_contact_section').classList.add('hidden');
+  // Reset beach bento
+  const bentoNo = document.getElementById('bento_no');
+  if (bentoNo) bentoNo.checked = true;
+  document.getElementById('bento_details').classList.add('hidden');
+  // Reset Chung Mung bento
+  const cmBentoNo = document.getElementById('cm_bento_no');
+  if (cmBentoNo) cmBentoNo.checked = true;
+  const cmBentoDetails = document.getElementById('cm_bento_details');
+  if (cmBentoDetails) cmBentoDetails.classList.add('hidden');
+  // Reset events
   ['ev1','ev2','ev3','ev4','ev5','ev6','ev7','ev8','ev9'].forEach(id => {
     const noRadio = document.getElementById(id+'_no');
     if (noRadio) noRadio.checked = true;
@@ -1530,8 +1752,18 @@ function resetForm() {
     if (details) details.classList.add('hidden');
   });
   document.getElementById('banquet_individual').checked = true;
+  document.getElementById('banquet_ind_names').innerHTML = '';
+  document.getElementById('banquet_tbl_names').innerHTML = '';
   toggleBanquetType();
-  ['ev1_count','ev2_count','ev3_count','ev4_count','ev5_count','ev7_count','ev8_count','ev9_count','banquet_ind_count','banquet_tbl_count','yah_count'].forEach(id => {
+  // Reset adult/child counters
+  ['ev1_adults','ev3_adults','ev9_adults','banquet_ind_adults'].forEach(id => {
+    const el = document.getElementById(id); if(el) el.value=1;
+  });
+  ['ev1_children','ev3_children','ev9_children','banquet_ind_children'].forEach(id => {
+    const el = document.getElementById(id); if(el) el.value=0;
+  });
+  // Reset standard counters
+  ['ev2_count','ev4_count','ev5_count','ev7_count','ev8_count','banquet_tbl_count','yah_count','bento_count','cm_bento_count'].forEach(id => {
     const el = document.getElementById(id); if(el) el.value=1;
   });
   updateCosts();
