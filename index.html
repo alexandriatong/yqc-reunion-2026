@@ -718,7 +718,7 @@
               <div class="hidden" id="ev1_details">
                 <div class="field-row">
                   <div class="field-group">
-                    <label>3rd Gen. Uncle/Aunty or Spouse ($0)</label>
+                    <label>3rd Gen. Uncle/Aunty and/or Spouse ($0)</label>
                     <div class="stepper">
                       <button onclick="changeQty('ev1_3rdgen',-1, function(){ update3rdGenNames('ev1_3rdgen','ev1_3rdgen_names'); })">−</button>
                       <input type="number" id="ev1_3rdgen" class="qty-input" value="0" min="0" max="50" oninput="updateCosts(); update3rdGenNames('ev1_3rdgen','ev1_3rdgen_names');">
@@ -1066,10 +1066,10 @@
 
                   <!-- Individual -->
                   <div class="banquet-subcard" id="banquet_individual_section">
-                    <h4>🪑 Individual Tickets — $38.88 adult / $25 child age 4-10 / $0 for 3rd Gen. Uncle/Aunty or Spouse</h4>
+                    <h4>🪑 Individual Tickets — $38.88 adult / $25 child age 4-10 / $0 for 3rd Gen. Uncle/Aunty and/or Spouse</h4>
                     <div class="field-row">
                       <div class="field-group">
-                        <label>3rd Gen. Uncle/Aunty or Spouse ($0)</label>
+                        <label>3rd Gen. Uncle/Aunty and/or Spouse ($0)</label>
                         <div class="stepper">
                           <button onclick="changeQty('banquet_ind_3rdgen',-1, updateBanquetNames)">−</button>
                           <input type="number" id="banquet_ind_3rdgen" class="qty-input" value="0" min="0" max="50" oninput="updateCosts(); updateBanquetNames();">
@@ -1204,8 +1204,9 @@
                 </div>
                 <div style="height:12px"></div>
                 <div class="field-group">
-                  <label>Email Address</label>
+                  <label>Email Address <span class="req">*</span></label>
                   <input type="email" id="yah_email" placeholder="you@example.com">
+                  <span class="error-msg" id="err-yah-email">Please enter an email address.</span>
                 </div>
                 <div style="height:12px"></div>
                 <div class="field-group">
@@ -1277,7 +1278,7 @@
               <div class="hidden" id="ev9_details">
                 <div class="field-row">
                   <div class="field-group">
-                    <label>3rd Gen. Uncle/Aunty or Spouse ($0)</label>
+                    <label>3rd Gen. Uncle/Aunty and/or Spouse ($0)</label>
                     <div class="stepper">
                       <button onclick="changeQty('ev9_3rdgen',-1, function(){ update3rdGenNames('ev9_3rdgen','ev9_3rdgen_names'); })">−</button>
                       <input type="number" id="ev9_3rdgen" class="qty-input" value="0" min="0" max="50" oninput="updateCosts(); update3rdGenNames('ev9_3rdgen','ev9_3rdgen_names');">
@@ -1528,6 +1529,7 @@ function validatePage2() {
   if (yahInterested) {
     req('yah_name', 'err-yah-name', 'Please enter your name.');
     req('yah_phone', 'err-yah-phone', 'Please enter a phone number.');
+    req('yah_email', 'err-yah-email', 'Please enter an email address.');
   }
 
   // Mahjong contact fields (only if interested)
@@ -1589,8 +1591,13 @@ function update3rdGenNames(countId, containerId) {
 function toggleEvent(evId) {
   const attending = document.querySelector(`input[name="${evId}_attend"]:checked`)?.value === 'yes';
   const details = document.getElementById(evId + '_details');
-  if (attending) details.classList.remove('hidden');
-  else details.classList.add('hidden');
+  if (attending) {
+    details.classList.remove('hidden');
+    // Golf: always show name fields immediately when attending selected
+    if (evId === 'ev2') updateGolfNames();
+  } else {
+    details.classList.add('hidden');
+  }
   updateCosts();
 }
 
