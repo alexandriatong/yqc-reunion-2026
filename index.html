@@ -1394,7 +1394,7 @@ function updateBanquetNames() {
     for (let i = 1; i <= total; i++) {
       const div = document.createElement('div');
       div.className = 'field-group';
-      div.innerHTML = `<label>Guest ${i} Full Name <span class="req">*</span></label><input type="text" id="banquet_ind_name_${i}" placeholder="e.g. Lei Ching" value="${existingVals[i] || ''}">`;
+      div.innerHTML = `<label>Guest ${i} Full Name <span class="req">*</span></label><input type="text" id="banquet_ind_name_${i}" value="${existingVals[i] || ''}">`;
       container.appendChild(div);
     }
   } else {
@@ -1417,9 +1417,9 @@ function updateBanquetNames() {
       const section = document.createElement('div');
       section.style.cssText = 'border-top:1px dashed var(--border);padding-top:14px;';
       let html = `<div style="font-family:'Playfair Display',serif;font-size:0.95rem;color:var(--teal-dark);margin-bottom:10px;font-weight:700">Table ${t}</div>`;
-      html += `<div class="field-group" style="margin-bottom:10px"><label>Table Name / Family Group <span class="req">*</span></label><input type="text" id="banquet_tbl_label_${t}" placeholder="e.g. Uncle Roy's Table" value="${existingLabels[t] || ''}"></div>`;
+      html += `<div class="field-group" style="margin-bottom:10px"><label>Table Name / Family Group <span class="req">*</span></label><input type="text" id="banquet_tbl_label_${t}" value="${existingLabels[t] || ''}"></div>`;
       for (let g = 1; g <= 10; g++) {
-        html += `<div class="field-group" style="margin-bottom:8px"><label>Seat ${g} — Full Name</label><input type="text" id="banquet_tbl_${t}_name_${g}" placeholder="Full name (or leave blank if empty seat)" value="${(existingSeats[t] && existingSeats[t][g]) || ''}"></div>`;
+        html += `<div class="field-group" style="margin-bottom:8px"><label>Seat ${g} — Full Name</label><input type="text" id="banquet_tbl_${t}_name_${g}" value="${(existingSeats[t] && existingSeats[t][g]) || ''}"></div>`;
       }
       section.innerHTML = html;
       container.appendChild(section);
