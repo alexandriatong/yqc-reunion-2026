@@ -219,17 +219,17 @@
   .event-day-badge .day { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 1px; opacity: 0.85; font-weight: 700; }
   .event-day-badge .date { font-size: 1.1rem; font-weight: 900; font-family: 'Playfair Display', serif; }
   .event-title-block { flex: 1; min-width: 0; }
-  .event-title { font-family: 'Playfair Display', serif; font-size: 1.25rem; font-weight: 700; color: var(--teal-dark); }
-  .event-meta { font-size: 0.92rem; color: var(--muted); margin-top: 3px; font-weight: 600; line-height: 1.5; }
+  .event-title { font-family: 'Playfair Display', serif; font-size: 1.15rem; font-weight: 700; color: var(--teal-dark); }
+  .event-meta { font-size: 0.88rem; color: var(--muted); margin-top: 3px; font-weight: 600; line-height: 1.5; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .event-meta .meta-sep { margin: 0 4px; opacity: 0.5; }
   .event-meta .meta-time,
-  .event-meta .meta-loc { display: inline; }
+  .event-meta .meta-loc { display: inline; white-space: nowrap; }
   @media (max-width: 480px) {
-    .event-title { font-size: 1.1rem; }
-    .event-meta { font-size: 0.82rem; }
+    .event-title { font-size: 1.05rem; }
+    .event-meta { font-size: 0.82rem; white-space: normal; overflow: visible; text-overflow: unset; }
     .event-meta .meta-sep { display: none; }
     .event-meta .meta-time,
-    .event-meta .meta-loc { display: block; }
+    .event-meta .meta-loc { display: block; white-space: normal; }
   }
   .event-price-tag {
     background: var(--gold-light);
@@ -969,7 +969,7 @@
             <div class="event-day-badge"><div class="day">Wednesday</div><div class="date">Jul 22</div></div>
             <div class="event-title-block">
               <div class="event-title">Traditional Chung Mung Experience</div>
-              <div class="event-meta"><span class="meta-time">🕛 12pm</span><span class="meta-sep"> | </span><span class="meta-loc">📍 Hawaiian Memorial Park Cemetery</span></div>
+              <div class="event-meta"><span class="meta-time">🕛 12pm</span><span class="meta-sep"> | </span><span class="meta-loc">📍 Hawaiian Memorial Park</span></div>
             </div>
             <div class="event-price-tag">Free + optional bento</div>
           </div>
@@ -1121,7 +1121,7 @@
             <div class="event-day-badge"><div class="day">Thursday</div><div class="date">Jul 23</div></div>
             <div class="event-title-block">
               <div class="event-title">Step by Step – The Hike</div>
-              <div class="event-meta"><span class="meta-time">🕘 9am</span><span class="meta-sep"> | </span><span class="meta-loc">📍 Makapu'u Point Lighthouse Trail</span></div>
+              <div class="event-meta"><span class="meta-time">🕘 9am</span><span class="meta-sep"> | </span><span class="meta-loc">📍 Makapu'u Lighthouse Trail</span></div>
             </div>
             <div class="event-price-tag">$5/person</div>
           </div>
@@ -1154,7 +1154,7 @@
             <div class="event-day-badge" style="background:var(--teal-dark)"><div class="day">Thursday</div><div class="date">Jul 23</div></div>
             <div class="event-title-block">
               <div class="event-title">Our Biennial Dinner Banquet ⭐</div>
-              <div class="event-meta"><span class="meta-time">🕔 5pm</span><span class="meta-sep"> | </span><span class="meta-loc">📍 Jade Dynasty Restaurant, Ala Moana Center</span></div>
+              <div class="event-meta"><span class="meta-time">🕔 5pm</span><span class="meta-sep"> | </span><span class="meta-loc">📍 Jade Dynasty, Ala Moana</span></div>
             </div>
             <div class="event-price-tag" style="background:var(--teal);color:white">Several options available</div>
           </div>
@@ -1235,7 +1235,7 @@
             <div class="event-day-badge"><div class="day">Friday</div><div class="date">Jul 24</div></div>
             <div class="event-title-block">
               <div class="event-title">Sun, Sand & Smiles</div>
-              <div class="event-meta"><span class="meta-time">🕙 10am till your heart's desire</span><span class="meta-sep"> | </span><span class="meta-loc">📍 Ala Moana Beach Park</span></div>
+              <div class="event-meta"><span class="meta-time">🕙 10am onwards</span><span class="meta-sep"> | </span><span class="meta-loc">📍 Ala Moana Beach Park</span></div>
             </div>
             <div class="event-price-tag">Free + optional bento</div>
           </div>
@@ -1288,7 +1288,7 @@
             <div class="event-day-badge" style="background:var(--gold)"><div class="day">Friday</div><div class="date">Jul 24</div></div>
             <div class="event-title-block">
               <div class="event-title">✨ Young at Heart Night (Part 1)</div>
-              <div class="event-meta"><span class="meta-loc">📍 Location & details TBA</span><span class="meta-sep"> | </span><span class="meta-time">Gen 5 & 6 (Gen 4 welcome till 10pm!)</span></div>
+              <div class="event-meta"><span class="meta-loc">📍 Location TBA</span><span class="meta-sep"> | </span><span class="meta-time">Gen 5 & 6 (Gen 4 till 10pm)</span></div>
             </div>
             <div class="event-price-tag" style="background:var(--gold);color:white">Interest Only</div>
           </div>
@@ -1341,7 +1341,7 @@
             <div class="event-day-badge"><div class="day">Saturday</div><div class="date">Jul 25</div></div>
             <div class="event-title-block">
               <div class="event-title">Magic, It Must Be Magic</div>
-              <div class="event-meta"><span class="meta-time">🕦 11:30am</span><span class="meta-sep"> | </span><span class="meta-loc">📍 Hilton Waikiki Beach Resort</span><span class="meta-sep"> | </span><span class="meta-time">⚠️ 75 max</span></div>
+              <div class="event-meta"><span class="meta-time">🕦 11:30am</span><span class="meta-sep"> | </span><span class="meta-loc">📍 Hilton Waikiki Beach Resort</span></div>
             </div>
             <div class="event-price-tag">$35/person</div>
           </div>
@@ -1375,7 +1375,7 @@
             <div class="event-day-badge" style="background:var(--coral)"><div class="day">Sunday</div><div class="date">Jul 26</div></div>
             <div class="event-title-block">
               <div class="event-title">Ono Food, Much Aloha… Our Luau 🌅</div>
-              <div class="event-meta"><span class="meta-time">🕙 10am until the sun says "Aloha Po"</span><span class="meta-sep"> | </span><span class="meta-loc">📍 Kokololio/Kakela Beach Park, Hauula</span></div>
+              <div class="event-meta"><span class="meta-time">🕙 10am – sunset</span><span class="meta-sep"> | </span><span class="meta-loc">📍 Kakela Beach Park, Hauula</span></div>
             </div>
             <div class="event-price-tag">$33 adult / $15 child (4-10)</div>
           </div>
