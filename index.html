@@ -751,7 +751,7 @@
   <!-- PAGE 1: YOUR INFO -->
   <div class="form-page active" id="page-1">
     <div class="info-note" style="font-size:1rem;line-height:1.75;margin-bottom:24px;padding:18px 20px;border-radius:12px;">
-      🌺 <strong>Aloha family</strong> — we can't wait to see you in a few months! Please complete each step of this form to register for the reunion. If you have any questions, please reach out to <strong>Bryson Hoe</strong> (<a href="mailto:bhoe@me.com" style="color:var(--teal-dark)">bhoe@me.com</a>) or <strong>Alexandria Tong</strong> (<a href="mailto:alexandriatong@gmail.com" style="color:var(--teal-dark)">alexandriatong@gmail.com</a>).
+      🌺 <strong>Aloha family</strong> — we can't wait to see you in a few months! Please complete each step of this form to register for the reunion. If you have any questions, please reach out to <strong>Tyler Ching</strong> (<a href="mailto:tyler.ching@gmail.com" style="color:var(--teal-dark)">tyler.ching@gmail.com</a>) or <strong>Alexandria Tong</strong> (<a href="mailto:alexandriatong@gmail.com" style="color:var(--teal-dark)">alexandriatong@gmail.com</a>).
     </div>
     <div class="page-heading">
       <div class="eyebrow">Step 1 of 3</div>
@@ -825,7 +825,7 @@
               <div class="hidden" id="ev1_details">
                 <div class="field-row">
                   <div class="field-group">
-                    <label>3rd Gen. Uncle/Aunty and/or Spouse ($0)</label>
+                    <label>3rd Gen. Uncle/Aunty and/or Spouse ($0 each)</label>
                     <div class="stepper">
                       <button onclick="changeQty('ev1_3rdgen',-1, function(){ update3rdGenNames('ev1_3rdgen','ev1_3rdgen_names'); })">−</button>
                       <input type="number" id="ev1_3rdgen" class="qty-input" value="0" min="0" max="50" oninput="updateCosts(); update3rdGenNames('ev1_3rdgen','ev1_3rdgen_names');">
@@ -1180,7 +1180,7 @@
                     <h4>🪑 Individual Tickets — $38.88 adult / $25 child age 4-10 / $0 for 3rd Gen. Uncle/Aunty and/or Spouse</h4>
                     <div class="field-row">
                       <div class="field-group">
-                        <label>3rd Gen. Uncle/Aunty and/or Spouse ($0)</label>
+                        <label>3rd Gen. Uncle/Aunty and/or Spouse ($0 each)</label>
                         <div class="stepper">
                           <button onclick="changeQty('banquet_ind_3rdgen',-1, updateBanquetNames)">−</button>
                           <input type="number" id="banquet_ind_3rdgen" class="qty-input" value="0" min="0" max="50" oninput="updateCosts(); updateBanquetNames();">
@@ -1389,7 +1389,7 @@
               <div class="hidden" id="ev9_details">
                 <div class="field-row">
                   <div class="field-group">
-                    <label>3rd Gen. Uncle/Aunty and/or Spouse ($0)</label>
+                    <label>3rd Gen. Uncle/Aunty and/or Spouse ($0 each)</label>
                     <div class="stepper">
                       <button onclick="changeQty('ev9_3rdgen',-1, function(){ update3rdGenNames('ev9_3rdgen','ev9_3rdgen_names'); })">−</button>
                       <input type="number" id="ev9_3rdgen" class="qty-input" value="0" min="0" max="50" oninput="updateCosts(); update3rdGenNames('ev9_3rdgen','ev9_3rdgen_names');">
@@ -1528,6 +1528,10 @@
       </div>
     </div>
 
+    <div class="info-note" style="margin-bottom:24px">
+      If you have any questions, please reach out to <strong>Bryson Hoe</strong> (<a href="mailto:bhoe@me.com" style="color:var(--teal-dark)">bhoe@me.com</a>) or <strong>Alexandria Tong</strong> (<a href="mailto:alexandriatong@gmail.com" style="color:var(--teal-dark)">alexandriatong@gmail.com</a>).
+    </div>
+
     <div class="btn-row">
       <button class="btn btn-secondary" onclick="goToPage(2)">← Back</button>
       <button class="btn btn-gold" onclick="submitForm()">Submit Registration 🌺</button>
@@ -1592,6 +1596,13 @@ function goToPage(n) {
 }
 
 // ===================== VALIDATION =====================
+function isValidPhone(val) {
+  // Accepts 10-digit US numbers in common formats:
+  // (808) 555-0100 | 808-555-0100 | 808.555.0100 | 8085550100 | +18085550100
+  const stripped = val.replace(/[\s\-().+]/g, '');
+  return /^1?\d{10}$/.test(stripped);
+}
+
 function validatePage1() {
   let ok = true;
   const fn = document.getElementById('firstName').value.trim();
@@ -1600,9 +1611,14 @@ function validatePage1() {
   const em = document.getElementById('email').value.trim();
   setError('firstName', !fn, 'err-firstName');
   setError('lastName', !ln, 'err-lastName');
-  setError('phone', !ph, 'err-phone');
+  const phoneInvalid = !ph || !isValidPhone(ph);
+  setError('phone', phoneInvalid, 'err-phone');
+  if (phoneInvalid) {
+    const errEl = document.getElementById('err-phone');
+    if (errEl) errEl.textContent = !ph ? 'Please enter your phone number.' : 'Please enter a valid phone number (e.g. 808-555-0100).';
+  }
   setError('email', !em || !em.includes('@'), 'err-email');
-  if (!fn || !ln || !ph || !em || !em.includes('@')) ok = false;
+  if (!fn || !ln || phoneInvalid || !em || !em.includes('@')) ok = false;
   return ok;
 }
 function setError(fieldId, hasError, errId) {
@@ -1617,17 +1633,36 @@ function validatePage2() {
   let ok = true;
   let firstError = null;
 
-  // Helper: validate a visible text/email/tel field
+  // Helper: validate a visible required text/email field
   function req(id, errId, msg) {
     const el = document.getElementById(id);
     const errEl = document.getElementById(errId);
     if (!el || !errEl) return;
-    // Only validate if the field is visible (not inside a hidden ancestor)
     const visible = el.offsetParent !== null;
     if (!visible) { errEl.classList.remove('show'); el.classList.remove('has-error'); return; }
     const val = el.value.trim();
     if (!val) {
+      el.classList.add('has-error'); errEl.classList.add('show'); errEl.textContent = msg;
+      if (!firstError) firstError = el;
+      ok = false;
+    } else {
+      el.classList.remove('has-error'); errEl.classList.remove('show');
+    }
+  }
+
+  // Helper: validate a visible phone field
+  function reqPhone(id, errId) {
+    const el = document.getElementById(id);
+    const errEl = document.getElementById(errId);
+    if (!el || !errEl) return;
+    const visible = el.offsetParent !== null;
+    if (!visible) { errEl.classList.remove('show'); el.classList.remove('has-error'); return; }
+    const val = el.value.trim();
+    const empty = !val;
+    const invalid = val && !isValidPhone(val);
+    if (empty || invalid) {
       el.classList.add('has-error'); errEl.classList.add('show');
+      errEl.textContent = empty ? 'Please enter a phone number.' : 'Please enter a valid phone number (e.g. 808-555-0100).';
       if (!firstError) firstError = el;
       ok = false;
     } else {
@@ -1639,14 +1674,14 @@ function validatePage2() {
   const yahInterested = document.querySelector('input[name="yah_attend"]:checked')?.value === 'yes';
   if (yahInterested) {
     req('yah_name', 'err-yah-name', 'Please enter your name.');
-    req('yah_phone', 'err-yah-phone', 'Please enter a phone number.');
+    reqPhone('yah_phone', 'err-yah-phone');
     req('yah_email', 'err-yah-email', 'Please enter an email address.');
   }
 
   // Mahjong contact fields (only if interested)
   const mahjongInterested = document.querySelector('input[name="mahjong_interest"]:checked')?.value === 'yes';
   if (mahjongInterested) {
-    req('mahjong_phone', 'err-mahjong-phone', 'Please enter a phone number.');
+    reqPhone('mahjong_phone', 'err-mahjong-phone');
     req('mahjong_email', 'err-mahjong-email', 'Please enter an email address.');
   }
 
