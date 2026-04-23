@@ -972,7 +972,7 @@
             <div class="event-price-tag">Free + optional bento</div>
           </div>
           <div class="event-body">
-            <div class="event-desc">Held in the month of April annually, Chung Mung is our opportunity to honor and pay respects to Kung Kung and Popo and other family members who have passed. Since many of us have never experienced this event and its culture, we will be recreating Chung Mung for those who wish to enjoy this meaningful tradition.</div>
+            <div class="event-desc">Held in the month of April annually, Chung Mung is our opportunity to honor and pay respects to Kung Kung and Popo and other family members who have passed. Since many of us have never experienced this event and its culture, we will be re-creating Chung Mung for those who wish to enjoy this meaningful tradition.</div>
             <div class="event-inputs">
               <div class="attending-toggle">
                 <div class="radio-group">
@@ -1119,12 +1119,12 @@
             <div class="event-day-badge"><div class="day">Thursday</div><div class="date">Jul 23</div></div>
             <div class="event-title-block">
               <div class="event-title">Step by Step – The Hike</div>
-              <div class="event-meta"><span class="meta-time">🕘 9am</span><span class="meta-sep"> | </span><span class="meta-loc">📍 Makapuu Point Lighthouse Trail</span></div>
+              <div class="event-meta"><span class="meta-time">🕘 9am</span><span class="meta-sep"> | </span><span class="meta-loc">📍 Makapu'u Point Lighthouse Trail</span></div>
             </div>
             <div class="event-price-tag">$5/person</div>
           </div>
           <div class="event-body">
-            <div class="event-desc">Get those shoes out! No, not your dancing shoes…yet! Your walkers, runners, hikers, those shoes! Join the Ching hiking party. You know you're going to be eating and eating this week so… MAKAPUU POINT LIGHTHOUSE TRAIL, 9am</div>
+            <div class="event-desc">Get those shoes out! No, not your dancing shoes…yet! Your walkers, runners, hikers, those shoes! Join the Ching hiking party. You know you're going to be eating and eating this week so…</div>
             <div class="event-inputs">
               <div class="attending-toggle">
                 <div class="radio-group">
@@ -1154,7 +1154,7 @@
               <div class="event-title">Our Biennial Dinner Banquet ⭐</div>
               <div class="event-meta"><span class="meta-time">🕔 5pm</span><span class="meta-sep"> | </span><span class="meta-loc">📍 Jade Dynasty Restaurant, Ala Moana Center</span></div>
             </div>
-            <div class="event-price-tag" style="background:var(--teal);color:white">See options</div>
+            <div class="event-price-tag" style="background:var(--teal);color:white">Several options available</div>
           </div>
           <div class="event-body">
             <div class="event-desc">This is our night to indulge in delicious Chinese food, try to talk over the happy Ching family chatter, and learn about additions to and accomplishments of our awesome family!</div>
@@ -1543,6 +1543,7 @@
     <div class="success-icon">🌺</div>
     <h2>Mahalo, <span id="success-name"></span>!</h2>
     <p style="margin-bottom:20px">Your registration has been recorded. Please send your payment to Tiffany Davis by <strong>June 24, 2026</strong> to confirm your spot.</p>
+    <p style="margin-bottom:20px;font-size:0.9rem;color:var(--muted)">📧 A confirmation email has been sent to <strong id="success-email"></strong> — please check your inbox.</p>
     <p style="margin-bottom:32px;font-size:0.9rem">💙 Venmo: @ZyiaGirl808 &nbsp;|&nbsp; 📬 Check: 233 Kawaihae St., Apt 115D, Honolulu, HI 96825<br>📧 tcd7455@gmail.com &nbsp;|&nbsp; 📞 541-760-9981</p>
     <div class="btn-row" style="justify-content:center">
       <button class="btn btn-download" onclick="printRegistration()">🖨️ Print / Save as PDF</button>
@@ -1559,8 +1560,8 @@ const EVENTS = [
   { id:'ev2', name:'18 Holes of Golf', day:'Wednesday, Jul 22', price:85, priceLabel:'$85/person', countId:'ev2_count', type:'per_person' },
   { id:'ev3', name:'Mini Golf', day:'Wednesday, Jul 22', type:'adult_child', adultPrice:13, childPrice:10, thirdGenId:null, adultId:'ev3_adults', childId:'ev3_children' },
   { id:'ev4', name:'Traditional Chung Mung', day:'Wednesday, Jul 22', price:0, priceLabel:'Free', countId:'ev4_count', type:'free' },
-  { id:'ev5', name:'The Hike – Makapuu', day:'Thursday, Jul 23', price:5, priceLabel:'$5/person', countId:'ev5_count', type:'per_person' },
-  { id:'ev6', name:'Biennial Dinner Banquet', day:'Thursday, Jul 23', price:null, priceLabel:'See options', countId:null, type:'banquet' },
+  { id:'ev5', name:'The Hike – Makapu\'u', day:'Thursday, Jul 23', price:5, priceLabel:'$5/person', countId:'ev5_count', type:'per_person' },
+  { id:'ev6', name:'Biennial Dinner Banquet', day:'Thursday, Jul 23', price:null, priceLabel:'Several options available', countId:null, type:'banquet' },
   { id:'ev7', name:'Sun, Sand & Smiles (Beach Day)', day:'Friday, Jul 24', price:0, priceLabel:'Free', countId:'ev7_count', type:'free' },
   { id:'ev8', name:'Magic Show – Magical Mystery Show', day:'Saturday, Jul 25', price:35, priceLabel:'$35/person', countId:'ev8_count', type:'per_person' },
   { id:'ev9', name:'Ono Food & Luau', day:'Sunday, Jul 26', type:'adult_child', adultPrice:33, childPrice:15, thirdGenId:'ev9_3rdgen', adultId:'ev9_adults', childId:'ev9_children' },
@@ -1992,7 +1993,7 @@ function buildReview() {
 
 // ===================== GOOGLE SHEETS CONFIG =====================
 // PASTE YOUR APPS SCRIPT WEB APP URL BELOW (replace the placeholder)
-const GOOGLE_SHEET_URL = 'https://script.google.com/macros/s/AKfycbzNSLKzTrjhINH6ISwlQM_6ykv2NG0MXfqYYlpXDCGoK2_2c7ELR1R1G5fUchaQYr0MKQ/exec';
+const GOOGLE_SHEET_URL = 'https://script.google.com/macros/s/AKfycbyHqJGuvdlqrVZr0EvgSv57E8isLu6El0CGWRJERZdBtNSkj3asaHrvTSVmk5WcZEHceQ/exec';
 
 // ===================== SUBMIT =====================
 function submitForm() {
@@ -2123,6 +2124,8 @@ function submitForm() {
   document.querySelectorAll('.form-page').forEach(p => p.classList.remove('active'));
   document.getElementById('success-page').classList.add('active');
   document.getElementById('success-name').textContent = fn;
+  const successEmail = document.getElementById('success-email');
+  if (successEmail) successEmail.textContent = email;
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
