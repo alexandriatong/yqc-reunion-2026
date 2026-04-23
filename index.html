@@ -222,10 +222,12 @@
   .event-title { font-family: 'Playfair Display', serif; font-size: 1.25rem; font-weight: 700; color: var(--teal-dark); }
   .event-meta { font-size: 0.92rem; color: var(--muted); margin-top: 3px; font-weight: 600; line-height: 1.5; }
   .event-meta .meta-sep { margin: 0 4px; opacity: 0.5; }
-  @media (max-width: 600px) {
+  .event-meta .meta-time,
+  .event-meta .meta-loc { display: inline; }
+  @media (max-width: 480px) {
     .event-title { font-size: 1.1rem; }
     .event-meta { font-size: 0.82rem; }
-    .event-meta .meta-sep { display: block; height: 0; overflow: hidden; margin: 2px 0; }
+    .event-meta .meta-sep { display: none; }
     .event-meta .meta-time,
     .event-meta .meta-loc { display: block; }
   }
@@ -1993,7 +1995,7 @@ function buildReview() {
 
 // ===================== GOOGLE SHEETS CONFIG =====================
 // PASTE YOUR APPS SCRIPT WEB APP URL BELOW (replace the placeholder)
-const GOOGLE_SHEET_URL = 'https://script.google.com/macros/s/AKfycbzqDumMuvFV_iTLNTTWr_tLImrlntbgwbZe6mOMv2mZu_eJbW2Ynbv3hkupdSkLh8rFag/exec';
+const GOOGLE_SHEET_URL = 'https://script.google.com/macros/s/AKfycbz79egAa5mT3nrBk1mu7wbHt5IuFVi5tRomtn5DEDZ6nkBUWdbHSyF0mA-eT-K2RHHzMQ/exec';
 
 // ===================== SUBMIT =====================
 function submitForm() {
