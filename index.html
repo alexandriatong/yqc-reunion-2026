@@ -971,7 +971,7 @@
               <div class="hidden" id="ev3_details">
                 <div class="field-row">
                   <div class="field-group">
-                    <label>Adults ($13 each) <span class="req">*</span></label>
+                    <label>Adults ($13 each)</label>
                     <div class="stepper">
                       <button onclick="changeQty('ev3_adults',-1)">−</button>
                       <input type="number" id="ev3_adults" class="qty-input" value="0" min="0" max="50" oninput="updateCosts()">
@@ -1013,7 +1013,7 @@
               </div>
               <div class="hidden" id="ev4_details">
                 <div class="field-group">
-                  <label>Number of People</label>
+                  <label>Number of People <span class="req">*</span></label>
                   <div class="stepper">
                     <button onclick="changeQty('ev4_count',-1)">−</button>
                     <input type="number" id="ev4_count" class="qty-input" value="0" min="1" max="50" oninput="updateCosts()">
@@ -1300,7 +1300,7 @@
                       <label>Number of Bentos <span class="req">*</span></label>
                       <div class="stepper">
                         <button onclick="changeQty('bento_count',-1)">−</button>
-                        <input type="number" id="bento_count" class="qty-input" value="0" min="1" max="50" oninput="updateCosts()">
+                        <input type="number" id="bento_count" class="qty-input" value="0" min="0" max="50" oninput="updateCosts()">
                         <button onclick="changeQty('bento_count',1)">+</button>
                       </div>
                     </div>
@@ -1738,6 +1738,68 @@ function validatePage2() {
       } else if (el) { el.classList.remove('has-error'); }
     }
   }
+
+  // ── Attendee count validation: any "Attending" event must have >= 1 person ──
+  function checkAttendeeCount(evId, getTotal, errorContainerId) {
+    const attending = document.querySelector(`input[name="${evId}_attend"]:checked`)?.value === 'yes';
+    if (!attending) return;
+    const total = getTotal();
+    const container = document.getElementById(errorContainerId);
+    // Remove any existing count error for this event
+    const existing = document.getElementById(`err-count-${evId}`);
+    if (existing) existing.remove();
+    if (total < 1) {
+      ok = false;
+      if (container) {
+        const errMsg = document.createElement('div');
+        errMsg.id = `err-count-${evId}`;
+        errMsg.style.cssText = 'color:#b03020;font-size:0.85rem;font-weight:700;margin-top:6px;';
+        errMsg.textContent = '⚠️ Please enter at least 1 attendee.';
+        container.appendChild(errMsg);
+        if (!firstError) firstError = errMsg;
+      }
+    }
+  }
+
+  // adult_child events: sum of 3rdgen + adults + children
+  checkAttendeeCount('ev1', () => {
+    return (parseInt(document.getElementById('ev1_3rdgen')?.value)||0) +
+           (parseInt(document.getElementById('ev1_adults')?.value)||0) +
+           (parseInt(document.getElementById('ev1_children')?.value)||0);
+  }, 'ev1_details');
+
+  checkAttendeeCount('ev3', () => {
+    return (parseInt(document.getElementById('ev3_adults')?.value)||0) +
+           (parseInt(document.getElementById('ev3_children')?.value)||0);
+  }, 'ev3_details');
+
+  checkAttendeeCount('ev9', () => {
+    return (parseInt(document.getElementById('ev9_3rdgen')?.value)||0) +
+           (parseInt(document.getElementById('ev9_adults')?.value)||0) +
+           (parseInt(document.getElementById('ev9_children')?.value)||0);
+  }, 'ev9_details');
+
+  // banquet: sum of all individual fields OR table count
+  checkAttendeeCount('ev6', () => {
+    const type = document.querySelector('input[name="banquet_type"]:checked')?.value || 'individual';
+    if (type === 'table') {
+      return parseInt(document.getElementById('banquet_tbl_count')?.value)||0;
+    }
+    return (parseInt(document.getElementById('banquet_ind_3rdgen')?.value)||0) +
+           (parseInt(document.getElementById('banquet_ind_adults')?.value)||0) +
+           (parseInt(document.getElementById('banquet_ind_children')?.value)||0);
+  }, 'ev6_details');
+
+  // per_person / free events: single count field
+  [
+    { evId: 'ev2', countId: 'ev2_count' },
+    { evId: 'ev4', countId: 'ev4_count' },
+    { evId: 'ev5', countId: 'ev5_count' },
+    { evId: 'ev7', countId: 'ev7_count' },
+    { evId: 'ev8', countId: 'ev8_count' },
+  ].forEach(({ evId, countId }) => {
+    checkAttendeeCount(evId, () => parseInt(document.getElementById(countId)?.value)||0, `${evId}_details`);
+  });
 
   if (!ok && firstError) {
     firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
