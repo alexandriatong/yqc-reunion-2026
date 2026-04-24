@@ -866,6 +866,7 @@
                       <div class="field-group">
                         <label>Contact Name <span class="req">*</span></label>
                         <input type="text" id="mahjong_name">
+                        <span class="error-msg" id="err-mahjong-name">Please enter a contact name.</span>
                       </div>
                       <div class="field-group">
                         <label>Phone / Text <span class="req">*</span></label>
@@ -895,6 +896,7 @@
                       <div class="field-group">
                         <label>Contact Name <span class="req">*</span></label>
                         <input type="text" id="poker_name">
+                        <span class="error-msg" id="err-poker-name">Please enter a contact name.</span>
                       </div>
                       <div class="field-group">
                         <label>Phone / Text <span class="req">*</span></label>
@@ -1713,6 +1715,7 @@ function validatePage2() {
   // Mahjong contact fields (only if interested)
   const mahjongInterested = document.querySelector('input[name="mahjong_interest"]:checked')?.value === 'yes';
   if (mahjongInterested) {
+    req('mahjong_name', 'err-mahjong-name', 'Please enter a contact name.');
     reqPhone('mahjong_phone', 'err-mahjong-phone');
     req('mahjong_email', 'err-mahjong-email', 'Please enter an email address.');
   }
@@ -1720,12 +1723,58 @@ function validatePage2() {
   // Poker contact fields (only if interested)
   const pokerInterested = document.querySelector('input[name="poker_interest"]:checked')?.value === 'yes';
   if (pokerInterested) {
+    req('poker_name', 'err-poker-name', 'Please enter a contact name.');
     reqPhone('poker_phone', 'err-poker-phone');
     req('poker_email', 'err-poker-email', 'Please enter an email address.');
   }
 
-  // Golf name fields
-  const golfAttending = document.querySelector('input[name="ev2_attend"]:checked')?.value === 'yes';
+  // Beach day bento: if "Yes, order bentos" selected, at least 1 bento required
+  const beachAttending = document.querySelector('input[name="ev7_attend"]:checked')?.value === 'yes';
+  const wantsBento = document.querySelector('input[name="bento_order"]:checked')?.value === 'yes';
+  if (beachAttending && wantsBento) {
+    const bentoCount = parseInt(document.getElementById('bento_count')?.value)||0;
+    const existing = document.getElementById('err-count-bento');
+    if (existing) existing.remove();
+    if (bentoCount < 1) {
+      ok = false;
+      const anchor = document.getElementById('bento_count');
+      if (anchor) {
+        const errMsg = document.createElement('div');
+        errMsg.id = 'err-count-bento';
+        errMsg.style.cssText = 'color:#b03020;font-size:0.85rem;font-weight:700;margin-top:8px;';
+        errMsg.textContent = '⚠️ Please enter at least 1 bento.';
+        anchor.closest('.stepper').insertAdjacentElement('afterend', errMsg);
+        if (!firstError) firstError = errMsg;
+      }
+    }
+  }
+
+  // Banquet table names (required when table mode is selected and attending)
+  const banquetAttending = document.querySelector('input[name="ev6_attend"]:checked')?.value === 'yes';
+  const banquetType = document.querySelector('input[name="banquet_type"]:checked')?.value;
+  if (banquetAttending && banquetType === 'table') {
+    const tblCount = parseInt(document.getElementById('banquet_tbl_count')?.value)||0;
+    for (let t = 1; t <= tblCount; t++) {
+      const el = document.getElementById(`banquet_tbl_label_${t}`);
+      if (el && !el.value.trim()) {
+        el.classList.add('has-error');
+        if (!firstError) firstError = el;
+        ok = false;
+        // Add inline error if not already there
+        if (!document.getElementById(`err-tbl-label-${t}`)) {
+          const errMsg = document.createElement('span');
+          errMsg.id = `err-tbl-label-${t}`;
+          errMsg.className = 'error-msg show';
+          errMsg.textContent = `Please enter a name for Table ${t}.`;
+          el.insertAdjacentElement('afterend', errMsg);
+        }
+      } else if (el) {
+        el.classList.remove('has-error');
+        const existing = document.getElementById(`err-tbl-label-${t}`);
+        if (existing) existing.remove();
+      }
+    }
+  }
   if (golfAttending) {
     const count = parseInt(document.getElementById('ev2_count')?.value)||1;
     for (let i = 1; i <= count; i++) {
@@ -1740,65 +1789,63 @@ function validatePage2() {
   }
 
   // ── Attendee count validation: any "Attending" event must have >= 1 person ──
-  function checkAttendeeCount(evId, getTotal, errorContainerId) {
+  function checkAttendeeCount(evId, getTotal, errorAnchorId, msg) {
     const attending = document.querySelector(`input[name="${evId}_attend"]:checked`)?.value === 'yes';
-    if (!attending) return;
-    const total = getTotal();
-    const container = document.getElementById(errorContainerId);
     // Remove any existing count error for this event
     const existing = document.getElementById(`err-count-${evId}`);
     if (existing) existing.remove();
+    if (!attending) return;
+    const total = getTotal();
     if (total < 1) {
       ok = false;
-      if (container) {
+      const anchor = document.getElementById(errorAnchorId);
+      if (anchor) {
         const errMsg = document.createElement('div');
         errMsg.id = `err-count-${evId}`;
-        errMsg.style.cssText = 'color:#b03020;font-size:0.85rem;font-weight:700;margin-top:6px;';
-        errMsg.textContent = '⚠️ Please enter at least 1 attendee.';
-        container.appendChild(errMsg);
+        errMsg.style.cssText = 'color:#b03020;font-size:0.85rem;font-weight:700;margin-top:8px;';
+        errMsg.textContent = msg;
+        anchor.insertAdjacentElement('afterend', errMsg);
         if (!firstError) firstError = errMsg;
       }
     }
   }
 
-  // adult_child events: sum of 3rdgen + adults + children
+  // adult_child events
   checkAttendeeCount('ev1', () => {
     return (parseInt(document.getElementById('ev1_3rdgen')?.value)||0) +
            (parseInt(document.getElementById('ev1_adults')?.value)||0) +
            (parseInt(document.getElementById('ev1_children')?.value)||0);
-  }, 'ev1_details');
+  }, 'ev1_3rdgen_names', '⚠️ Please select at least 1 attendee for Beef Stew Night.');
 
   checkAttendeeCount('ev3', () => {
     return (parseInt(document.getElementById('ev3_adults')?.value)||0) +
            (parseInt(document.getElementById('ev3_children')?.value)||0);
-  }, 'ev3_details');
+  }, 'ev3_details', '⚠️ Please select at least 1 attendee for Mini Golf.');
 
   checkAttendeeCount('ev9', () => {
     return (parseInt(document.getElementById('ev9_3rdgen')?.value)||0) +
            (parseInt(document.getElementById('ev9_adults')?.value)||0) +
            (parseInt(document.getElementById('ev9_children')?.value)||0);
-  }, 'ev9_details');
+  }, 'ev9_3rdgen_names', '⚠️ Please select at least 1 attendee for the Luau.');
 
-  // banquet: sum of all individual fields OR table count
+  // banquet
   checkAttendeeCount('ev6', () => {
     const type = document.querySelector('input[name="banquet_type"]:checked')?.value || 'individual';
-    if (type === 'table') {
-      return parseInt(document.getElementById('banquet_tbl_count')?.value)||0;
-    }
+    if (type === 'table') return parseInt(document.getElementById('banquet_tbl_count')?.value)||0;
     return (parseInt(document.getElementById('banquet_ind_3rdgen')?.value)||0) +
            (parseInt(document.getElementById('banquet_ind_adults')?.value)||0) +
            (parseInt(document.getElementById('banquet_ind_children')?.value)||0);
-  }, 'ev6_details');
+  }, 'banquet_ind_names', '⚠️ Please select at least 1 attendee for the Dinner Banquet.');
 
-  // per_person / free events: single count field
+  // per_person / free single-count events
   [
-    { evId: 'ev2', countId: 'ev2_count' },
-    { evId: 'ev4', countId: 'ev4_count' },
-    { evId: 'ev5', countId: 'ev5_count' },
-    { evId: 'ev7', countId: 'ev7_count' },
-    { evId: 'ev8', countId: 'ev8_count' },
-  ].forEach(({ evId, countId }) => {
-    checkAttendeeCount(evId, () => parseInt(document.getElementById(countId)?.value)||0, `${evId}_details`);
+    { evId: 'ev2', countId: 'ev2_count',  msg: '⚠️ Please enter the number of golfers.' },
+    { evId: 'ev4', countId: 'ev4_count',  msg: '⚠️ Please enter the number of attendees for Chung Mung.' },
+    { evId: 'ev5', countId: 'ev5_count',  msg: '⚠️ Please enter the number of hikers.' },
+    { evId: 'ev7', countId: 'ev7_count',  msg: '⚠️ Please enter the number of attendees for Beach Day.' },
+    { evId: 'ev8', countId: 'ev8_count',  msg: '⚠️ Please enter the number of attendees for the Magic Show.' },
+  ].forEach(({ evId, countId, msg }) => {
+    checkAttendeeCount(evId, () => parseInt(document.getElementById(countId)?.value)||0, countId, msg);
   });
 
   if (!ok && firstError) {
