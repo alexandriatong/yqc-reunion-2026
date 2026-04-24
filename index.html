@@ -1782,6 +1782,11 @@ function toggleBanquetType() {
   const type = document.querySelector('input[name="banquet_type"]:checked')?.value;
   document.getElementById('banquet_individual_section').classList.toggle('hidden', type !== 'individual');
   document.getElementById('banquet_table_section').classList.toggle('hidden', type !== 'table');
+  // Default table count to 1 when switching to table mode
+  if (type === 'table') {
+    const tblCount = document.getElementById('banquet_tbl_count');
+    if (tblCount && parseInt(tblCount.value) === 0) tblCount.value = 1;
+  }
   updateCosts();
   updateBanquetNames();
 }
