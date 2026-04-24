@@ -881,6 +881,35 @@
                     </div>
                   </div>
                 </div>
+                <div class="banquet-subcard" style="margin-top:12px">
+                  <h4>🃏 Poker Night Interest</h4>
+                  <div class="field-group" style="margin-bottom:10px">
+                    <label>Interested in joining Poker Night?</label>
+                    <div class="radio-group" style="margin-top:6px">
+                      <div class="radio-option"><input type="radio" name="poker_interest" id="poker_no" value="no" checked onchange="togglePoker()"><label for="poker_no"><span class="check-circle"></span> Not Interested</label></div>
+                      <div class="radio-option"><input type="radio" name="poker_interest" id="poker_yes" value="yes" onchange="togglePoker()"><label for="poker_yes"><span class="check-circle"></span> Yes, count me in!</label></div>
+                    </div>
+                  </div>
+                  <div class="hidden" id="poker_contact">
+                    <div class="field-row">
+                      <div class="field-group">
+                        <label>Contact Name <span class="req">*</span></label>
+                        <input type="text" id="poker_name">
+                      </div>
+                      <div class="field-group">
+                        <label>Phone / Text <span class="req">*</span></label>
+                        <input type="tel" id="poker_phone" placeholder="(808) 555-0100">
+                        <span class="error-msg" id="err-poker-phone">Please enter a phone number.</span>
+                      </div>
+                    </div>
+                    <div style="height:10px"></div>
+                    <div class="field-group">
+                      <label>Email Address <span class="req">*</span></label>
+                      <input type="email" id="poker_email" placeholder="you@example.com">
+                      <span class="error-msg" id="err-poker-email">Please enter an email address.</span>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -1508,7 +1537,7 @@
         <div class="payment-icon venmo">💙</div>
         <div class="payment-method-info">
           <div class="method-name">Venmo</div>
-          <div class="method-detail">@ZyiaGirl808</div>
+          <div class="method-detail">@ZyiaGirlT808</div>
         </div>
       </div>
       <div class="payment-method">
@@ -1546,7 +1575,7 @@
     <h2>Mahalo, <span id="success-name"></span>!</h2>
     <p style="margin-bottom:20px">Your registration has been recorded. Please send your payment to Tiffany Davis by <strong>June 24, 2026</strong> to confirm your spot.</p>
     <p style="margin-bottom:20px;font-size:0.9rem;color:var(--muted)">📧 A confirmation email has been sent to <strong id="success-email"></strong> — please check your inbox.</p>
-    <p style="margin-bottom:32px;font-size:0.9rem">💙 Venmo: @ZyiaGirl808 &nbsp;|&nbsp; 📬 Check: 233 Kawaihae St., Apt 115D, Honolulu, HI 96825<br>📧 tcd7455@gmail.com &nbsp;|&nbsp; 📞 541-760-9981</p>
+    <p style="margin-bottom:32px;font-size:0.9rem">💙 Venmo: @ZyiaGirlT808 &nbsp;|&nbsp; 📬 Check: 233 Kawaihae St., Apt 115D, Honolulu, HI 96825<br>📧 tcd7455@gmail.com &nbsp;|&nbsp; 📞 541-760-9981</p>
     <div class="btn-row" style="justify-content:center">
       <button class="btn btn-download" onclick="printRegistration()">🖨️ Print / Save as PDF</button>
       <button class="btn btn-primary" onclick="resetForm()">Register Another Person</button>
@@ -1688,6 +1717,13 @@ function validatePage2() {
     req('mahjong_email', 'err-mahjong-email', 'Please enter an email address.');
   }
 
+  // Poker contact fields (only if interested)
+  const pokerInterested = document.querySelector('input[name="poker_interest"]:checked')?.value === 'yes';
+  if (pokerInterested) {
+    reqPhone('poker_phone', 'err-poker-phone');
+    req('poker_email', 'err-poker-email', 'Please enter an email address.');
+  }
+
   // Golf name fields
   const golfAttending = document.querySelector('input[name="ev2_attend"]:checked')?.value === 'yes';
   if (golfAttending) {
@@ -1813,6 +1849,11 @@ function toggleCMBento() {
 function toggleMahjong() {
   const interested = document.querySelector('input[name="mahjong_interest"]:checked')?.value === 'yes';
   document.getElementById('mahjong_contact').classList.toggle('hidden', !interested);
+}
+
+function togglePoker() {
+  const interested = document.querySelector('input[name="poker_interest"]:checked')?.value === 'yes';
+  document.getElementById('poker_contact').classList.toggle('hidden', !interested);
 }
 
 function updateGolfNames() {
@@ -2030,7 +2071,7 @@ function buildReview() {
 
 // ===================== GOOGLE SHEETS CONFIG =====================
 // PASTE YOUR APPS SCRIPT WEB APP URL BELOW (replace the placeholder)
-const GOOGLE_SHEET_URL = 'https://script.google.com/macros/s/AKfycbwm_XhVaZuyAvY9kGBLJLNPzSMuJ2lHIE2H-I_DXSJTpzaUuuT8B-3v4jJ0kfp9HKdB/exec';
+const GOOGLE_SHEET_URL = 'https://script.google.com/macros/s/AKfycbxYXZ1jekkf5uMYLNXy0PSjkSdH2icYQzbEut_EfBtBTFAVtx0CdPk2s5hRJnmNZhMQiQ/exec';
 
 // ===================== SUBMIT =====================
 function submitForm() {
@@ -2100,6 +2141,10 @@ function submitForm() {
     ev1_mahjong_name: document.getElementById('mahjong_name')?.value.trim()||'',
     ev1_mahjong_phone: document.getElementById('mahjong_phone')?.value.trim()||'',
     ev1_mahjong_email: document.getElementById('mahjong_email')?.value.trim()||'',
+    ev1_poker_interested: document.querySelector('input[name="poker_interest"]:checked')?.value === 'yes',
+    ev1_poker_name: document.getElementById('poker_name')?.value.trim()||'',
+    ev1_poker_phone: document.getElementById('poker_phone')?.value.trim()||'',
+    ev1_poker_email: document.getElementById('poker_email')?.value.trim()||'',
     ev1_cost: eventsData.ev1.cost,
     ev2_Golf_attending: eventsData.ev2.attending, ev2_count: eventsData.ev2.count, ev2_cost: eventsData.ev2.cost,
     ev2_golf_names: (() => { const names = []; const c = parseInt(document.getElementById('ev2_count')?.value)||1; for(let i=1;i<=c;i++){const v=document.getElementById(`golf_name_${i}`)?.value.trim(); if(v) names.push(v);} return names.join(', '); })(),
@@ -2177,7 +2222,7 @@ function printRegistration() {
     { label: 'Mini Golf (Wed Jul 22)', attending: s.ev3_MiniGolf_attending, count: `${s.ev3_adults} adult(s), ${s.ev3_children} child(ren)`, cost: s.ev3_cost },
     { label: `Chung Mung (Wed Jul 22)${s.ev4_bento_ordered ? ` + ${s.ev4_bento_count} bento(s)` : ''}`, attending: s.ev4_ChungMung_attending, count: s.ev4_count, cost: s.ev4_cost },
     { label: 'The Hike (Thu Jul 23)', attending: s.ev5_Hike_attending, count: s.ev5_count, cost: s.ev5_cost },
-    { label: 'Dinner Banquet (Thu Jul 23)', attending: s.ev6_Banquet_attending, count: s.ev6_banquet_type === 'table' ? `${s.ev6_banquet_tables} table(s)` : `${s.ev6_banquet_ind_adults} adult(s), ${s.ev6_banquet_ind_children_4_10} child(ren)`, cost: s.ev6_cost },
+    { label: 'Dinner Banquet (Thu Jul 23)', attending: s.ev6_Banquet_attending, count: s.ev6_banquet_type === 'table' ? `${s.ev6_banquet_tables} table(s)${s.ev6_banquet_table_data ? ': ' + s.ev6_banquet_table_data : ''}` : `${s.ev6_banquet_ind_adults} adult(s), ${s.ev6_banquet_ind_children_4_10} child(ren)`, cost: s.ev6_cost },
     { label: `Beach Day (Fri Jul 24)${s.ev7_bento_ordered ? ` + ${s.ev7_bento_count} bento(s)` : ''}`, attending: s.ev7_BeachDay_attending, count: s.ev7_count, cost: s.ev7_cost },
     { label: 'Magic Show (Sat Jul 25)', attending: s.ev8_MagicShow_attending, count: s.ev8_count, cost: s.ev8_cost },
     { label: 'Luau (Sun Jul 26)', attending: s.ev9_Luau_attending, count: `${s.ev9_adults} adult(s), ${s.ev9_children} child(ren)`, cost: s.ev9_cost },
@@ -2239,7 +2284,7 @@ function printRegistration() {
 
   <div class="payment-box">
     <strong>💳 How to Pay — contact Tiffany Davis</strong><br>
-    💙 Venmo: @ZyiaGirl808<br>
+    💙 Venmo: @ZyiaGirlT808<br>
     📬 Check: 233 Kawaihae St., Apt 115D, Honolulu, HI 96825<br>
     📧 tcd7455@gmail.com &nbsp;&nbsp; 📞 541-760-9981
   </div>
@@ -2309,6 +2354,10 @@ function resetForm() {
   if (mahjongNo) mahjongNo.checked = true;
   const mahjongContact = document.getElementById('mahjong_contact');
   if (mahjongContact) mahjongContact.classList.add('hidden');
+  const pokerNo = document.getElementById('poker_no');
+  if (pokerNo) pokerNo.checked = true;
+  const pokerContact = document.getElementById('poker_contact');
+  if (pokerContact) pokerContact.classList.add('hidden');
   // Reset golf names
   const golfNames = document.getElementById('golf_names');
   if (golfNames) golfNames.innerHTML = '';
