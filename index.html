@@ -1740,12 +1740,17 @@ function update3rdGenNames(countId, containerId) {
 function toggleEvent(evId) {
   const attending = document.querySelector(`input[name="${evId}_attend"]:checked`)?.value === 'yes';
   const details = document.getElementById(evId + '_details');
+  const ev = EVENTS.find(e => e.id === evId);
   if (attending) {
     details.classList.remove('hidden');
     if (evId === 'ev2') updateGolfNames();
+    // Default single-count events to 1 when attending selected
+    if (ev && ev.countId) {
+      const el = document.getElementById(ev.countId);
+      if (el && parseInt(el.value) === 0) el.value = 1;
+    }
   } else {
     details.classList.add('hidden');
-    const ev = EVENTS.find(e => e.id === evId);
     if (ev) {
       if (ev.type === 'adult_child') {
         if (ev.thirdGenId) { const el = document.getElementById(ev.thirdGenId); if (el) el.value = 0; }
@@ -1784,10 +1789,8 @@ function toggleBanquetType() {
 function toggleYAH() {
   const interested = document.querySelector('input[name="yah_attend"]:checked')?.value === 'yes';
   document.getElementById('yah_contact_section').classList.toggle('hidden', !interested);
-  if (!interested) {
-    const yahCount = document.getElementById('yah_count');
-    if (yahCount) yahCount.value = 0;
-  }
+  const yahCount = document.getElementById('yah_count');
+  if (yahCount) yahCount.value = interested ? (parseInt(yahCount.value) === 0 ? 1 : yahCount.value) : 0;
 }
 
 function toggleBento() {
