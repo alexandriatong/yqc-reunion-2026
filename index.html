@@ -2188,7 +2188,40 @@ function buildReview() {
       hasAny = true;
       total += r.cost;
       const costStr = r.cost === 0 ? '$0' : `$${r.cost.toLocaleString()} (${r.label})`;
-      evHTML += `<div class="review-row"><span class="review-label">${ev.day}</span><span class="review-value"><strong>${ev.name}</strong><br><span style="color:var(--teal-dark)">${costStr}</span></span></div>`;
+
+      // Build banquet names detail for review
+      let banquetDetail = '';
+      if (ev.id === 'ev6') {
+        const bType = document.querySelector('input[name="banquet_type"]:checked')?.value || 'individual';
+        if (bType === 'table') {
+          const tbls = parseInt(document.getElementById('banquet_tbl_count')?.value)||0;
+          const tableLines = [];
+          for (let t = 1; t <= tbls; t++) {
+            const label = document.getElementById(`banquet_tbl_label_${t}`)?.value.trim() || `Table ${t}`;
+            const seats = [];
+            for (let g = 1; g <= 10; g++) {
+              const v = document.getElementById(`banquet_tbl_${t}_name_${g}`)?.value.trim();
+              if (v) seats.push(v);
+            }
+            tableLines.push(`<em>${label}:</em> ${seats.join(', ') || '—'}`);
+          }
+          if (tableLines.length) banquetDetail = `<br><span style="font-size:0.82rem;color:var(--muted)">${tableLines.join('<br>')}</span>`;
+        } else {
+          // Individual — collect names
+          const thirdGen = parseInt(document.getElementById('banquet_ind_3rdgen')?.value)||0;
+          const adults = parseInt(document.getElementById('banquet_ind_adults')?.value)||0;
+          const children = parseInt(document.getElementById('banquet_ind_children')?.value)||0;
+          const nameTotal = thirdGen + adults + children;
+          const names = [];
+          for (let i = 1; i <= nameTotal; i++) {
+            const v = document.getElementById(`banquet_ind_name_${i}`)?.value.trim();
+            if (v) names.push(v);
+          }
+          if (names.length) banquetDetail = `<br><span style="font-size:0.82rem;color:var(--muted)">${names.join(', ')}</span>`;
+        }
+      }
+
+      evHTML += `<div class="review-row"><span class="review-label">${ev.day}</span><span class="review-value"><strong>${ev.name}</strong><br><span style="color:var(--teal-dark)">${costStr}</span>${banquetDetail}</span></div>`;
     }
   });
   if (!hasAny) evHTML = '<p style="color:var(--muted);font-size:0.9rem;font-style:italic">No events selected.</p>';
