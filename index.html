@@ -1882,9 +1882,7 @@ function validatePage2() {
   });
 
   if (!ok && firstError) {
-    console.log('[DEBUG] firstError:', firstError, 'id:', firstError?.id, 'inDOM:', document.contains(firstError));
     const card = firstError.closest('.event-card, .banquet-subcard') || firstError;
-    console.log('[DEBUG] scrolling to card:', card?.className, card?.id);
     setTimeout(() => {
       card.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }, 50);
@@ -1971,7 +1969,7 @@ function toggleBanquetType() {
     if (tblCount && parseInt(tblCount.value) === 0) tblCount.value = 1;
   }
   updateCosts();
-  updateBanquetNames();
+  updateBanquetNames(); // always regenerate name fields after type or count change
 }
 
 function toggleYAH() {
