@@ -1302,7 +1302,7 @@
                       <label>Number of Bentos <span class="req">*</span></label>
                       <div class="stepper">
                         <button onclick="changeQty('bento_count',-1)">−</button>
-                        <input type="number" id="bento_count" class="qty-input" value="0" min="0" max="50" oninput="updateCosts()">
+                        <input type="number" id="bento_count" class="qty-input" value="0" min="1" max="50" oninput="updateCosts()">
                         <button onclick="changeQty('bento_count',1)">+</button>
                       </div>
                     </div>
@@ -1667,13 +1667,22 @@ function validatePage2() {
   let ok = true;
   let firstError = null;
 
+  // Helper: check if element is actually visible by checking known hidden containers
+  function isVisible(el) {
+    let node = el;
+    while (node && node !== document.body) {
+      if (node.classList && node.classList.contains('hidden')) return false;
+      node = node.parentElement;
+    }
+    return true;
+  }
+
   // Helper: validate a visible required text/email field
   function req(id, errId, msg) {
     const el = document.getElementById(id);
     const errEl = document.getElementById(errId);
     if (!el || !errEl) return;
-    const visible = el.offsetParent !== null;
-    if (!visible) { errEl.classList.remove('show'); el.classList.remove('has-error'); return; }
+    if (!isVisible(el)) { errEl.classList.remove('show'); el.classList.remove('has-error'); return; }
     const val = el.value.trim();
     if (!val) {
       el.classList.add('has-error'); errEl.classList.add('show'); errEl.textContent = msg;
@@ -1689,8 +1698,7 @@ function validatePage2() {
     const el = document.getElementById(id);
     const errEl = document.getElementById(errId);
     if (!el || !errEl) return;
-    const visible = el.offsetParent !== null;
-    if (!visible) { errEl.classList.remove('show'); el.classList.remove('has-error'); return; }
+    if (!isVisible(el)) { errEl.classList.remove('show'); el.classList.remove('has-error'); return; }
     const val = el.value.trim();
     const empty = !val;
     const invalid = val && !isValidPhone(val);
@@ -1749,6 +1757,29 @@ function validatePage2() {
     }
   }
 
+  // Chung Mung bento: if "Yes, order bentos" selected, sum of all items must be >= 1
+  const cmAttending = document.querySelector('input[name="ev4_attend"]:checked')?.value === 'yes';
+  const wantsCMBento = document.querySelector('input[name="cm_bento_order"]:checked')?.value === 'yes';
+  if (cmAttending && wantsCMBento) {
+    const cmIds = ['cm_bento_a','cm_bento_b','cm_bento_c','cm_bento_d','cm_bento_e','cm_bento_f',
+                   'cm_bento_g','cm_bento_h','cm_bento_i','cm_bento_j','cm_bento_k','cm_bento_l'];
+    const cmTotal = cmIds.reduce((sum, id) => sum + (parseInt(document.getElementById(id)?.value)||0), 0);
+    const existingCM = document.getElementById('err-count-cm-bento');
+    if (existingCM) existingCM.remove();
+    if (cmTotal < 1) {
+      ok = false;
+      const anchor = document.getElementById('cm_bento_total_display');
+      if (anchor) {
+        const errMsg = document.createElement('div');
+        errMsg.id = 'err-count-cm-bento';
+        errMsg.style.cssText = 'color:#b03020;font-size:0.85rem;font-weight:700;margin-top:8px;';
+        errMsg.textContent = '⚠️ Please select at least 1 bento item.';
+        anchor.closest('.bento-total-row').insertAdjacentElement('afterend', errMsg);
+        if (!firstError) firstError = errMsg;
+      }
+    }
+  }
+
   // Banquet table names (required when table mode is selected and attending)
   const banquetAttending = document.querySelector('input[name="ev6_attend"]:checked')?.value === 'yes';
   const banquetType = document.querySelector('input[name="banquet_type"]:checked')?.value;
@@ -1775,6 +1806,9 @@ function validatePage2() {
       }
     }
   }
+
+  // Golf name fields
+  const golfAttending = document.querySelector('input[name="ev2_attend"]:checked')?.value === 'yes';
   if (golfAttending) {
     const count = parseInt(document.getElementById('ev2_count')?.value)||1;
     for (let i = 1; i <= count; i++) {
@@ -1791,7 +1825,6 @@ function validatePage2() {
   // ── Attendee count validation: any "Attending" event must have >= 1 person ──
   function checkAttendeeCount(evId, getTotal, errorAnchorId, msg) {
     const attending = document.querySelector(`input[name="${evId}_attend"]:checked`)?.value === 'yes';
-    // Remove any existing count error for this event
     const existing = document.getElementById(`err-count-${evId}`);
     if (existing) existing.remove();
     if (!attending) return;
@@ -1804,8 +1837,8 @@ function validatePage2() {
         errMsg.id = `err-count-${evId}`;
         errMsg.style.cssText = 'color:#b03020;font-size:0.85rem;font-weight:700;margin-top:8px;';
         errMsg.textContent = msg;
-        anchor.insertAdjacentElement('afterend', errMsg);
-        if (!firstError) firstError = errMsg;
+        anchor.insertAdjacentElement('afterend', errMsg); // insert FIRST
+        if (!firstError) firstError = errMsg;             // set AFTER insertion
       }
     }
   }
@@ -1849,7 +1882,12 @@ function validatePage2() {
   });
 
   if (!ok && firstError) {
-    firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    console.log('[DEBUG] firstError:', firstError, 'id:', firstError?.id, 'inDOM:', document.contains(firstError));
+    const card = firstError.closest('.event-card, .banquet-subcard') || firstError;
+    console.log('[DEBUG] scrolling to card:', card?.className, card?.id);
+    setTimeout(() => {
+      card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }, 50);
     if (!document.getElementById('page2-error-banner')) {
       const banner = document.createElement('div');
       banner.id = 'page2-error-banner';
@@ -1946,6 +1984,10 @@ function toggleYAH() {
 function toggleBento() {
   const wants = document.querySelector('input[name="bento_order"]:checked')?.value === 'yes';
   document.getElementById('bento_details').classList.toggle('hidden', !wants);
+  if (wants) {
+    const bentoCount = document.getElementById('bento_count');
+    if (bentoCount && parseInt(bentoCount.value) === 0) bentoCount.value = 1;
+  }
   updateCosts();
 }
 
