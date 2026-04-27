@@ -917,7 +917,7 @@
           </div>
         </div>
 
-        <!-- WEDNESDAY GOLF 🏌🏻‍♀️-->
+        <!-- WEDNESDAY GOLF -->
         <div class="event-card">
           <div class="event-header">
             <div class="event-day-badge"><div class="day">Wednesday</div><div class="date">Jul 22</div></div>
@@ -951,7 +951,7 @@
           </div>
         </div>
 
-        <!-- WEDNESDAY MINI GOLF ⛳️-->
+        <!-- WEDNESDAY MINI GOLF -->
         <div class="event-card">
           <div class="event-header">
             <div class="event-day-badge"><div class="day">Wednesday</div><div class="date">Jul 22</div></div>
@@ -994,7 +994,7 @@
           </div>
         </div>
 
-        <!-- WEDNESDAY CHUNG MUNG 🪷-->
+        <!-- WEDNESDAY CHUNG MUNG -->
         <div class="event-card">
           <div class="event-header">
             <div class="event-day-badge"><div class="day">Wednesday</div><div class="date">Jul 22</div></div>
@@ -1146,7 +1146,7 @@
           </div>
         </div>
 
-        <!-- THURSDAY HIKE 🥾-->
+        <!-- THURSDAY HIKE -->
         <div class="event-card">
           <div class="event-header">
             <div class="event-day-badge"><div class="day">Thursday</div><div class="date">Jul 23</div></div>
@@ -1260,7 +1260,7 @@
           </div>
         </div>
 
-        <!-- FRIDAY BEACH 🏖️-->
+        <!-- FRIDAY BEACH -->
         <div class="event-card">
           <div class="event-header">
             <div class="event-day-badge"><div class="day">Friday</div><div class="date">Jul 24</div></div>
@@ -1313,7 +1313,7 @@
           </div>
         </div>
 
-        <!-- FRIDAY YOUNG AT HEART ✨-->
+        <!-- FRIDAY YOUNG AT HEART -->
         <div class="event-card" style="border: 2px solid var(--gold);">
           <div class="event-header">
             <div class="event-day-badge" style="background:var(--gold)"><div class="day">Friday</div><div class="date">Jul 24</div></div>
@@ -1366,7 +1366,7 @@
           </div>
         </div>
 
-        <!-- SATURDAY MAGIC 🪄-->
+        <!-- SATURDAY MAGIC -->
         <div class="event-card">
           <div class="event-header">
             <div class="event-day-badge"><div class="day">Saturday</div><div class="date">Jul 25</div></div>
@@ -2219,7 +2219,36 @@ function buildReview() {
         }
       }
 
-      evHTML += `<div class="review-row"><span class="review-label">${ev.day}</span><span class="review-value"><strong>${ev.name}</strong><br><span style="color:var(--teal-dark)">${costStr}</span>${banquetDetail}</span></div>`;
+      // Build Chung Mung bento detail for review
+      let cmBentoDetail = '';
+      if (ev.id === 'ev4') {
+        const wantsCMBento = document.querySelector('input[name="cm_bento_order"]:checked')?.value === 'yes';
+        if (wantsCMBento) {
+          const cmBentoItems = [
+            { id: 'cm_bento_a', label: '(A) 7-Pack' },
+            { id: 'cm_bento_b', label: '(B) Deluxe Breakfast' },
+            { id: 'cm_bento_c', label: '(C) Chicken Katsu Curry' },
+            { id: 'cm_bento_d', label: '(D) Fried Chicken' },
+            { id: 'cm_bento_e', label: '(E) Teriyaki Chicken' },
+            { id: 'cm_bento_f', label: '(F) Creamy Sesame Chicken Salad' },
+            { id: 'cm_bento_g', label: '(G) Deluxe Somen Salad' },
+            { id: 'cm_bento_h', label: '(H) Large Fried Saimin' },
+            { id: 'cm_bento_i', label: '(I) Spaghetti with Meat Sauce' },
+            { id: 'cm_bento_j', label: '(J) Salisbury Steak with Mushroom Gravy' },
+            { id: 'cm_bento_k', label: '(K) Seafood Inari Sushi Bomb' },
+            { id: 'cm_bento_l', label: '(L) Spicy Ahi Inari Pack' },
+          ];
+          const selected = cmBentoItems
+            .map(item => ({ ...item, qty: parseInt(document.getElementById(item.id)?.value)||0 }))
+            .filter(item => item.qty > 0)
+            .map(item => `${item.label} × ${item.qty}`);
+          if (selected.length) {
+            cmBentoDetail = `<br><span style="font-size:0.82rem;color:var(--muted)">Bentos: ${selected.join(', ')}</span>`;
+          }
+        }
+      }
+
+      evHTML += `<div class="review-row"><span class="review-label">${ev.day}</span><span class="review-value"><strong>${ev.name}</strong><br><span style="color:var(--teal-dark)">${costStr}</span>${banquetDetail}${cmBentoDetail}</span></div>`;
     }
   });
   if (!hasAny) evHTML = '<p style="color:var(--muted);font-size:0.9rem;font-style:italic">No events selected.</p>';
@@ -2253,7 +2282,7 @@ function buildReview() {
 
 // ===================== GOOGLE SHEETS CONFIG =====================
 // PASTE YOUR APPS SCRIPT WEB APP URL BELOW (replace the placeholder)
-const GOOGLE_SHEET_URL = 'https://script.google.com/macros/s/AKfycbxcJceJ4LMTJyvTprgZzSf7IqF-XDSZExolU3jTxeE0VZmDk3CpSe4GIp5ouF-T8NM1Pw/exec';
+const GOOGLE_SHEET_URL = 'https://script.google.com/macros/s/AKfycbya7XgVF9VVJbxqtdYGpnQfEwTZUM7pqddG5f-cgzUmVIIOrCC2-P1N7Sidi6mNHbZ4ng/exec';
 
 // ===================== SUBMIT =====================
 function submitForm() {
