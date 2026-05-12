@@ -1207,14 +1207,14 @@
                   <div class="field-group">
                     <label>How would you like to register?</label>
                     <div class="radio-group" style="margin-top:6px">
-                      <div class="radio-option"><input type="radio" name="banquet_type" id="banquet_individual" value="individual" checked onchange="toggleBanquetType()"><label for="banquet_individual"><span class="check-circle"></span> Individual Tickets ($38.88 adult / $25 child age 4-10)</label></div>
+                      <div class="radio-option"><input type="radio" name="banquet_type" id="banquet_individual" value="individual" checked onchange="toggleBanquetType()"><label for="banquet_individual"><span class="check-circle"></span> Individual Tickets ($38.88 adult / $15 child age 4-10)</label></div>
                       <div class="radio-option"><input type="radio" name="banquet_type" id="banquet_table" value="table" onchange="toggleBanquetType()"><label for="banquet_table"><span class="check-circle"></span> Reserve a Table ($388/table, up to 10)</label></div>
                     </div>
                   </div>
 
                   <!-- Individual -->
                   <div class="banquet-subcard" id="banquet_individual_section">
-                    <h4>🪑 Individual Tickets — $38.88 adult / $25 child age 4-10 / $0 for 3rd Gen. Uncle/Aunty and/or Spouse</h4>
+                    <h4>🪑 Individual Tickets — $38.88 adult / $15 child age 4-10 / $0 for 3rd Gen. Uncle/Aunty and/or Spouse</h4>
                     <div class="field-row">
                       <div class="field-group">
                         <label>3rd Gen. Uncle/Aunty and/or Spouse ($0 each)</label>
@@ -1233,7 +1233,7 @@
                         </div>
                       </div>
                       <div class="field-group">
-                        <label>Children age 4-10 ($25 each)</label>
+                        <label>Children age 4-10 ($15 each)</label>
                         <div class="stepper">
                           <button onclick="changeQty('banquet_ind_children',-1, updateBanquetNames)">−</button>
                           <input type="number" id="banquet_ind_children" class="qty-input" value="0" min="0" max="50" oninput="updateCosts(); updateBanquetNames();">
@@ -2131,8 +2131,8 @@ function getEventCost(ev) {
     if (bType === 'individual') {
       const adults = parseInt(document.getElementById('banquet_ind_adults').value)||0;
       const children = parseInt(document.getElementById('banquet_ind_children').value)||0;
-      const cost = (adults * 38.88) + (children * 25);
-      return { cost: Math.round(cost * 100) / 100, label: `${adults} adult(s) × $38.88 + ${children} child(ren) age 4-10 × $25`, attending: true, count: adults + children };
+      const cost = (adults * 38.88) + (children * 15);
+      return { cost: Math.round(cost * 100) / 100, label: `${adults} adult(s) × $38.88 + ${children} child(ren) age 4-10 × $15`, attending: true, count: adults + children };
     } else {
       const tbls = parseInt(document.getElementById('banquet_tbl_count').value)||1;
       return { cost: tbls * 388, label: `${tbls} table(s) × $388`, attending: true, count: tbls };
