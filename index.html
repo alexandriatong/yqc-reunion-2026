@@ -2033,13 +2033,35 @@ function updateBanquetNames() {
     const container = document.getElementById('banquet_ind_names');
     // Preserve existing values before rebuilding
     const existingVals = {};
-    container.querySelectorAll('input').forEach((inp, i) => { existingVals[i + 1] = inp.value; });
+    container.querySelectorAll('input').forEach((inp) => { existingVals[inp.id] = inp.value; });
     container.innerHTML = '';
-    if (total <= 1) return;
-    for (let i = 1; i <= total; i++) {
+    if (total === 0) return;
+
+    // Always ask for names of 3rd Gen attendees
+    for (let i = 1; i <= thirdGen; i++) {
+      const id = `banquet_ind_name_3rdgen_${i}`;
       const div = document.createElement('div');
       div.className = 'field-group';
-      div.innerHTML = `<label>Guest ${i} Full Name <span class="req">*</span></label><input type="text" id="banquet_ind_name_${i}" value="${existingVals[i] || ''}">`;
+      div.innerHTML = `<label>3rd Gen. Guest ${i} Full Name <span class="req">*</span></label><input type="text" id="${id}" value="${existingVals[id] || ''}">`;
+      container.appendChild(div);
+    }
+
+    // Always ask for adult names if total > 1 (skip solo adult — they're the registrant)
+    // Always ask for child names regardless of total
+    if (adults > 1 || (adults === 1 && (thirdGen > 0 || children > 0))) {
+      for (let i = 1; i <= adults; i++) {
+        const id = `banquet_ind_name_adult_${i}`;
+        const div = document.createElement('div');
+        div.className = 'field-group';
+        div.innerHTML = `<label>Adult ${i} Full Name <span class="req">*</span></label><input type="text" id="${id}" value="${existingVals[id] || ''}">`;
+        container.appendChild(div);
+      }
+    }
+    for (let i = 1; i <= children; i++) {
+      const id = `banquet_ind_name_child_${i}`;
+      const div = document.createElement('div');
+      div.className = 'field-group';
+      div.innerHTML = `<label>Child ${i} Full Name <span class="req">*</span></label><input type="text" id="${id}" value="${existingVals[id] || ''}">`;
       container.appendChild(div);
     }
   } else {
@@ -2212,10 +2234,17 @@ function buildReview() {
           const thirdGen = parseInt(document.getElementById('banquet_ind_3rdgen')?.value)||0;
           const adults = parseInt(document.getElementById('banquet_ind_adults')?.value)||0;
           const children = parseInt(document.getElementById('banquet_ind_children')?.value)||0;
-          const nameTotal = thirdGen + adults + children;
           const names = [];
-          for (let i = 1; i <= nameTotal; i++) {
-            const v = document.getElementById(`banquet_ind_name_${i}`)?.value.trim();
+          for (let i = 1; i <= thirdGen; i++) {
+            const v = document.getElementById(`banquet_ind_name_3rdgen_${i}`)?.value.trim();
+            if (v) names.push(v);
+          }
+          for (let i = 1; i <= adults; i++) {
+            const v = document.getElementById(`banquet_ind_name_adult_${i}`)?.value.trim();
+            if (v) names.push(v);
+          }
+          for (let i = 1; i <= children; i++) {
+            const v = document.getElementById(`banquet_ind_name_child_${i}`)?.value.trim();
             if (v) names.push(v);
           }
           if (names.length) banquetDetail = `<br><span style="font-size:0.82rem;color:var(--muted)">${names.join(', ')}</span>`;
@@ -2318,10 +2347,17 @@ function submitForm() {
       const thirdGen = parseInt(document.getElementById('banquet_ind_3rdgen')?.value)||0;
       const adults = parseInt(document.getElementById('banquet_ind_adults').value)||0;
       const children = parseInt(document.getElementById('banquet_ind_children').value)||0;
-      const nameTotal = thirdGen + adults + children;
       const names = [];
-      for (let i = 1; i <= nameTotal; i++) {
-        const v = document.getElementById(`banquet_ind_name_${i}`)?.value.trim();
+      for (let i = 1; i <= thirdGen; i++) {
+        const v = document.getElementById(`banquet_ind_name_3rdgen_${i}`)?.value.trim();
+        if (v) names.push(v);
+      }
+      for (let i = 1; i <= adults; i++) {
+        const v = document.getElementById(`banquet_ind_name_adult_${i}`)?.value.trim();
+        if (v) names.push(v);
+      }
+      for (let i = 1; i <= children; i++) {
+        const v = document.getElementById(`banquet_ind_name_child_${i}`)?.value.trim();
         if (v) names.push(v);
       }
       banquetIndNames = names.join(', ');
